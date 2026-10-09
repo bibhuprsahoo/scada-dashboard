@@ -80,12 +80,12 @@ main{width:100%;max-width:100%;margin:0;padding:1.25rem 1.875rem 2.5rem;display:
    line intact because .fbright never wraps internally. */
 .filterbar{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--sh-card);
   padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
-.filterbar h1{font-size:1.5rem;font-weight:800;color:var(--navy);line-height:1.5;letter-spacing:-.2px;
+.filterbar h1{font-size:1rem;font-weight:800;color:var(--navy);line-height:1.5;letter-spacing:-.2px;
   min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fbright{display:flex;align-items:center;gap:.75rem;flex-wrap:nowrap;flex-shrink:0}
-.rangechip{font-size:1rem;font-weight:700;color:var(--navy);background:var(--chip-bg);border:1px solid var(--chip-bd);border-radius:var(--r-pill);padding:.425rem .9875rem;white-space:nowrap}
+.rangechip{font-size:.75rem;font-weight:700;color:var(--navy);background:var(--chip-bg);border:1px solid var(--chip-bd);border-radius:var(--r-pill);padding:.3rem .75rem;white-space:nowrap}
 .seg{display:inline-flex;background:var(--seg-bg);border-radius:var(--r-seg);padding:3px}
-.seg button{border:none;background:transparent;padding:.5rem 1.125rem;border-radius:var(--r-segbtn);font-size:1.0625rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s;font-family:inherit}
+.seg button{border:none;background:transparent;padding:.35rem .75rem;border-radius:var(--r-segbtn);font-size:.8125rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s;font-family:inherit}
 .seg button:hover{color:var(--navy)}
 .seg button.active{background:var(--navy);color:#fff;box-shadow:var(--sh-active)}
 .seg button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
@@ -93,9 +93,9 @@ main{width:100%;max-width:100%;margin:0;padding:1.25rem 1.875rem 2.5rem;display:
    justify-content:flex-end aligns it with the segmented control above. */
 #customInputs{display:none;align-items:center;gap:.5rem;}
 #customInputs.on{display:flex}
-.dinp{padding:.4375rem .625rem;border:1px solid var(--line);border-radius:var(--r-segbtn);font-size:1rem;font-family:inherit;color:var(--ink);flex-shrink:0}
+.dinp{padding:.3rem .5rem;border:1px solid var(--line);border-radius:var(--r-segbtn);font-size:.8125rem;font-family:inherit;color:var(--ink);flex-shrink:0}
 .mini{font-size:.9375rem;color:var(--muted);flex-shrink:0}
-.dbtn{padding:.4375rem 1rem;border:none;border-radius:var(--r-segbtn);background:var(--navy);color:#fff;font-size:.8125rem;font-weight:700;font-family:inherit;cursor:pointer;flex-shrink:0}
+.dbtn{padding:.3rem .75rem;border:none;border-radius:var(--r-segbtn);background:var(--navy);color:#fff;font-size:.75rem;font-weight:700;font-family:inherit;cursor:pointer;flex-shrink:0}
 .dbtn:hover{background:#16457c}
 .dbtn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 
