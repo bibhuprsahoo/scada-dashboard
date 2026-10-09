@@ -1105,18 +1105,23 @@ async function pdFarmersAll(fromDate, toDate) {
     cached(`pour_${fromDate}_${toDate}`, ttl, async () => (await pdQ(
       `SELECT COUNT(*) AS pourings_recorded, ROUND(SUM(milk_qty),0) AS total_qty_ltrs, ROUND(AVG(avg_fat),2) AS avg_fat
        FROM tbl_farmer_bill WHERE created_at >= ? AND created_at < ? AND milk_qty > 0`, [fromDate, toExcl]))[0] || {}),
-    // Aggregate bills first, then join the small dimension tables to only the
-    // top candidates — far cheaper than joining every member to every bill.
+    // Top quantity pourers from actual collections (tbl_milk_collection by
+    // collection_date). Aggregate first, then join names to only the top 10.
     cached(`topqty_${fromDate}_${toDate}`, ttl, () => pdQ(
-      `SELECT m.member_name, d.dcs_name, s.sub_district_name AS taluk, t.total_qty, t.avg_fat, t.qty_per_cycle
-       FROM (SELECT member_code, dcs_code, ROUND(SUM(milk_qty),1) AS total_qty, ROUND(AVG(avg_fat),2) AS avg_fat,
-                    ROUND(SUM(milk_qty)/COUNT(DISTINCT dcs_payment_code),1) AS qty_per_cycle
-             FROM tbl_farmer_bill WHERE created_at >= ? AND created_at < ?
-             GROUP BY member_code, dcs_code ORDER BY total_qty DESC LIMIT 40) t
-       JOIN tbl_member m ON m.member_code=t.member_code AND m.is_delete=0
-       JOIN tbl_dcs d ON d.dcs_code=t.dcs_code
-       JOIN tbl_sub_districts s ON s.sub_district_code=d.sub_district_code
-       ORDER BY t.total_qty DESC LIMIT 10`, [fromDate, toExcl])),
+      `SELECT m.member_name, d.dcs_name, s.sub_district_name AS taluk, t.total_qty, t.pours, t.avg_fat
+       FROM (SELECT member_code, dcs_code,
+                    ROUND(SUM(quantity),1)      AS total_qty,
+                    COUNT(*)                    AS pours,
+                    ROUND(AVG(NULLIF(fat,0)),2) AS avg_fat
+             FROM tbl_milk_collection
+             WHERE collection_date >= ? AND collection_date < ? AND is_delete = 0
+             GROUP BY member_code, dcs_code
+             ORDER BY total_qty DESC
+             LIMIT 10) t
+       LEFT JOIN tbl_member m        ON m.member_code = t.member_code AND m.is_delete = 0
+       LEFT JOIN tbl_dcs d           ON d.dcs_code = t.dcs_code
+       LEFT JOIN tbl_sub_districts s ON s.sub_district_code = d.sub_district_code
+       ORDER BY t.total_qty DESC`, [fromDate, toExcl])),
     cached(`topfat_${fromDate}_${toDate}`, ttl, () => pdQ(
       `SELECT m.member_name, d.dcs_name, s.sub_district_name AS taluk, t.avg_fat, t.total_qty
        FROM (SELECT member_code, dcs_code, ROUND(AVG(avg_fat),2) AS avg_fat, ROUND(SUM(milk_qty),1) AS total_qty
