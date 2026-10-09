@@ -151,7 +151,9 @@ window.DD = null;
     if(j.success) window.DD = j.data;
     else throw new Error(j.error);
   }catch(e){
-    document.getElementById('loading-overlay').innerHTML = '<div style="text-align:center;color:#d64545;padding:40px"><b>Failed to load data</b><br><small>'+e.message+'</small></div>';
+    const ol=document.getElementById('loading-overlay');
+    ol.style.display='flex';
+    ol.innerHTML = '<div style="text-align:center;color:#d64545;padding:40px"><b>Failed to load data</b><br><small>'+e.message+'</small></div>';
     return;
   }
   document.getElementById('loading-overlay').style.display='none';
@@ -322,7 +324,7 @@ document.getElementById('dFrom').addEventListener('change',e=>{from=e.target.val
 document.getElementById('dTo').addEventListener('change',e=>{to=e.target.value;saveFilter();renderAll();});
 if(window.ChartDataLabels) Chart.register(ChartDataLabels);
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
-renderAll();
+try{renderAll();}catch(e){console.error('renderAll failed:',e);}
 }
 
 </script>
