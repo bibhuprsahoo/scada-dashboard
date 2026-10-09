@@ -91,8 +91,7 @@ main{width:100%;max-width:100%;margin:0;padding:1.25rem 1.875rem 2.5rem;display:
 .seg button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 /* Full-width flex item, so it always lands on its own line below row 1.
    justify-content:flex-end aligns it with the segmented control above. */
-#customInputs{display:none;align-items:center;justify-content:flex-end;gap:.5rem;
-  flex:0 0 100%;width:100%;margin-top:.125rem}
+#customInputs{display:none;align-items:center;gap:.5rem;}
 #customInputs.on{display:flex}
 .dinp{padding:.4375rem .625rem;border:1px solid var(--line);border-radius:var(--r-segbtn);font-size:1rem;font-family:inherit;color:var(--ink);flex-shrink:0}
 .mini{font-size:.9375rem;color:var(--muted);flex-shrink:0}
@@ -198,15 +197,13 @@ footer{font-size:.71875rem;color:var(--muted);text-align:center;padding:1.25rem}
         <button type="button" data-b="monthly">Monthly</button>
         <button type="button" data-b="custom">Custom</button>
       </div>
+      <span id="customInputs">
+        <input type="date" id="dFrom" class="dinp" aria-label="From date">
+        <span class="mini">to</span>
+        <input type="date" id="dTo" class="dinp" aria-label="To date">
+        <button type="button" id="applyRange" class="dbtn">Apply</button>
+      </span>
     </div>
-    <!-- Custom range pickers drop onto a second line, right-aligned so they sit
-         directly under the Monthly / Custom buttons. -->
-    <span id="customInputs">
-      <input type="date" id="dFrom" class="dinp" aria-label="From date">
-      <span class="mini">to</span>
-      <input type="date" id="dTo" class="dinp" aria-label="To date">
-      <button type="button" id="applyRange" class="dbtn">Apply</button>
-    </span>
   </div>
 
   <!-- KPI row -->
