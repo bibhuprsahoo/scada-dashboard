@@ -213,6 +213,8 @@ document.getElementById('dFrom').min=minDate; document.getElementById('dFrom').m
 document.getElementById('dTo').min=minDate;   document.getElementById('dTo').max=maxDate;
 document.getElementById('reportingPeriod').textContent=PL[2];
 let basis='daily', from=W.dates[Math.max(0,DAYS-14)], to=maxDate;
+(function(){try{const s=JSON.parse(localStorage.getItem('predairy_filter')||'{}');if(s.basis)basis=s.basis;if(s.from)from=s.from;if(s.to)to=s.to;}catch(e){}})();
+function saveFilter(){try{localStorage.setItem('predairy_filter',JSON.stringify({basis,from,to}));}catch(e){}}
 
 function range(){
   if(basis==='daily') return {s:DAYS-2,e:DAYS-1};
@@ -314,11 +316,12 @@ document.getElementById('segBasis').addEventListener('click',e=>{
   if(e.target.tagName!=='BUTTON')return;
   basis=e.target.dataset.b;
   document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b===e.target));
-  renderAll();
+  saveFilter();renderAll();
 });
-document.getElementById('dFrom').addEventListener('change',e=>{from=e.target.value;renderAll();});
-document.getElementById('dTo').addEventListener('change',e=>{to=e.target.value;renderAll();});
+document.getElementById('dFrom').addEventListener('change',e=>{from=e.target.value;saveFilter();renderAll();});
+document.getElementById('dTo').addEventListener('change',e=>{to=e.target.value;saveFilter();renderAll();});
 if(window.ChartDataLabels) Chart.register(ChartDataLabels);
+document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
 renderAll();
 }
 

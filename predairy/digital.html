@@ -263,6 +263,8 @@ footer{font-size:.71875rem;color:var(--muted);text-align:center;padding:1.25rem}
 const API = 'https://bangalore-dairy.duckdns.org/papi';
 const clientCache = {};
 let basis = 'daily', fromCustom = '', toCustom = '', lastCustomFrom = '', lastCustomTo = '';
+(function(){try{const s=JSON.parse(localStorage.getItem('predairy_filter')||'{}');if(s.basis)basis=s.basis;if(s.fromCustom){fromCustom=s.fromCustom;lastCustomFrom=s.fromCustom;}if(s.toCustom){toCustom=s.toCustom;lastCustomTo=s.toCustom;}}catch(e){}})();
+function saveFilter(){try{localStorage.setItem('predairy_filter',JSON.stringify({basis,fromCustom,toCustom}));}catch(e){}}
 let liveLoading = false;
 let cMix, cExt, cWB, cFB;
 
@@ -694,8 +696,6 @@ document.getElementById('segBasis').addEventListener('click', e => {
   document.querySelectorAll('#segBasis button').forEach(b => b.classList.toggle('active', b === btn));
   document.getElementById('customInputs').classList.toggle('on', basis === 'custom');
   if (basis === 'custom') {
-    // Show the pickers and prefill; DON'T fetch yet — the user confirms with
-    // Apply. If a range was applied before, keep showing it.
     if (lastCustomFrom && lastCustomTo) {
       fromCustom = lastCustomFrom; toCustom = lastCustomTo;
     } else if (!fromCustom) {
@@ -705,15 +705,13 @@ document.getElementById('segBasis').addEventListener('click', e => {
     document.getElementById('dFrom').value = fromCustom;
     document.getElementById('dTo').value = toCustom;
     constrainCustom();
-    if (lastCustomFrom && lastCustomTo) fetchLive();   // re-show a previously applied range
+    if (lastCustomFrom && lastCustomTo) fetchLive();
     return;
   }
-  fetchLive();
+  saveFilter();fetchLive();
 });
-// Custom pickers only update state + constrain; fetching waits for Apply.
 document.getElementById('dFrom').addEventListener('change', e => {
   fromCustom = e.target.value;
-  // If "to" is now before the new "from", snap it up to "from".
   if (toCustom && toCustom < fromCustom) { toCustom = fromCustom; document.getElementById('dTo').value = toCustom; }
   constrainCustom();
 });
@@ -729,9 +727,11 @@ document.getElementById('applyRange').addEventListener('click', () => {
   if (sd > ed)    { alert('From date cannot be after To date.'); return; }
   fromCustom = sd; toCustom = ed;
   lastCustomFrom = sd; lastCustomTo = ed;
-  fetchLive();
+  saveFilter();fetchLive();
 });
 
+document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
+if(basis==='custom'){document.getElementById('customInputs').classList.add('on');}
 showEmpty();
 loadCustomWindow();
 fetchLive().then(() => prefetch());
