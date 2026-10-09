@@ -213,8 +213,8 @@ document.getElementById('dFrom').min=minDate; document.getElementById('dFrom').m
 document.getElementById('dTo').min=minDate;   document.getElementById('dTo').max=maxDate;
 document.getElementById('reportingPeriod').textContent=PL[2];
 let basis='daily', from=W.dates[Math.max(0,DAYS-14)], to=maxDate;
-(function(){try{const s=JSON.parse(localStorage.getItem('predairy_filter')||'{}');if(s.basis)basis=s.basis;if(s.from)from=s.from;if(s.to)to=s.to;}catch(e){}})();
-function saveFilter(){try{localStorage.setItem('predairy_filter',JSON.stringify({basis,from,to}));}catch(e){}}
+(function(){try{const s=JSON.parse(localStorage.getItem('predairy_filter')||'{}');if(s.basis)basis=s.basis;if(s.fromCustom)from=s.fromCustom;if(s.toCustom)to=s.toCustom;}catch(e){}})();
+function saveFilter(){try{localStorage.setItem('predairy_filter',JSON.stringify({basis,fromCustom:from,toCustom:to}));}catch(e){}}
 
 function range(){
   if(basis==='daily') return {s:DAYS-2,e:DAYS-1};

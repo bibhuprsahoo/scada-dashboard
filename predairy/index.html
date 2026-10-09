@@ -158,8 +158,8 @@ document.getElementById('reportingPeriod').textContent=PL[2];
 
 let basis='monthly',from=W.dates[Math.max(0,DAYS-14)],to=maxDate;
 // restore persisted filter
-(function(){try{const s=JSON.parse(localStorage.getItem('predairy_filter')||'{}');if(s.basis)basis=s.basis;if(s.from)from=s.from;if(s.to)to=s.to;}catch(e){}})();
-function saveFilter(){try{localStorage.setItem('predairy_filter',JSON.stringify({basis,from,to}));}catch(e){}}
+(function(){try{const s=JSON.parse(localStorage.getItem('predairy_filter')||'{}');if(s.basis)basis=s.basis;if(s.fromCustom)from=s.fromCustom;if(s.toCustom)to=s.toCustom;}catch(e){}})();
+function saveFilter(){try{localStorage.setItem('predairy_filter',JSON.stringify({basis,fromCustom:from,toCustom:to}));}catch(e){}}
 
 function range(){
   if(basis==='daily'){const tod=new Date();const yest=new Date(tod);yest.setDate(tod.getDate()-1);const yestStr=yest.toISOString().split('T')[0];let i=W.dates.indexOf(yestStr);if(i<0){i=DAYS-1;while(i>0&&W.dailyAll[i]===0)i--;}return{s:i,e:i+1};}//
