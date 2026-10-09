@@ -428,6 +428,14 @@ async function buildProcurementCache() {
     const months = getMonthRanges(3);
     const last90 = getLast90();
 
+    // Per-taluk auto weight from tbl_milk_collection grouped by dcs_code (no join — uses idx_dcs_daily_full)
+    const talukAutoWeight = await Promise.all(months.map(async m => {
+      const [r] = await c.query(
+        'SELECT dcs_code, SUM(CASE WHEN is_quantity_auto=1 THEN quantity ELSE 0 END) AS autoQty FROM tbl_milk_collection WHERE collection_date >= ? AND collection_date < ? AND is_delete=0 GROUP BY dcs_code',
+        [m.start, m.endExcl]);
+      return r;
+    }));
+
     // Monthly taluk aggregates
     const talukMonthly = await Promise.all(months.map(async m => {
       const [r] = await c.query(`
@@ -592,6 +600,27 @@ async function buildProcurementCache() {
       const map={}; r.forEach(x=>map[x.taluk]=parseFloat(x.localSale)||0); return map;
     }));
 
+    // Build dcs_code -> sub_district_code map for auto weight aggregation
+    const [dcsRows] = await c.query('SELECT dcs_code, sub_district_code FROM tbl_dcs WHERE is_delete=0');
+    const dcsToSubDistrict = {};
+    dcsRows.forEach(r => { dcsToSubDistrict[r.dcs_code] = r.sub_district_code; });
+    // sub_district_code -> taluk name map (from PD_TALUKS reversed)
+    const subDistrictToTaluk = {
+      '05545':'Anekal','05544':'Bangalore East','05542':'Bangalore North',
+      '05543':'Bangalore South','05607':'Channapatna','05603':'Devanahalli',
+      '05602':'Dod Ballapur','05604':'Hosakote','05608':'Kanakapura',
+      '05605':'Magadi','05601':'Nelamangala','05606':'Ramanagara'
+    };
+    // Aggregate auto weight per taluk per month
+    const talukAutoMap = talukAutoWeight.map(monthRows => {
+      const m = {};
+      monthRows.forEach(r => {
+        const taluk = subDistrictToTaluk[dcsToSubDistrict[r.dcs_code]];
+        if (taluk) m[taluk] = (m[taluk]||0) + (parseFloat(r.autoQty)||0);
+      });
+      return m;
+    });
+
     // Build taluks
     const names = [...new Set(talukMonthly.flatMap(m=>m.map(t=>t.taluk)))].sort();
     const taluks = names.map(name => {
@@ -604,17 +633,10 @@ async function buildProcurementCache() {
       // Real per-taluk local sale; net = purchase − local sale
       const localSale = months.map((_,i)=>talukLocalSale[i][name]||0);
       const netPurchase = purchase.map((v,i)=>v-(localSale[i]||0));
-      // Auto/manual split: apply the union-wide real ratio to this taluk's real purchase
-      // (per-taluk raw is_quantity_auto scan over 17M rows is too costly for the drilldown)
+      // Auto/manual split: real per-taluk auto weight from tbl_milk_collection
       return { name, purchase, avgFat, avgSnf, measurements,
-        autoWeightQty: purchase.map((v,i)=>{
-          const gp=parseFloat(unionMonthly[i]?.purchase)||0, ga=parseFloat(unionMonthly[i]?.autoWeightQty)||0;
-          return gp? v*(ga/gp) : 0;
-        }),
-        manualWeightQty: purchase.map((v,i)=>{
-          const gp=parseFloat(unionMonthly[i]?.purchase)||0, gm=parseFloat(unionMonthly[i]?.manualWeightQty)||0;
-          return gp? v*(gm/gp) : 0;
-        }),
+        autoWeightQty: bm.map((_,i) => talukAutoMap[i][name]||0),
+        manualWeightQty: purchase.map((v,i) => v - (talukAutoMap[i][name]||0)),
         localSale, sampleMilk: months.map(()=>null),
         netPurchase,
         farmerApp:[0,0,0], secretaryApp:[0,0,0],
