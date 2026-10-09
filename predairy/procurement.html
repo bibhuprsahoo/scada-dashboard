@@ -147,9 +147,10 @@ window.DD = null;
 (async function(){
   try{
     const r = await fetch('/papi/bangalore/union054/procurement');
+    if(!r.ok) throw new Error('HTTP '+r.status);
     const j = await r.json();
-    if(j.success) window.DD = j.data;
-    else throw new Error(j.error);
+    if(!j || !j.success) throw new Error((j&&j.error)||'No data');
+    window.DD = j.data;
   }catch(e){
     const ol=document.getElementById('loading-overlay');
     ol.style.display='flex';
@@ -270,7 +271,7 @@ function renderScore(){
   document.getElementById('csScore').textContent=`All taluks for ${rangeLabel(range())}. Click column headers to sort.`;
   const tbl=document.getElementById('tblTaluk');
   let html=`<thead><tr><th class="l">Taluk</th><th>Purchase (Ltr)</th><th>Change %</th><th>Per-Day (Ltr)</th><th>Avg Fat %</th><th>Auto Weight %</th><th>Local Sale (Ltr)</th></tr></thead><tbody>`;
-  D.taluks.map(t=>{const tv=basis==='monthly'?t.purchase[2]:(W.talukDaily&&W.talukDaily[t.name]?W.talukDaily[t.name].slice(r.s,r.e).reduce((a,b)=>a+b,0):t.purchase[2]);return{t,ap:pct(t.autoWeightQty[2],t.purchase[2]),ch:talukChg(t),v:tv};})
+  D.taluks.map(t=>{const tv=basis==='monthly'?t.purchase[2]:(W.talukDaily&&W.talukDaily[t.name]?W.talukDaily[t.name].slice(r.s,r.e).reduce((a,b)=>a+b,0):t.purchase[2]);return{t,ap:basis==='monthly'?pct(t.autoWeightQty[2],t.purchase[2]):(W.autoAll?pct(sum(W.autoAll.slice(r.s,r.e)),sum(W.dailyAll.slice(r.s,r.e))):pct(t.autoWeightQty[2],t.purchase[2])),ch:talukChg(t),v:tv};})
   .sort((a,b)=>b.v-a.v).forEach(x=>{
    const apCls=x.ap>=90?'pg':x.ap>=75?'pa':'pr';
    html+=`<tr><td class="l"><b>${x.t.name}</b></td>
