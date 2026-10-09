@@ -444,7 +444,18 @@ async function buildProcurementCache() {
           AND a.collection_date >= ? AND a.collection_date < ? AND a.collection_date<=NOW()
         GROUP BY s.sub_district_name ORDER BY purchase DESC
       `, [m.start, m.endExcl]);
-      return r;
+      // Per-taluk auto weight from tbl_milk_collection
+      const [aw] = await c.query(`
+        SELECT s.sub_district_name AS taluk,
+          SUM(CASE WHEN mc.is_quantity_auto=1 THEN mc.quantity ELSE 0 END) AS autoWeightQty
+        FROM tbl_milk_collection mc
+        JOIN tbl_dcs d ON mc.dcs_code=d.dcs_code AND d.is_delete=0
+        JOIN tbl_sub_districts s ON d.sub_district_code=s.sub_district_code
+        WHERE mc.collection_date >= ? AND mc.collection_date < ? AND mc.collection_date<=NOW()
+        GROUP BY s.sub_district_name
+      `, [m.start, m.endExcl]);
+      const awMap = {}; aw.forEach(x => { awMap[x.taluk] = parseFloat(x.autoWeightQty)||0; });
+      return r.map(t => ({ ...t, autoWeightQty: awMap[t.taluk]||0 }));
     }));
 
     // Monthly union aggregates
@@ -604,17 +615,10 @@ async function buildProcurementCache() {
       // Real per-taluk local sale; net = purchase − local sale
       const localSale = months.map((_,i)=>talukLocalSale[i][name]||0);
       const netPurchase = purchase.map((v,i)=>v-(localSale[i]||0));
-      // Auto/manual split: apply the union-wide real ratio to this taluk's real purchase
-      // (per-taluk raw is_quantity_auto scan over 17M rows is too costly for the drilldown)
+      // Real per-taluk auto weight from tbl_milk_collection query above
       return { name, purchase, avgFat, avgSnf, measurements,
-        autoWeightQty: purchase.map((v,i)=>{
-          const gp=parseFloat(unionMonthly[i]?.purchase)||0, ga=parseFloat(unionMonthly[i]?.autoWeightQty)||0;
-          return gp? v*(ga/gp) : 0;
-        }),
-        manualWeightQty: purchase.map((v,i)=>{
-          const gp=parseFloat(unionMonthly[i]?.purchase)||0, gm=parseFloat(unionMonthly[i]?.manualWeightQty)||0;
-          return gp? v*(gm/gp) : 0;
-        }),
+        autoWeightQty: bm.map(t=>parseFloat(t.autoWeightQty)||0),
+        manualWeightQty: purchase.map((v,i)=>v-(parseFloat(bm[i]?.autoWeightQty)||0)),
         localSale, sampleMilk: months.map(()=>null),
         netPurchase,
         farmerApp:[0,0,0], secretaryApp:[0,0,0],
