@@ -152,13 +152,9 @@ window.DD = null;
     if(!j || !j.success) throw new Error((j&&j.error)||'No data');
     window.DD = j.data;
   }catch(e){
-    const ol=document.getElementById('loading-overlay');
-    ol.style.display='flex';
-    ol.innerHTML = '<div style="text-align:center;color:#d64545;padding:40px"><b>Failed to load data</b><br><small>'+e.message+'</small></div>';
+    document.body.innerHTML = '<div style="color:#d64545;padding:40px;text-align:center;font-family:sans-serif"><b>Failed to load data</b><br><small>'+e.message+'</small></div>';
     return;
   }
-  document.getElementById('loading-overlay').style.display='none';
-  // Run the main script
   initPage();
 })();
 </script>
