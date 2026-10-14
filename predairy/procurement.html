@@ -238,7 +238,7 @@ const nDays = r => r.e-r.s;
 const talukChg = t => basis==='monthly' ? pct(t.purchase[2]-t.purchase[1],t.purchase[1]) : t.chg[basis];
 
 function setChrome(){
-  ['smpScore','smpShare'].forEach(id=>document.getElementById(id).style.display=isSample()?'':'none');
+  
   document.getElementById('customInputs').style.display = basis==='custom'?'':'none';
   document.getElementById('dFrom').value=from; document.getElementById('dTo').value=to;
   document.getElementById('rangeChip').textContent = rangeLabel(range());
@@ -320,7 +320,7 @@ document.getElementById('dFrom').addEventListener('change',e=>{from=e.target.val
 document.getElementById('dTo').addEventListener('change',e=>{to=e.target.value;saveFilter();renderAll();});
 if(window.ChartDataLabels) Chart.register(ChartDataLabels);
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
-try{renderAll();}catch(e){console.error('renderAll failed:',e);}
+try{renderAll();}catch(e){console.error("renderAll failed:",e);}
 }
 
 </script>
