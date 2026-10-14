@@ -88,7 +88,9 @@ main{width:100%;max-width:100%;margin:0;padding:26px 30px 60px;display:flex;flex
 .seg button:hover{color:var(--navy)}
 .seg button.active{background:var(--navy);color:#fff;box-shadow:0 2px 6px rgba(13,43,78,.3)}
 .seg button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-#customInputs{display:none;align-items:center;gap:.5rem;}
+/* Second-line custom range: full-width so it wraps below row 1, right-aligned
+   under the segmented control, with a little gap from the row above. */
+#customInputs{display:none;flex:0 0 100%;width:100%;align-items:center;justify-content:flex-end;gap:.5rem;margin-top:10px}
 #customInputs.on{display:flex}
 .dinp{padding:7px 10px;border:1px solid var(--line);border-radius:8px;font-size:16px;font-family:inherit;color:var(--ink);flex-shrink:0}
 .mini{font-size:15px;color:var(--muted);flex-shrink:0}
@@ -188,12 +190,6 @@ footer{font-size:.71875rem;color:var(--muted);text-align:center;padding:1.25rem}
     <h1>Farmer Milk Procurement Dashboard</h1>
     <div class="fbright">
       <span class="rangechip" id="rangeChip">—</span>
-      <span id="customInputs">
-        <input type="date" id="dFrom" class="dinp" aria-label="From date">
-        <span class="mini">to</span>
-        <input type="date" id="dTo" class="dinp" aria-label="To date">
-        <button type="button" id="applyRange" class="dbtn">Apply</button>
-      </span>
       <div class="seg" id="segBasis" role="group" aria-label="Reporting period">
         <button type="button" data-b="daily" class="active">Yesterday</button>
         <button type="button" data-b="weekly">Weekly</button>
@@ -201,6 +197,14 @@ footer{font-size:.71875rem;color:var(--muted);text-align:center;padding:1.25rem}
         <button type="button" data-b="custom">Custom</button>
       </div>
     </div>
+    <!-- Custom date range drops onto its own second line, right-aligned under
+         the segmented control. Only shown when Custom is active. -->
+    <span id="customInputs">
+      <input type="date" id="dFrom" class="dinp" aria-label="From date">
+      <span class="mini">to</span>
+      <input type="date" id="dTo" class="dinp" aria-label="To date">
+      <button type="button" id="applyRange" class="dbtn">Apply</button>
+    </span>
   </div>
 
   <!-- KPI row -->
@@ -568,13 +572,17 @@ document.getElementById('applyRange').addEventListener('click', () => {
   saveFilter();fetchLive();
 });
 
-// Header "Reporting period" badge — the current month name (e.g. "October
-// 2026"), mirroring union-summary.html's periodName label. Independent of the
-// Yesterday/Weekly/Monthly/Custom filter (that selection shows in the chip).
+// Header "Reporting period" badge — the LATEST data month in "MMM YY" form
+// (e.g. "Oct 26"), matching union-summary's logic (it shows the most recent
+// data period). Today's data is still arriving, so the latest full day is
+// yesterday; we take its month. Independent of the Yesterday/Weekly/Monthly/
+// Custom filter (that selection shows in the chip).
 function setReportingPeriod(){
   const el = document.getElementById('reportingPeriod');
   if(!el) return;
-  el.textContent = new Date().toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const d = new Date(); d.setDate(d.getDate() - 1);   // latest full day = yesterday
+  el.textContent = MON[d.getMonth()] + ' ' + String(d.getFullYear()).slice(2);
 }
 
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
