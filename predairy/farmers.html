@@ -267,6 +267,12 @@ const fmtN = n => Number(n).toLocaleString('en-IN', {maximumFractionDigits:1});
 const fmtI = n => Number(n).toLocaleString('en-IN', {maximumFractionDigits:0});
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const fmtLabel = iso => { const d = new Date(iso+'T00:00:00'); return `${d.getDate()} ${MON[d.getMonth()]} ${d.getFullYear()}`; };
+// Short form (no year) for a range start, matching union-summary's fmtDs so the
+// chip reads "7 Oct – 14 Oct 2026" (year only on the end), not both ends.
+const fmtLabelShort = iso => { const d = new Date(iso+'T00:00:00'); return `${d.getDate()} ${MON[d.getMonth()]}`; };
+// Chip label for a range: single day → full date; otherwise start(no year) –
+// end(with year) · N days. Mirrors union-summary.html exactly.
+const rangeChipLabel = (f,t,n) => (f===t ? fmtLabel(t) : fmtLabelShort(f)+' – '+fmtLabel(t)) + ' · ' + n + (n===1?' day':' days');
 const daysBetween = (a, b) =>
   Math.round((new Date(b+'T00:00:00') - new Date(a+'T00:00:00')) / 86400000) + 1;
 
@@ -293,7 +299,7 @@ function getDateRange(b) {
     const f = fmtDate(mon), t = fmtDate(end);
     const n = Math.round((new Date(t+'T00:00:00') - new Date(f+'T00:00:00'))/86400000) + 1;
     return { asOf:t, from:f, to:t, basis:srvBasis,
-             label:(f === t ? fmtLabel(t) : fmtLabel(f)+' – '+fmtLabel(t))+' · '+n+(n===1?' day':' days'),
+             label:rangeChipLabel(f,t,n),
              key:'weekly_'+f+'_'+t };
   }
   if (b === 'monthly') {
@@ -301,11 +307,12 @@ function getDateRange(b) {
     const first = new Date(today.getFullYear(), today.getMonth(), 1);
     const end = yday < first ? new Date(first) : yday;
     const from = fmtDate(first), t = fmtDate(end);
-    return { asOf:t, from, to:t, basis:srvBasis, label:today.toLocaleDateString('en-IN',{month:'long',year:'numeric'}), key:'monthly_'+from+'_'+t };
+    const n = daysBetween(from, t);
+    return { asOf:t, from, to:t, basis:srvBasis, label:rangeChipLabel(from,t,n), key:'monthly_'+from+'_'+t };
   }
   const f = fromCustom || fmtDate(today), t = toCustom || fmtDate(today);
   const n = daysBetween(f, t);
-  return { asOf:t, from:f, to:t, basis:srvBasis, label:fmtLabel(f)+' – '+fmtLabel(t)+' · '+n+(n===1?' day':' days'), key:'custom_'+f+'_'+t };
+  return { asOf:t, from:f, to:t, basis:srvBasis, label:rangeChipLabel(f,t,n), key:'custom_'+f+'_'+t };
 }
 
 // Full Monday–Sunday week that CONTAINS the given ISO date. Weeks are NOT
