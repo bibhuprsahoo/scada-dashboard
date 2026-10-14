@@ -110,7 +110,7 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
   <span id="customInputs" style="display:none">
     <input type="date" id="dFrom" class="dinp">
     <span class="mini">to</span>
-    <input type="date" id="dTo" class="dinp">
+    <input type="date" id="dTo" class="dinp"><button id="applyCustom" class="seg" style="padding:10px 24px;background:#0d2b4e;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-left:6px">Apply</button>
   </span>
   <div class="seg" id="segBasis">
     <button data-b="daily" class="active">Yesterday</button>
@@ -121,13 +121,13 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
 </div>
 <div class="grid kpis" id="kpiRow"></div>
 <div class="card">
-  <h3 class="ct">Taluk Scorecard <span class="sample" id="smpScore">Sample</span></h3>
+  <h3 class="ct">Taluk Scorecard</h3>
   <p class="cs" id="csScore"></p>
   <div style="overflow-x:auto"><table id="tblTaluk"></table></div>
 </div>
 <div class="sec">
   <div class="card">
-    <h3 class="ct">Share of Procurement — All Taluks <span class="sample" id="smpShare">Sample</span></h3>
+    <h3 class="ct">Share of Procurement — All Taluks</h3>
     <p class="cs" id="csShare"></p>
     <div style="display:flex;gap:32px;align-items:center">
       <div style="flex:0 0 480px;height:480px;position:relative;min-width:480px"><canvas id="chShare" style="width:480px!important;height:480px!important"></canvas></div>
@@ -139,7 +139,6 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
 
 </main>
 <footer>BAMUL — Bangalore Urban, Rural &amp; Ramanagara District Co-operative Milk Union Ltd. · Source: MPCS MIS Summary · Figures in litres unless stated</footer>
-<div id="loading-overlay" style="position:fixed;inset:0;background:#fff;display:none;align-items:center;justify-content:center;z-index:9999;font-family:system-ui"><div style="text-align:center"><div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top-color:#2f7fd0;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px"></div><div style="color:#64748b;font-size:14px">Loading procurement data...</div></div></div>
 <style>
 @keyframes spin{to{transform:rotate(360deg)}}</style>
 <script>
@@ -152,13 +151,9 @@ window.DD = null;
     if(!j || !j.success) throw new Error((j&&j.error)||'No data');
     window.DD = j.data;
   }catch(e){
-    const ol=document.getElementById('loading-overlay');
-    ol.style.display='flex';
-    ol.innerHTML = '<div style="text-align:center;color:#d64545;padding:40px"><b>Failed to load data</b><br><small>'+e.message+'</small></div>';
+    document.body.innerHTML = '<div style="color:#d64545;padding:40px;text-align:center;font-family:sans-serif"><b>Failed to load data</b><br><small>'+e.message+'</small></div>';
     return;
   }
-  document.getElementById('loading-overlay').style.display='none';
-  // Run the main script
   initPage();
 })();
 </script>
@@ -238,12 +233,12 @@ function rangeLabel(r){
   const a=W.dates[r.s], b=W.dates[r.e-1], n=r.e-r.s;
   return (a===b? fmtD(a) : fmtDs(a)+' – '+fmtD(b)) + ' · ' + n + (n===1?' day':' days');
 }
-const isSample = () => basis!=='monthly';
+const isSample = () => false;
 const nDays = r => r.e-r.s;
 const talukChg = t => basis==='monthly' ? pct(t.purchase[2]-t.purchase[1],t.purchase[1]) : t.chg[basis];
 
 function setChrome(){
-  ['smpScore','smpShare'].forEach(id=>document.getElementById(id).style.display=isSample()?'':'none');
+  
   document.getElementById('customInputs').style.display = basis==='custom'?'':'none';
   document.getElementById('dFrom').value=from; document.getElementById('dTo').value=to;
   document.getElementById('rangeChip').textContent = rangeLabel(range());
@@ -254,13 +249,13 @@ function renderKPIs(){
   const r=range(), n=nDays(r);
   const v = basis==='monthly'? U.purchase[2] : sum(W.dailyAll.slice(r.s,r.e));
   const p = basis==='monthly'? U.purchase[1] : (r.s-n>=0? sum(W.dailyAll.slice(r.s-n,r.s)) : null);
-  const smp = isSample()?' <span class="sample">Sample</span>':'';
+  const smp = "";
   const fat = basis==='monthly'? U.avgFat[2] : sum(W.fatAll.slice(r.s,r.e))/n;
   const snf = sum(W.snfAll.slice(r.s,r.e))/n;
   document.getElementById('kpiRow').innerHTML=[
    {l:'Total Purchase'+smp, v:fmt(v)+' Ltr', d:delta(v,p,false,'% vs prev period')},
    {l:'Average Fat'+smp, v:fat.toFixed(2)+' %', d:'<span class="nt">'+(n===1?'day value':'average over range')+'</span>'},
-   {l:'Average SNF <span class="sample">Sample</span>', v:snf.toFixed(2)+' %', d:'<span class="nt">'+(n===1?'day value':'average over range')+'</span>'},
+   {l:'Average SNF', v:snf.toFixed(2)+' %', d:'<span class="nt">'+(n===1?'day value':'average over range')+'</span>'},
    {l:'Local Sale'+smp, v:fmt(v*localR)+' Ltr', d:p?delta(v*localR,p*localR,false,'%'):'<span class="nt">—</span>'},
   ].map(k=>`<div class="card kpi"><div class="lbl">${k.l}</div><div class="val">${k.v}</div><div class="dl">${k.d}</div></div>`).join('');
 }
@@ -321,11 +316,12 @@ document.getElementById('segBasis').addEventListener('click',e=>{
   document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b===e.target));
   saveFilter();renderAll();
 });
-document.getElementById('dFrom').addEventListener('change',e=>{from=e.target.value;saveFilter();renderAll();});
-document.getElementById('dTo').addEventListener('change',e=>{to=e.target.value;saveFilter();renderAll();});
+document.getElementById('dFrom').addEventListener('change',e=>{from=e.target.value;});
+document.getElementById('dTo').addEventListener('change',e=>{to=e.target.value;});
+document.getElementById('applyCustom').addEventListener('click',()=>{saveFilter();renderAll();});
 if(window.ChartDataLabels) Chart.register(ChartDataLabels);
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
-try{renderAll();}catch(e){console.error('renderAll failed:',e);}
+try{renderAll();}catch(e){console.error("renderAll failed:",e);}
 }
 
 </script>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BAMUL Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:#f2f5f9;min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:linear-gradient(100deg,#0d2b4e,#16457c);color:#fff;padding:0 30px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 10px rgba(13,43,78,.25)}
+.brand{display:flex;align-items:center;gap:10px;padding:16px 0;font-weight:700;font-size:22px}
+.brand .ic{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:20px}
+main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:32px}
+h2{font-size:28px;font-weight:800;color:#0d2b4e;letter-spacing:-.4px;text-align:center}
+.toggle-wrap{display:flex;background:#e6ecf3;border-radius:14px;padding:4px;gap:4px}
+.toggle-btn{border:none;background:transparent;padding:14px 40px;border-radius:10px;font-size:18px;font-weight:700;color:#68788c;cursor:pointer;transition:.18s;white-space:nowrap}
+.toggle-btn.active{background:#0d2b4e;color:#fff;box-shadow:0 3px 10px rgba(13,43,78,.35)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:860px}
+.card{background:#fff;border:1px solid #e3e9f0;border-radius:16px;padding:28px 30px;box-shadow:0 1px 4px rgba(13,43,78,.07);display:flex;flex-direction:column;gap:10px;transition:.18s}
+.card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(13,43,78,.13)}
+.card a{text-decoration:none;color:inherit}
+.card .icon{font-size:32px}
+.card h3{font-size:20px;font-weight:800;color:#0d2b4e}
+.card p{font-size:14px;color:#68788c;line-height:1.5}
+.card .go{display:inline-block;margin-top:6px;font-size:14px;font-weight:700;color:#2f7fd0}
+.hidden{display:none}
+@media(max-width:600px){.cards{grid-template-columns:1fr}.toggle-btn{padding:12px 24px;font-size:16px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand"><div class="ic">🥛</div>BAMUL · Bangalore Dairy</div>
+</div>
+<main>
+  <h2>Select Dashboard</h2>
+  <div class="toggle-wrap">
+    <button class="toggle-btn active" onclick="show('pre')">🌾 Pre-Dairy</button>
+    <button class="toggle-btn" onclick="show('post')">🏭 Post-Dairy</button>
+  </div>
+  <a href="predairy-slideshow.html" style="display:inline-block;margin-top:8px;padding:10px 24px;background:#1a9e55;color:#fff;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none">▶ Auto Slideshow — Pre-Dairy (15s/page)</a>
+
+  <!-- Pre-Dairy cards -->
+  <div class="cards" id="pre">
+    <div class="card"><a href="predairy/index.html">
+      <div class="icon">📊</div>
+      <h3>Procurement Overview</h3>
+      <p>MPCS milk procurement — top gainers, decliners and daily trend.</p>
+      <span class="go">Open →</span>
+    </a></div>
+    <div class="card"><a href="predairy/union-summary.html">
+      <div class="icon">🗺️</div>
+      <h3>Union Summary</h3>
+      <p>District-level union procurement summary and comparisons.</p>
+      <span class="go">Open →</span>
+    </a></div>
+    <div class="card"><a href="predairy/procurement.html">
+      <div class="icon">📈</div>
+      <h3>Performance &amp; Trends</h3>
+      <p>Procurement performance metrics and historical trend analysis.</p>
+      <span class="go">Open →</span>
+    </a></div>
+    <div class="card"><a href="predairy/digital.html">
+      <div class="icon">💻</div>
+      <h3>Digital Transformation</h3>
+      <p>Digital adoption metrics across MPCS societies.</p>
+      <span class="go">Open →</span>
+    </a></div>
+    <div class="card"><a href="predairy/farmers.html">
+      <div class="icon">👨‍🌾</div>
+      <h3>Farmer Engagement</h3>
+      <p>Farmer registration, active members and engagement stats.</p>
+      <span class="go">Open →</span>
+    </a></div>
+    <div class="card"><a href="predairy/risk.html">
+      <div class="icon">⚠️</div>
+      <h3>Risk Dashboard</h3>
+      <p>Procurement risk indicators and early-warning signals.</p>
+      <span class="go">Open →</span>
+    </a></div>
+  </div>
+
+  <!-- Post-Dairy cards -->
+  <div class="cards hidden" id="post">
+    <div class="card"><a href="bangalore-dairy-dashboard.html">
+      <div class="icon">🏭</div>
+      <h3>Plant Flow</h3>
+      <p>End-to-end milk flow — weigh bridge, RMST, PMST, HMST and dispatch.</p>
+      <span class="go">Open →</span>
+    </a></div>
+    <div class="card"><a href="milk-movement.html">
+      <div class="icon">🚛</div>
+      <h3>Milk Movement</h3>
+      <p>Inbound and outbound milk movement summary and trends.</p>
+      <span class="go">Open →</span>
+    </a></div>
+    <div class="card"><a href="milk-usage-products.html">
+      <div class="icon">🧴</div>
+      <h3>Milk Products</h3>
+      <p>Product-wise milk usage and production output.</p>
+      <span class="go">Open →</span>
+    </a></div>
+    <div class="card"><a href="milk-dispatch-details.html">
+      <div class="icon">📦</div>
+      <h3>Dispatch Details</h3>
+      <p>Truck-wise milk dispatch to product block, NMP and other unions.</p>
+      <span class="go">Open →</span>
+    </a></div>
+    <div class="card"><a href="procurement-network.html">
+      <div class="icon">🔗</div>
+      <h3>Procurement Network</h3>
+      <p>Supply chain network view of procurement routes.</p>
+      <span class="go">Open →</span>
+    </a></div>
+    <div class="card"><a href="weigh-bridge-receipts.html">
+      <div class="icon">⚖️</div>
+      <h3>Weigh Bridge</h3>
+      <p>Truck-wise weigh bridge receipts and milk quality data.</p>
+      <span class="go">Open →</span>
+    </a></div>
+  </div>
+</main>
+
+<script>
+function show(tab) {
+  document.getElementById('pre').classList.toggle('hidden', tab !== 'pre');
+  document.getElementById('post').classList.toggle('hidden', tab !== 'post');
+  document.querySelectorAll('.toggle-btn').forEach((b, i) =>
+    b.classList.toggle('active', (i === 0 && tab === 'pre') || (i === 1 && tab === 'post'))
+  );
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BAMUL Pre-Dairy Slideshow</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{margin:0;overflow:hidden;background:#fff}
+#progressBar{position:fixed;top:0;left:0;height:3px;background:#7db4e8;width:0%;z-index:9999;transition:width .1s linear}
+#overlay{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:100;transition:opacity .4s ease}
+.frame-wrap{position:fixed;inset:0}
+iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+iframe.hidden{display:none}
+</style>
+</head>
+<body>
+
+
+
+<div id="progressBar"></div>
+<div id="overlay"></div>
+<div class="frame-wrap" id="frameWrap"></div>
+
+<script>
+const BASE = 'http://129.159.231.57:8080';
+const PAGES = [
+  { label: 'Union Summary',          src: BASE + '/predairy/union-summary.html' },
+  { label: 'Procurement Overview',   src: BASE + '/predairy/index.html' },
+  { label: 'Performance & Trends',   src: BASE + '/predairy/procurement.html' },
+  { label: 'Digital Transformation', src: BASE + '/predairy/digital.html' },
+  { label: 'Farmer Engagement',      src: BASE + '/predairy/farmers.html' },
+  { label: 'Risk Dashboard',         src: BASE + '/predairy/risk.html' },
+];
+
+// Force monthly filter for all predairy pages via localStorage on the target origin
+try { localStorage.setItem('predairy_filter', JSON.stringify({basis:'monthly'})); } catch(e) {}
+
+const DURATION = 15000; // 15 seconds
+
+let current = 0;
+let paused = false;
+let startTime = null;
+let elapsed = 0;
+let rafId = null;
+
+// Build iframes (all pre-loaded)
+const wrap = document.getElementById('frameWrap');
+const frames = PAGES.map((p, i) => {
+  const f = document.createElement('iframe');
+  f.src = p.src;
+  f.className = i === 0 ? '' : 'hidden';
+  wrap.appendChild(f);
+  return f;
+});
+
+const overlay = document.getElementById('overlay');
+
+function goTo(idx) {
+  cancelAnimationFrame(rafId);
+  const prev = current;
+  current = (idx + PAGES.length) % PAGES.length;
+  // fade to white
+  overlay.style.opacity = '1';
+  setTimeout(() => {
+    frames[prev].className = 'hidden';
+    frames[current].className = '';
+    // fade back from white
+    overlay.style.opacity = '0';
+  }, 400);
+  elapsed = 0;
+  startTime = performance.now();
+  updateBar(0);
+  tick();
+}
+
+function step(dir) { goTo(current + dir); }
+
+function togglePause() {
+  paused = !paused;
+  const btn = document.getElementById('pauseBtn');
+  if (paused) {
+    elapsed += performance.now() - (startTime || performance.now());
+    startTime = null;
+    btn.textContent = '▶ Resume';
+    cancelAnimationFrame(rafId);
+  } else {
+    startTime = performance.now();
+    btn.textContent = '⏸ Pause';
+    tick();
+  }
+}
+
+function tick() {
+  if (paused) return;
+  const now = performance.now();
+  const total = elapsed + (now - startTime);
+  const pct = Math.min(total / DURATION, 1);
+  if (total >= DURATION) {
+    goTo(current + 1);
+  } else {
+    updateBar(pct);
+    rafId = requestAnimationFrame(tick);
+  }
+}
+
+const bar = document.getElementById('progressBar');
+function updateBar(pct) { bar.style.width = (pct * 100) + '%'; }
+
+startTime = performance.now();
+tick();
+</script>
+</body>
+</html>
