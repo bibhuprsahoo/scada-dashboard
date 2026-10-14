@@ -30,6 +30,8 @@ main{max-width:100%;width:100%;margin:0;padding:26px 30px 60px}
 .ph{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 18px;box-shadow:0 1px 3px rgba(13,43,78,.06)}
 .ph h2{font-size:24px;font-weight:800;color:var(--navy);letter-spacing:-.4px;margin:0}
 .ph .rangechip{margin-left:auto}
+/* Custom range sits on its own second line, right-aligned under the seg. */
+.ph #customInputs{flex:0 0 100%;width:100%;align-items:center;justify-content:flex-end;gap:6px;margin-top:10px}
 .rangechip{font-size:16px;font-weight:700;color:var(--navy);background:#e8f1fb;border:1px solid #c9ddf2;border-radius:20px;padding:7px 16px}
 .seg{display:inline-flex;background:#e6ecf3;border-radius:10px;padding:3px;gap:2px}
 .seg button{border:none;background:transparent;padding:8px 18px;border-radius:8px;font-size:17px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s}
@@ -78,17 +80,19 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
   <div class="ph">
     <h2>MPCS Milk Procurement Overview</h2>
     <span class="rangechip" id="rangeChip"></span>
-    <span id="customInputs" style="display:none;gap:6px;align-items:center">
-      <input type="date" id="dFrom" class="dinp">
-      <span class="mini">to</span>
-      <input type="date" id="dTo" class="dinp"><button id="applyCustom" class="seg" style="padding:10px 24px;background:#0d2b4e;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-left:6px">Apply</button>
-    </span>
     <div class="seg" id="segBasis">
       <button data-b="daily">Yesterday</button>
       <button data-b="weekly">Weekly</button>
       <button data-b="monthly" class="active">Monthly</button>
       <button data-b="custom">Custom</button>
     </div>
+    <!-- Custom date range drops onto its own second line, right-aligned under
+         the segmented control. Only shown when Custom is active. -->
+    <span id="customInputs" style="display:none">
+      <input type="date" id="dFrom" class="dinp">
+      <span class="mini">to</span>
+      <input type="date" id="dTo" class="dinp"><button id="applyCustom" class="seg" style="padding:10px 24px;background:#0d2b4e;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-left:6px">Apply</button>
+    </span>
   </div>
 
   <div class="kpis" id="kpiRow"></div>
@@ -182,7 +186,7 @@ function rangeLabel(r){
 }
 
 function setChrome(){
-  document.getElementById('customInputs').style.display=basis==='custom'?'flex':'none';
+  document.getElementById('customInputs').style.display=basis==='custom'?'flex':'none';/*custom-row*/
   document.getElementById('dFrom').value=from;document.getElementById('dTo').value=to;
   document.getElementById('rangeChip').textContent=rangeLabel(range());
 }
