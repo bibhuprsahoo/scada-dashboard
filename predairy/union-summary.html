@@ -331,6 +331,7 @@ function render(){
   const _df=document.getElementById('dFrom'); if(_df) _df.value=from;
   const _dt=document.getElementById('dTo'); if(_dt) _dt.value=to;
   const _rc=document.getElementById('rangeChip'); if(_rc) _rc.textContent = rangeLabel(r);
+  const _rp=document.getElementById('reportingPeriod'); if(_rp) _rp.textContent = rangeLabel(r);
   const _ss=document.getElementById('smpSum'); if(_ss) _ss.style.display = basis==='monthly'?'none':'';
 
   const share = basis==='monthly' ? 1 : sum(W.dailyAll.slice(r.s,r.e))/U.purchase[2];

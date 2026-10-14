@@ -189,6 +189,7 @@ function setChrome(){
   document.getElementById('customInputs').style.display=basis==='custom'?'flex':'none';/*custom-row*/
   document.getElementById('dFrom').value=from;document.getElementById('dTo').value=to;
   document.getElementById('rangeChip').textContent=rangeLabel(range());
+  document.getElementById('reportingPeriod').textContent=rangeLabel(range());
 }
 
 function delta(cur,prv,prevLabel){
