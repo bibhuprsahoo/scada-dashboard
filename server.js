@@ -45,7 +45,7 @@ function dateCond(field, filter, start, end, startTime, endTime, dateOnly = fals
         if (filter === 'today')     return `CAST(${field} AS DATE) = CAST(${NOW} AS DATE)`;
         if (filter === 'yesterday') return `CAST(${field} AS DATE) = CAST(DATEADD(DAY,-1,${NOW}) AS DATE)`;
         if (filter === 'week')      return `CAST(${field} AS DATE) >= CAST(DATEADD(DAY,1-DATEPART(WEEKDAY,${NOW}),${NOW}) AS DATE) AND CAST(${field} AS DATE) <= CAST(${NOW} AS DATE)`;
-        if (filter === 'month')     return `CAST(${field} AS DATE) >= DATEFROMPARTS(YEAR(${NOW}),MONTH(${NOW}),1) AND CAST(${field} AS DATE) <= CAST(${NOW} AS DATE)`;
+        if (filter === 'month')     return `CAST(${field} AS DATE) >= DATEFROMPARTS(YEAR(${NOW}),MONTH(${NOW}),1) AND CAST(${field} AS DATE) <= CAST(DATEADD(DAY,-1,${NOW}) AS DATE)`;
         if (filter === 'custom' && start && end) return `CAST(${field} AS DATE) >= '${start}' AND CAST(${field} AS DATE) <= '${end}'`;
         return `CAST(${field} AS DATE) >= DATEFROMPARTS(YEAR(${NOW}),MONTH(${NOW}),1) AND CAST(${field} AS DATE) <= CAST(${NOW} AS DATE)`;
     }
