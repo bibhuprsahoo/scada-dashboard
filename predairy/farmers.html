@@ -390,6 +390,7 @@ function renderData(live, range, prev, prevLoading) {
   const k = live.kpis;
   const pk = prev ? prev.kpis : null;
   document.getElementById('rangeChip').textContent = range.label;
+  document.getElementById('reportingPeriod').textContent = range.label;
 
   // While the previous-period comparison is still being fetched, show a
   // "comparing…" placeholder in the delta slot instead of the fallback text,
@@ -442,6 +443,7 @@ const KPI_LABELS = ['Total Farmer App Users','Secretary App Users','Total Number
 
 function showLoading(range) {
   document.getElementById('rangeChip').textContent = range.label;
+  document.getElementById('reportingPeriod').textContent = range.label;
   document.getElementById('kpiRow').innerHTML =
     kpiCards(KPI_LABELS.map(l => ({ l, v:'—', d:'loading…', empty:true })));
   document.getElementById('bodyTopP').innerHTML = '<tr><td class="tmsg" colspan="7">loading…</td></tr>';
@@ -590,9 +592,7 @@ document.getElementById('applyRange').addEventListener('click', () => {
 function setReportingPeriod(){
   const el = document.getElementById('reportingPeriod');
   if(!el) return;
-  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const d = new Date(); d.setDate(d.getDate() - 1);   // latest full day = yesterday
-  el.textContent = MON[d.getMonth()] + ' ' + String(d.getFullYear()).slice(2);
+  el.textContent = getDateRange().label;
 }
 
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));

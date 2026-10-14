@@ -435,9 +435,7 @@ function renderData(live, range, prev, prevLoading) {
   const u = live.union;
   const p = prev ? prev.union : null;
   document.getElementById('rangeChip').textContent = range.label;
-
-  // While the previous-period comparison is still being fetched, show a
-  // "comparing…" placeholder in the delta slot instead of the fallback text,
+  document.getElementById('pbadgeTxt').textContent = range.label;
   // so the value doesn't visibly swap once the second request lands.
   const spin = '<span class="nt">comparing…</span>';
   document.getElementById('kpiRow').innerHTML = kpiCards([
@@ -602,6 +600,7 @@ function tablePlaceholder(msg) {
 
 function showLoading(range) {
   document.getElementById('rangeChip').textContent = range.label;
+  document.getElementById('pbadgeTxt').textContent = range.label;
   document.getElementById('kpiRow').innerHTML =
     kpiCards(KPI_LABELS.map(l => ({ l, v:'—', d:'loading…', empty:true })));
   tablePlaceholder('loading…');
@@ -744,13 +743,10 @@ document.getElementById('applyRange').addEventListener('click', () => {
 // (e.g. "Oct 26"), matching union-summary's logic (it shows the most recent
 // data period). Today's data is still arriving, so the latest full day is
 // yesterday; we take its month. Independent of the Yesterday/Weekly/Monthly/
-// Custom filter (that selection shows in the chip).
 function setReportingPeriod(){
   const el = document.getElementById('pbadgeTxt');
   if(!el) return;
-  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const d = new Date(); d.setDate(d.getDate() - 1);   // latest full day = yesterday
-  el.textContent = MON[d.getMonth()] + ' ' + String(d.getFullYear()).slice(2);
+  el.textContent = getDateRange().label;
 }
 
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
