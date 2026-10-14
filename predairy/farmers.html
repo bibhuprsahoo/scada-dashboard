@@ -94,7 +94,7 @@ main{width:100%;max-width:100%;margin:0;padding:26px 30px 60px;display:flex;flex
 #customInputs.on{display:flex}
 .dinp{padding:7px 10px;border:1px solid var(--line);border-radius:8px;font-size:16px;font-family:inherit;color:var(--ink);flex-shrink:0}
 .mini{font-size:15px;color:var(--muted);flex-shrink:0}
-.dbtn{padding:8px 18px;border:none;border-radius:8px;background:var(--navy);color:#fff;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;flex-shrink:0}
+.dbtn{padding:10px 24px;border:none;border-radius:8px;background:#0d2b4e;color:#fff;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;flex-shrink:0}
 .dbtn:hover{background:#16457c}
 .dbtn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 
@@ -547,6 +547,9 @@ document.getElementById('segBasis').addEventListener('click', e => {
     document.getElementById('dFrom').value = fromCustom;
     document.getElementById('dTo').value = toCustom;
     constrainCustom();
+    // Persist basis='custom' immediately so it carries to the other pages even
+    // before Apply is pressed.
+    saveFilter();
     if (lastCustomFrom && lastCustomTo) fetchLive();
     return;
   }
@@ -586,7 +589,14 @@ function setReportingPeriod(){
 }
 
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
-if(basis==='custom'){document.getElementById('customInputs').classList.add('on');}
+if(basis==='custom'){
+  // Restore the custom row AND prefill the date inputs from the persisted range
+  // (the click handler does this, but on first load that handler never ran).
+  document.getElementById('customInputs').classList.add('on');
+  if(fromCustom) document.getElementById('dFrom').value = fromCustom;
+  if(toCustom)   document.getElementById('dTo').value = toCustom;
+  constrainCustom();
+}
 setReportingPeriod();
 showEmpty();
 loadCustomWindow();
