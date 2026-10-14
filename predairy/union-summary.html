@@ -350,10 +350,10 @@ function render(){
   // Per-row value for a given column. Daily-backed rows scale the monthly figure by
   // the column window's share of purchase; fat/snf use their own daily averages.
   // Rows without a daily source return null (→ N/A) in day/week columns.
-  const DAILY_OK = new Set(['purchase','measurements','autoWeightQty','manualWeightQty','netPurchase']);
+  const DAILY_OK = new Set(['purchase','measurements','autoWeightQty','manualWeightQty','netPurchase','localSale']);
   function colVal(row, c){
     const v=U[row.k];
-    if(!daily){ return v ? v[c.monthIdx] : null; }         // monthly/custom → API month value
+    if(!daily){ return v ? (v[c.monthIdx] ?? 0) : null; }         // monthly/custom → API month value
     if(row.avg){ // fat → real daily average over the window
       const w=W.fatAll.slice(c.s,c.e).filter(x=>x>0);
       return w.length? sum(w)/w.length : null;
@@ -369,7 +369,7 @@ function render(){
       const monthVal=(U[row.k]?U[row.k][2]:0)||0;
       return monthQty? monthVal*(winQty/monthQty) : null;
     }
-    return null; // localSale, sampleMilk → no daily source
+    return null;
   }
 
   // Build the change markup (arrow + %) for the two most recent shown columns.
@@ -402,7 +402,7 @@ function render(){
     let selVal=null, selTxt='N/A', selNA=true;
     if(row.cum){ selVal = row.k==='farmerApp' ? W.farmerAppCum[r.e-1] : W.secAppCum[r.e-1]; selTxt=fmtL(selVal); selNA=false; }
     else if(row.avg){ selVal = basis==='monthly'? v[2] : sum(W.fatAll.slice(r.s,r.e))/n; selTxt=selVal.toFixed(2); selNA=false; }
-    else if(basis==='monthly'){ selVal = v[2]; selTxt=fmtL(selVal); selNA=false; }
+    else if(basis==='monthly'){ selVal = v[2]??0; selTxt=fmtL(selVal); selNA=false; }
     else if(DAILY_OK.has(row.k)){ selVal = v[2]*share; selTxt=fmtL(selVal); selNA=false; }
     // else: no daily source on a sub-monthly view → N/A (selVal stays null)
 
