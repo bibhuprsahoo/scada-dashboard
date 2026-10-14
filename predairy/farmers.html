@@ -71,31 +71,28 @@ body{background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
 /* ── page shell ──────────────────────────────────────────────────────────── */
 /* Full-width, no centered max-width cap — matches union-summary.html so the
    content uses the whole screen instead of sitting in a narrow column. */
-main{width:100%;max-width:100%;margin:0;padding:1.25rem 1.875rem 2.5rem;display:flex;flex-direction:column;gap:1rem}
+main{width:100%;max-width:100%;margin:0;padding:26px 30px 60px;display:flex;flex-direction:column;gap:16px}
 
 /* ── filter bar (design: title left, chip + segmented control right) ─────── */
 /* Row 1: title on the left, range chip + segmented control on the right.
    Row 2 (only when Custom is active): the date pickers, right-aligned so they
    sit directly beneath the Monthly / Custom buttons. The title keeps its own
    line intact because .fbright never wraps internally. */
-.filterbar{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--sh-card);
-  padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
-.filterbar h1{font-size:1rem;font-weight:800;color:var(--navy);line-height:1.5;letter-spacing:-.2px;
-  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fbright{display:flex;align-items:center;gap:.75rem;flex-wrap:nowrap;flex-shrink:0}
-.rangechip{font-size:.75rem;font-weight:700;color:var(--navy);background:var(--chip-bg);border:1px solid var(--chip-bd);border-radius:var(--r-pill);padding:.3rem .75rem;white-space:nowrap}
-.seg{display:inline-flex;background:var(--seg-bg);border-radius:var(--r-seg);padding:3px}
-.seg button{border:none;background:transparent;padding:.35rem .75rem;border-radius:var(--r-segbtn);font-size:.8125rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s;font-family:inherit}
+/* Title + filter row — sized to match union-summary/procurement/index. */
+.filterbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 18px;box-shadow:0 1px 3px rgba(13,43,78,.06)}
+.filterbar h1{font-size:24px;font-weight:800;color:var(--navy);letter-spacing:-.4px;margin:0;line-height:1.2}
+.fbright{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-left:auto}
+.rangechip{font-size:16px;font-weight:700;color:var(--navy);background:var(--chip-bg);border:1px solid var(--chip-bd);border-radius:20px;padding:7px 16px;white-space:nowrap}
+.seg{display:inline-flex;background:var(--seg-bg);border-radius:10px;padding:3px}
+.seg button{border:none;background:transparent;padding:8px 18px;border-radius:8px;font-size:17px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s;font-family:inherit}
 .seg button:hover{color:var(--navy)}
-.seg button.active{background:var(--navy);color:#fff;box-shadow:var(--sh-active)}
+.seg button.active{background:var(--navy);color:#fff;box-shadow:0 2px 6px rgba(13,43,78,.3)}
 .seg button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-/* Full-width flex item, so it always lands on its own line below row 1.
-   justify-content:flex-end aligns it with the segmented control above. */
 #customInputs{display:none;align-items:center;gap:.5rem;}
 #customInputs.on{display:flex}
-.dinp{padding:.3rem .5rem;border:1px solid var(--line);border-radius:var(--r-segbtn);font-size:.8125rem;font-family:inherit;color:var(--ink);flex-shrink:0}
-.mini{font-size:.9375rem;color:var(--muted);flex-shrink:0}
-.dbtn{padding:.3rem .75rem;border:none;border-radius:var(--r-segbtn);background:var(--navy);color:#fff;font-size:.75rem;font-weight:700;font-family:inherit;cursor:pointer;flex-shrink:0}
+.dinp{padding:7px 10px;border:1px solid var(--line);border-radius:8px;font-size:16px;font-family:inherit;color:var(--ink);flex-shrink:0}
+.mini{font-size:15px;color:var(--muted);flex-shrink:0}
+.dbtn{padding:8px 18px;border:none;border-radius:8px;background:var(--navy);color:#fff;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;flex-shrink:0}
 .dbtn:hover{background:#16457c}
 .dbtn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 
@@ -381,7 +378,6 @@ function kpiCards(items) {
 function renderData(live, range, prev, prevLoading) {
   const k = live.kpis;
   const pk = prev ? prev.kpis : null;
-  document.getElementById('reportingPeriod').textContent = range.label;
   document.getElementById('rangeChip').textContent = range.label;
 
   // While the previous-period comparison is still being fetched, show a
@@ -435,7 +431,6 @@ const KPI_LABELS = ['Total Farmer App Users','Secretary App Users','Total Number
 
 function showLoading(range) {
   document.getElementById('rangeChip').textContent = range.label;
-  document.getElementById('reportingPeriod').textContent = range.label;
   document.getElementById('kpiRow').innerHTML =
     kpiCards(KPI_LABELS.map(l => ({ l, v:'—', d:'loading…', empty:true })));
   document.getElementById('bodyTopP').innerHTML = '<tr><td class="tmsg" colspan="7">loading…</td></tr>';
@@ -573,8 +568,18 @@ document.getElementById('applyRange').addEventListener('click', () => {
   saveFilter();fetchLive();
 });
 
+// Header "Reporting period" badge — the current month name (e.g. "October
+// 2026"), mirroring union-summary.html's periodName label. Independent of the
+// Yesterday/Weekly/Monthly/Custom filter (that selection shows in the chip).
+function setReportingPeriod(){
+  const el = document.getElementById('reportingPeriod');
+  if(!el) return;
+  el.textContent = new Date().toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+}
+
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
 if(basis==='custom'){document.getElementById('customInputs').classList.add('on');}
+setReportingPeriod();
 showEmpty();
 loadCustomWindow();
 fetchLive().then(() => prefetch());
