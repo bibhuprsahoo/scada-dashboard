@@ -121,13 +121,13 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
 </div>
 <div class="grid kpis" id="kpiRow"></div>
 <div class="card">
-  <h3 class="ct">Taluk Scorecard <span class="sample" id="smpScore">Sample</span></h3>
+  <h3 class="ct">Taluk Scorecard</h3>
   <p class="cs" id="csScore"></p>
   <div style="overflow-x:auto"><table id="tblTaluk"></table></div>
 </div>
 <div class="sec">
   <div class="card">
-    <h3 class="ct">Share of Procurement — All Taluks <span class="sample" id="smpShare">Sample</span></h3>
+    <h3 class="ct">Share of Procurement — All Taluks</h3>
     <p class="cs" id="csShare"></p>
     <div style="display:flex;gap:32px;align-items:center">
       <div style="flex:0 0 480px;height:480px;position:relative;min-width:480px"><canvas id="chShare" style="width:480px!important;height:480px!important"></canvas></div>
@@ -238,7 +238,7 @@ function rangeLabel(r){
   const a=W.dates[r.s], b=W.dates[r.e-1], n=r.e-r.s;
   return (a===b? fmtD(a) : fmtDs(a)+' – '+fmtD(b)) + ' · ' + n + (n===1?' day':' days');
 }
-const isSample = () => basis!=='monthly';
+const isSample = () => false;
 const nDays = r => r.e-r.s;
 const talukChg = t => basis==='monthly' ? pct(t.purchase[2]-t.purchase[1],t.purchase[1]) : t.chg[basis];
 
@@ -254,13 +254,13 @@ function renderKPIs(){
   const r=range(), n=nDays(r);
   const v = basis==='monthly'? U.purchase[2] : sum(W.dailyAll.slice(r.s,r.e));
   const p = basis==='monthly'? U.purchase[1] : (r.s-n>=0? sum(W.dailyAll.slice(r.s-n,r.s)) : null);
-  const smp = isSample()?' <span class="sample">Sample</span>':'';
+  const smp = "";
   const fat = basis==='monthly'? U.avgFat[2] : sum(W.fatAll.slice(r.s,r.e))/n;
   const snf = sum(W.snfAll.slice(r.s,r.e))/n;
   document.getElementById('kpiRow').innerHTML=[
    {l:'Total Purchase'+smp, v:fmt(v)+' Ltr', d:delta(v,p,false,'% vs prev period')},
    {l:'Average Fat'+smp, v:fat.toFixed(2)+' %', d:'<span class="nt">'+(n===1?'day value':'average over range')+'</span>'},
-   {l:'Average SNF <span class="sample">Sample</span>', v:snf.toFixed(2)+' %', d:'<span class="nt">'+(n===1?'day value':'average over range')+'</span>'},
+   {l:'Average SNF', v:snf.toFixed(2)+' %', d:'<span class="nt">'+(n===1?'day value':'average over range')+'</span>'},
    {l:'Local Sale'+smp, v:fmt(v*localR)+' Ltr', d:p?delta(v*localR,p*localR,false,'%'):'<span class="nt">—</span>'},
   ].map(k=>`<div class="card kpi"><div class="lbl">${k.l}</div><div class="val">${k.v}</div><div class="dl">${k.d}</div></div>`).join('');
 }
