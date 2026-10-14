@@ -81,7 +81,7 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
     <span id="customInputs" style="display:none;gap:6px;align-items:center">
       <input type="date" id="dFrom" class="dinp">
       <span class="mini">to</span>
-      <input type="date" id="dTo" class="dinp">
+      <input type="date" id="dTo" class="dinp"><button id="applyCustom" class="seg" style="padding:6px 16px;background:#0d2b4e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;margin-left:4px">Apply</button>
     </span>
     <div class="seg" id="segBasis">
       <button data-b="daily">Yesterday</button>
@@ -171,7 +171,7 @@ function range(){
     let s=W.dates.indexOf(monStr); if(s<0)s=Math.max(0,last-6);
     return{s,e:last+1};
   }
-  if(basis==='monthly')return{s:W.monthStarts[2],e:DAYS};
+  if(basis==='monthly'){let last=DAYS-1;while(last>0&&W.dailyAll[last]===0)last--;return{s:W.monthStarts[2],e:last+1};}//
   let s=W.dates.indexOf(from),e=W.dates.indexOf(to)+1;
   if(s<0)s=0;if(e<=0)e=DAYS;if(e<=s){const t=s;s=e-1;e=t+1;}
   return{s,e};
@@ -299,8 +299,9 @@ document.getElementById('segBasis').addEventListener('click',e=>{
   document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b===e.target));
   saveFilter();renderAll();
 });
-document.getElementById('dFrom').addEventListener('change',e=>{from=e.target.value;saveFilter();renderAll();});
-document.getElementById('dTo').addEventListener('change',e=>{to=e.target.value;saveFilter();renderAll();});
+document.getElementById('dFrom').addEventListener('change',e=>{from=e.target.value;});
+document.getElementById('dTo').addEventListener('change',e=>{to=e.target.value;});
+document.getElementById('applyCustom').addEventListener('click',()=>{saveFilter();renderAll();});
 // restore active button
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
 renderAll();
