@@ -1122,15 +1122,23 @@ async function pdFarmersAll(fromDate, toDate) {
        LEFT JOIN tbl_dcs d           ON d.dcs_code = t.dcs_code
        LEFT JOIN tbl_sub_districts s ON s.sub_district_code = d.sub_district_code
        ORDER BY t.total_qty DESC`, [fromDate, toExcl])),
+    // Top fat pourers from actual collections (tbl_milk_collection by
+    // collection_date), quantity-weighted fat. Aggregate first, then join names.
     cached(`topfat_${fromDate}_${toDate}`, ttl, () => pdQ(
-      `SELECT m.member_name, d.dcs_name, s.sub_district_name AS taluk, t.avg_fat, t.total_qty
-       FROM (SELECT member_code, dcs_code, ROUND(AVG(avg_fat),2) AS avg_fat, ROUND(SUM(milk_qty),1) AS total_qty
-             FROM tbl_farmer_bill WHERE created_at >= ? AND created_at < ? AND milk_qty > 50
-             GROUP BY member_code, dcs_code ORDER BY avg_fat DESC LIMIT 40) t
-       JOIN tbl_member m ON m.member_code=t.member_code AND m.is_delete=0
-       JOIN tbl_dcs d ON d.dcs_code=t.dcs_code
-       JOIN tbl_sub_districts s ON s.sub_district_code=d.sub_district_code
-       ORDER BY t.avg_fat DESC LIMIT 10`, [fromDate, toExcl])),
+      `SELECT m.member_name, d.dcs_name, s.sub_district_name AS taluk, t.avg_fat, t.total_qty, t.pours
+       FROM (SELECT member_code, dcs_code,
+                    ROUND(SUM(fat*quantity)/NULLIF(SUM(quantity),0),2) AS avg_fat,
+                    ROUND(SUM(quantity),1)                             AS total_qty,
+                    COUNT(*)                                           AS pours
+             FROM tbl_milk_collection
+             WHERE collection_date >= ? AND collection_date < ? AND is_delete = 0 AND fat > 0
+             GROUP BY member_code, dcs_code
+             ORDER BY avg_fat DESC, total_qty DESC
+             LIMIT 10) t
+       LEFT JOIN tbl_member m        ON m.member_code = t.member_code AND m.is_delete = 0
+       LEFT JOIN tbl_dcs d           ON d.dcs_code = t.dcs_code
+       LEFT JOIN tbl_sub_districts s ON s.sub_district_code = d.sub_district_code
+       ORDER BY t.avg_fat DESC, t.total_qty DESC`, [fromDate, toExcl])),
   ]);
   const num = v => Number(v) || 0;
   return {
