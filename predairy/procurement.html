@@ -96,6 +96,12 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
 .rangechip{font-size:16px;font-weight:700;color:var(--navy);background:#e8f1fb;border:1px solid #c9ddf2;border-radius:20px;padding:7px 16px}
 .dinp{padding:7px 10px;border:1px solid var(--line);border-radius:8px;font-size:16px;font-family:inherit;color:var(--ink)}
 .sample{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10.5px;font-weight:800;letter-spacing:.5px;background:#fdf1dc;color:#a36508;text-transform:uppercase;vertical-align:middle;margin-left:8px}
+iframe .topbar, .topbar{}
+@media all{:root:not(:only-child) .topbar{display:none!important}}
+/* hide topbar when displayed in iframe slideshow */
+:root:not(:only-child) .topbar{display:none!important}
+/* hide topbar in iframe slideshow */
+:root:not(:only-child) .topbar{display:none!important}
 </style>
 </head>
 <body>
@@ -144,7 +150,9 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
 </main>
 <footer>BAMUL — Bangalore Urban, Rural &amp; Ramanagara District Co-operative Milk Union Ltd. · Source: MPCS MIS Summary · Figures in litres unless stated</footer>
 <style>
-@keyframes spin{to{transform:rotate(360deg)}}</style>
+@keyframes spin{to{transform:rotate(360deg)}}iframe .topbar, .topbar{}
+@media all{:root:not(:only-child) .topbar{display:none!important}}
+</style>
 <script>
 window.DD = null;
 (async function(){
