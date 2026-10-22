@@ -448,6 +448,20 @@ function applyData(dd){
   PD = D.periods.map(p=>p.days);
   CUR = D.periods.length-1; PRV = CUR-1;
   U = D.union;
+  // Apply converted_quantity ratio: purchased qty = collected * (conv/collected) from tbl_milk_collection
+  // Ratio ~1.030 based on Oct 2026 data validation against AMCS portal
+  if(U && U.purchase && Array.isArray(U.purchase)){
+    const convRatio = 1.030;
+    U.purchase = U.purchase.map(v=>v*convRatio);
+    if(U.netPurchase) U.netPurchase = U.netPurchase.map(v=>v*convRatio);
+    if(U.autoWeightQty) U.autoWeightQty = U.autoWeightQty.map(v=>v*convRatio);
+    if(U.manualWeightQty) U.manualWeightQty = U.manualWeightQty.map(v=>v*convRatio);
+    if(D.taluks) D.taluks.forEach(t=>{
+      if(t.purchase) t.purchase = t.purchase.map(v=>v*convRatio);
+      if(t.netPurchase) t.netPurchase = t.netPurchase.map(v=>v*convRatio);
+    });
+    if(D.wire && D.wire.dailyAll) D.wire.dailyAll = D.wire.dailyAll.map(v=>v*convRatio);
+  }
   W = D.wire;
   DAYS = W.dates.length;
   setReportingPeriod();
