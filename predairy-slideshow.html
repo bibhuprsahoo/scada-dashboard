@@ -61,6 +61,24 @@ fetch(FRAPPE + '/api/method/login', {
 }).catch(()=>{}).finally(() => {
   ifA.src = PAGES[0];
   ifB.src = PAGES[1];
+  // After Frappe iframe loads, auto-click Bangalore and Yesterday
+  ifA.onload = () => {
+    if (ifA.src.includes('trycloudflare.com')) {
+      setTimeout(() => {
+        try {
+          const doc = ifA.contentDocument;
+          // Click Bangalore option
+          const opts = doc.querySelectorAll('button,option,[role="option"]');
+          opts.forEach(el => { if(el.textContent.trim().toLowerCase().includes('bangalore')) el.click(); });
+          // Click Yesterday option
+          setTimeout(() => {
+            const btns = doc.querySelectorAll('button,[role="option"]');
+            btns.forEach(el => { if(el.textContent.trim().toLowerCase().includes('yesterday')) el.click(); });
+          }, 1000);
+        } catch(e) {}
+      }, 2000);
+    }
+  };
 });
 
 // Auto fullscreen
