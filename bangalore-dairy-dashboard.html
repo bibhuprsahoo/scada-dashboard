@@ -613,6 +613,13 @@ const BASE_URL = '';
 
 const params = new URLSearchParams(window.location.search);
 const dairy  = params.get('dairy') || 'bengaluru';
+// Apply filter from URL param if provided (used by slideshow)
+if(params.get('filter')){
+  const fp = params.get('filter');
+  document.querySelectorAll('.pill').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');});
+  const pill = document.querySelector(`.pill[data-filter="${fp}"]`);
+  if(pill){pill.classList.add('active');pill.setAttribute('aria-selected','true');}
+}
 
 function formatIN(n){ return Math.round(Number(n) || 0).toLocaleString('en-IN'); }
 function num(v){ return parseFloat(v || 0); }
