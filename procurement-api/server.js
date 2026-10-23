@@ -993,11 +993,19 @@ function pdPeriodTotals(perDay, dmap) {
 async function pdDigitalAll(fromDate, toDate) {
   let withoutAmcu = pdCacheGet(pdCache, 'without_amcu', 60 * 60 * 1000);
   if (withoutAmcu === undefined) {
+    // Count only societies in the 12 taluks that actually have farmers —
+    // active tbl_dcs rows with no members are not real MPCS and inflated this
+    // count (61 vs the AMCS report's 14 on 21 Oct 2026).
+    const talukCodes = Object.values(PD_TALUKS);
     const rows = await pdQ(
       `SELECT COUNT(*) AS cnt FROM tbl_dcs d
        WHERE d.is_active=1 AND d.is_delete=0
+         AND d.sub_district_code IN (${talukCodes.map(() => '?').join(',')})
+         AND EXISTS (SELECT 1 FROM tbl_member m
+                     WHERE m.dcs_code=d.dcs_code AND m.is_delete=0)
          AND NOT EXISTS (SELECT 1 FROM tbl_identity_collection_point i
-                         WHERE i.dcs_code=d.dcs_code AND i.is_active=1 AND i.is_delete=0)`);
+                         WHERE i.dcs_code=d.dcs_code AND i.is_active=1 AND i.is_delete=0)`,
+      talukCodes);
     withoutAmcu = Number(rows[0]?.cnt) || 0;
     pdCacheSet(pdCache, 'without_amcu', withoutAmcu);
   }
