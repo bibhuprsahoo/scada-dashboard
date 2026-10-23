@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BAMUL Slideshow</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0d2b4e}
+.scene{position:fixed;inset:0;perspective:2000px}
+.card{
+  position:absolute;inset:0;
+  transform-style:preserve-3d;
+  transition:transform .8s cubic-bezier(.4,0,.2,1);
+}
+.card.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+.face.back{transform:rotateY(180deg)}
+iframe{width:100%;height:100%;border:none;display:block}
+</style>
+</head>
+<body>
+<div class="scene">
+  <div class="card" id="card">
+    <div class="face front"><iframe id="ifA"></iframe></div>
+    <div class="face back"><iframe id="ifB"></iframe></div>
+  </div>
+</div>
+<script>
+const PUBLIC = 'https://bangalore-dairy.duckdns.org';
+const PAGES = [
+  'http://10.46.161.22:5174/dashboard',
+  PUBLIC + '/bangalore-dairy-dashboard.html',
+  PUBLIC + '/predairy/union-summary.html',
+  PUBLIC + '/predairy/index.html',
+  PUBLIC + '/predairy/procurement.html',
+  PUBLIC + '/predairy/digital.html',
+  PUBLIC + '/predairy/farmers.html',
+];
+
+try { localStorage.setItem('predairy_filter', JSON.stringify({basis:'monthly'})); } catch(e) {}
+
+const DURATION = 15000;
+const card = document.getElementById('card');
+const ifA  = document.getElementById('ifA');
+const ifB  = document.getElementById('ifB');
+
+let current = 0, flipped = false;
+
+ifA.src = PAGES[0];
+ifB.src = PAGES[1];
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => document.documentElement.requestFullscreen().catch(()=>{}), 500);
+});
+document.addEventListener('click', () => {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+}, {once:true});
+
+function next() {
+  current = (current + 1) % PAGES.length;
+  const nextIdx = (current + 1) % PAGES.length;
+  flipped = !flipped;
+  card.classList.toggle('flip', flipped);
+  setTimeout(() => {
+    if (flipped) ifA.src = PAGES[nextIdx];
+    else         ifB.src = PAGES[nextIdx];
+  }, 900);
+}
+
+setInterval(next, DURATION);
+</script>
+</body>
+</html>
