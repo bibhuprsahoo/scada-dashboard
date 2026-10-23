@@ -25,6 +25,7 @@ jobs:
             sudo git reset --hard origin/latest
 
             sudo cp "$REPO"/*.html "$WEB"/
+            sudo cp "$REPO"/logo.png "$WEB"/ 2>/dev/null || true
 
             # Pre-dairy pages live in a subfolder; the root glob above does not
             # recurse, so copy them explicitly.
