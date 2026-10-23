@@ -6,67 +6,74 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:#0d2b4e}
-.frame-wrap{position:fixed;inset:0}
-iframe{
-  position:absolute;inset:0;width:100%;height:100%;border:none;
-  transition:opacity .6s ease;
-  opacity:1;
+.scene{position:fixed;inset:0;perspective:2000px}
+.card{
+  position:absolute;inset:0;
+  transform-style:preserve-3d;
+  transition:transform .8s cubic-bezier(.4,0,.2,1);
 }
-iframe.hidden{opacity:0;pointer-events:none;}
+.card.flip{transform:rotateY(180deg)}
+.face{
+  position:absolute;inset:0;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.face.back{transform:rotateY(180deg)}
+iframe{width:100%;height:100%;border:none;display:block}
 </style>
 </head>
 <body>
-<div class="frame-wrap" id="frameWrap"></div>
+<div class="scene">
+  <div class="card" id="card">
+    <div class="face front"><iframe id="ifA"></iframe></div>
+    <div class="face back"><iframe id="ifB"></iframe></div>
+  </div>
+</div>
 <script>
 const BASE = 'https://bangalore-dairy.duckdns.org';
 const PAGES = [
-  { src: BASE + '/predairy/union-summary.html' },
-  { src: BASE + '/predairy/index.html' },
-  { src: BASE + '/predairy/procurement.html' },
-  { src: BASE + '/predairy/digital.html' },
-  { src: BASE + '/predairy/farmers.html' },
+  BASE + '/predairy/union-summary.html',
+  BASE + '/predairy/index.html',
+  BASE + '/predairy/procurement.html',
+  BASE + '/predairy/digital.html',
+  BASE + '/predairy/farmers.html',
 ];
 
 try { localStorage.setItem('predairy_filter', JSON.stringify({basis:'monthly'})); } catch(e) {}
 
 const DURATION = 15000;
-let current = 0, startTime = null, rafId = null;
+const card = document.getElementById('card');
+const ifA  = document.getElementById('ifA');
+const ifB  = document.getElementById('ifB');
 
-// Auto fullscreen on load
+let current = 0;
+let flipped = false;
+
+// Load first two pages
+ifA.src = PAGES[0];
+ifB.src = PAGES[1];
+
+// Auto fullscreen
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => { document.documentElement.requestFullscreen().catch(()=>{}); }, 500);
+  setTimeout(() => document.documentElement.requestFullscreen().catch(()=>{}), 500);
 });
 document.addEventListener('click', () => {
   if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
-}, { once: true });
+}, {once:true});
 
-// Build iframes
-const wrap = document.getElementById('frameWrap');
-const frames = PAGES.map((p, i) => {
-  const f = document.createElement('iframe');
-  f.src = p.src;
-  f.className = i === 0 ? '' : 'hidden';
-  wrap.appendChild(f);
-  return f;
-});
-
-function goTo(idx) {
-  cancelAnimationFrame(rafId);
-  const prev = current;
-  current = (idx + PAGES.length) % PAGES.length;
-  frames[prev].classList.add('hidden');
-  frames[current].classList.remove('hidden');
-  startTime = performance.now();
-  tick();
+function next() {
+  current = (current + 1) % PAGES.length;
+  const nextIdx = (current + 1) % PAGES.length;
+  flipped = !flipped;
+  card.classList.toggle('flip', flipped);
+  // preload the next page into the hidden face
+  setTimeout(() => {
+    if (flipped) ifA.src = PAGES[nextIdx];
+    else         ifB.src = PAGES[nextIdx];
+  }, 900); // after flip completes
 }
 
-function tick() {
-  if (performance.now() - startTime >= DURATION) { goTo(current + 1); }
-  else { rafId = requestAnimationFrame(tick); }
-}
-
-startTime = performance.now();
-tick();
+setInterval(next, DURATION);
 </script>
 </body>
 </html>
