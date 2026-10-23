@@ -32,6 +32,7 @@ iframe{width:100%;height:100%;border:none;display:block}
 <script>
 const BASE = 'https://bangalore-dairy.duckdns.org';
 const PAGES = [
+  BASE + '/welcome.html',
   'https://friend-publishing-bottom-knife.trycloudflare.com/dashboard?union=bangalore&period=yesterday',
   BASE + '/bangalore-dairy-dashboard.html?filter=yesterday',
   BASE + '/predairy/union-summary.html',
@@ -40,6 +41,7 @@ const PAGES = [
   BASE + '/predairy/digital.html',
   BASE + '/predairy/farmers.html',
 ];
+const DURATIONS = [5000,15000,15000,15000,15000,15000,15000,15000];
 
 try { localStorage.setItem('predairy_filter', JSON.stringify({basis:'daily'})); } catch(e) {}
 
@@ -77,14 +79,14 @@ function next() {
   const nextIdx = (current + 1) % PAGES.length;
   flipped = !flipped;
   card.classList.toggle('flip', flipped);
-  // preload the next page into the hidden face
   setTimeout(() => {
     if (flipped) ifA.src = PAGES[nextIdx];
     else         ifB.src = PAGES[nextIdx];
-  }, 900); // after flip completes
+  }, 900);
+  setTimeout(next, DURATIONS[current] || 15000);
 }
 
-setInterval(next, DURATION);
+setTimeout(next, DURATIONS[0]);
 </script>
 </body>
 </html>
