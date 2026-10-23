@@ -166,7 +166,7 @@ iframe .topbar, .topbar{}
   </span>
 </div>
 <div class="card">
-  <h3 class="ct">Overall DCS Summary <span class="sample" id="smpSum">Sample</span></h3>
+  <h3 class="ct">Overall DCS Summary</h3>
   <div class="tblwrap" style="overflow-x:auto"><table id="tblUnion"></table></div>
 </div>
 
@@ -335,7 +335,6 @@ function render(){
   const _dt=document.getElementById('dTo'); if(_dt) _dt.value=to;
   const _rc=document.getElementById('rangeChip'); if(_rc) _rc.textContent = rangeLabel(r);
   const _rp=document.getElementById('reportingPeriod'); if(_rp) _rp.textContent = rangeLabel(r);
-  const _ss=document.getElementById('smpSum'); if(_ss) _ss.style.display = basis==='monthly'?'none':'';
 
   const share = basis==='monthly' ? 1 : sum(W.dailyAll.slice(r.s,r.e))/U.purchase[2];
   const { cols, daily } = periodColumns();
@@ -467,7 +466,6 @@ function applyData(dd){
   }catch(e){ console.warn('Union summary API fetch failed, using fallback:', e); return; }
   if(json && json.success && json.data && json.data.union){
     applyData(json.data);
-    const badge = document.getElementById('smpSum'); if(badge) badge.style.display='none'; // real data → hide "Sample" badge
     render(); // render errors now surface in console (render is null-safe)
   }
 })();
