@@ -51,9 +51,17 @@ const ifB  = document.getElementById('ifB');
 let current = 0;
 let flipped = false;
 
-// Load first two pages
-ifA.src = PAGES[0];
-ifB.src = PAGES[1];
+// Auto-login to Frappe then load iframes
+const FRAPPE = 'https://friend-publishing-bottom-knife.trycloudflare.com';
+fetch(FRAPPE + '/api/method/login', {
+  method: 'POST',
+  credentials: 'include',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({usr: 'test@gmail.com', pwd: 'frappe123'})
+}).catch(()=>{}).finally(() => {
+  ifA.src = PAGES[0];
+  ifB.src = PAGES[1];
+});
 
 // Auto fullscreen
 document.addEventListener('DOMContentLoaded', () => {
