@@ -219,7 +219,6 @@ iframe .topbar, .topbar{}
   <!-- Top 10 by quantity -->
   <section class="card tcard">
     <h3 class="ct">Top 10 Highest-Quantity Pourers</h3>
-    <p class="cs" id="csTopT">—</p>
     <div class="tscroll">
       <table id="tblTopP">
         <colgroup><col><col><col><col><col><col><col></colgroup>
@@ -235,7 +234,6 @@ iframe .topbar, .topbar{}
   <!-- Top 10 by fat -->
   <section class="card tcard pad-lg">
     <h3 class="ct">Top 10 Highest-Fat Pourers</h3>
-    <p class="cs" id="csTopF">—</p>
     <div class="tscroll">
       <table id="tblTopF">
         <colgroup><col><col><col><col><col><col></colgroup>
@@ -409,12 +407,7 @@ function renderData(live, range, prev, prevLoading) {
   ]);
 
   const span = daysBetween(range.from, range.to);
-  const rangeTxt = range.from === range.to
-    ? `${fmtLabel(range.from)} · 1 day`
-    : `${fmtLabel(range.from)} – ${fmtLabel(range.to)} · ${span} days`;
 
-  document.getElementById('csTopT').textContent =
-    `Candidates for Chairman's recognition (${rangeTxt})`;
   document.getElementById('bodyTopP').innerHTML = live.top_quantity_pourers.length
     ? live.top_quantity_pourers.map((p,i) =>
         `<tr><td>${i+1}</td><td class="nm">${p.member_name}</td>` +
@@ -425,13 +418,11 @@ function renderData(live, range, prev, prevLoading) {
       ).join('')
     : '<tr><td class="tmsg" colspan="7">No data for this period</td></tr>';
 
-  document.getElementById('csTopF').textContent =
-    `Highest reported fat percentages (${rangeTxt}) — readings above 11% warrant verification of testing equipment`;
   document.getElementById('bodyTopF').innerHTML = live.top_fat_pourers.length
     ? live.top_fat_pourers.map((p,i) =>
         `<tr><td>${i+1}</td><td class="nm">${p.member_name}</td>` +
         `<td class="wrap">${p.dcs_name}</td><td>${p.taluk}</td>` +
-        `<td class="r"><span class="pill ${p.avg_fat>11?'pr':'pa'}">${Number(p.avg_fat).toFixed(2)}</span></td>` +
+        `<td class="r">${Number(p.avg_fat).toFixed(2)}</td>` +
         `<td class="r">${fmtN(p.total_qty)}</td></tr>`
       ).join('')
     : '<tr><td class="tmsg" colspan="6">No data for this period</td></tr>';
