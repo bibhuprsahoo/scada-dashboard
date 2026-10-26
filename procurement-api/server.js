@@ -54,6 +54,43 @@ function pool(res) {
     if (!sqlPool) { res.status(503).json({ success: false, error: 'SQL Server not connected' }); return null; }
     return sqlPool;
 }
+// ----- Mojro BEARER TOKEN ------------
+app.get('/api/mojro/token', async (req, res) => {
+    try {
+        // Request a bearer token from Mojro's authentication API
+        const response = await fetch(
+            "https://gateway.mojro.com/enterprise/v1/account/oauth/token",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Ocp-Apim-Subscription-Key": "efd89678c93d40fc9e0c35f73280dba2", 
+                },
+                body: JSON.stringify({
+                    username: "bamul1@integration.com", 
+                    password: "Bamul1234@",    
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            return res.status(response.status).json({ 
+                error: "Failed to fetch token from Mojro", 
+                details: errorText 
+            });
+        }
+
+        const data = await response.json();
+        
+        // Send the token back to your frontend dashboard
+        return res.json({ token: data.token }); 
+
+    } catch (err) {
+        console.error("Error in /api/mojro/token:", err);
+        return res.status(500).json({ error: "Internal server error", message: err.message });
+    }
+});
 
 // ── Weigh Bridge ───────────────────────────────────────────────────────────────
 app.get('/api/bangalore/truck-entry', async (req, res) => {

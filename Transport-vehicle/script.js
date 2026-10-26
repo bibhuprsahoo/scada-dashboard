@@ -1,29 +1,15 @@
 async function getMojroAuthToken() {
     try {
-        const response = await fetch(
-            "https://gateway.mojro.com/enterprise/v1/account/oauth/token",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Ocp-Apim-Subscription-Key": "efd89678c93d40fc9e0c35f73280dba2",
-                },
-                body: JSON.stringify({
-                    username: "bamull@integration.com",
-                    password: "Bamul1234@",
-                }),
-            },
-        );
-
+        // Call your backend API endpoint instead of Mojro directly
+        const response = await fetch("/api/mojro/token");
         if (!response.ok) {
-            throw new Error(`Authentication failed with status: ${response.status}`);
+            throw new Error(`Failed to fetch token from backend with status: ${response.status}`);
         }
-
         const data = await response.json();
-        // Returns the token string from the response payload
+        // Returns the token string from your backend response
         return data.token;
     } catch (error) {
-        console.error("Error fetching Mojro token:", error);
+        console.error("Error fetching Mojro token from backend:", error);
         return null;
     }
 }
@@ -32,18 +18,19 @@ const iframe = document.getElementById("mojroIframe");
 
 window.addEventListener("message", async (event) => {
     // Ensure message is coming from Mojro
-    
-    console.warn("Message Event from MOJRO")
+    console.warn("Message Event from MOJRO", event.origin);
     if (!event.origin.includes("mojro.com")) return;
+
     const message = event.data;
 
     // Check if Mojro is asking for a token (on load or after a 401 expiry)
     if (message === "SHIPPER_READY" || message.type === "SHIPPER_TOKEN_REQUEST") {
-        console.log("Mojro requested token. Fetching new token...");
+        console.log("Mojro requested token. Fetching new token from backend...");
 
-        // Fetch the token dynamically using the credentials provided
+        // Fetch the token dynamically via your backend route
         const token = await getMojroAuthToken();
-        console.warn(token);
+        console.warn("Retrieved Token:", token);
+
         if (token) {
             // Send the token back to the iframe
             iframe.contentWindow.postMessage(
