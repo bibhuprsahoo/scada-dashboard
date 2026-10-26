@@ -214,8 +214,9 @@ tfoot td.kg{font-family:'Bricolage Grotesque',sans-serif;font-size:32px;color:va
         <p>Plant flow → Stage 1 · Weigh Bridge</p>
       </div>
     </div>
-    <span id="hero-date" style="font-size:16px;font-weight:700;color:var(--muted);white-space:nowrap;margin-left:auto;align-self:center"></span>
-    <div class="range-group">
+    <div style="margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:nowrap">
+    <span id="hero-date" style="font-size:16px;font-weight:700;color:var(--muted);white-space:nowrap"></span>
+    <div class="range-group" style="margin-left:0">
       <div class="range-pills" role="tablist" aria-label="Date range">
         <button class="pill" role="tab" aria-selected="false" data-filter="yesterday">Yesterday</button>
         <button class="pill" role="tab" aria-selected="false" data-filter="week">This week</button>
@@ -229,6 +230,7 @@ tfoot td.kg{font-family:'Bricolage Grotesque',sans-serif;font-size:32px;color:va
         <div class="cr-field"><label for="endTime">To time</label><input type="time" id="endTime" class="date-input" value="04:44"></div>
         <button class="btn primary" id="applyRange" type="button">Apply</button>
       </div>
+    </div>
     </div>
     <a class="btn" id="back-btn" href="bangalore-dairy-dashboard.html">← Back to plant flow</a>
     <button class="btn" onclick="downloadPDF()">📥 PDF</button>
