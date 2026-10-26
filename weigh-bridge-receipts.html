@@ -140,7 +140,11 @@ thead th{
   font-size:26px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
   background:var(--milk);text-align:left;padding:12px 0;border-bottom:1px solid var(--sky-line);white-space:nowrap;
 }
-thead th.r, td.r{text-align:right}
+/* All value columns left-aligned (start at the same left edge, ragged right),
+   matching the Source column. */
+thead th.r, td.r{text-align:left}
+/* …except the last column (Completed), which hugs the right edge. */
+thead th:last-child, tbody td:last-child, tfoot td:last-child{text-align:right}
 tbody td{
   font-size:28px;padding:14px 0;border-bottom:1px solid var(--sky-line);white-space:nowrap;
 }
