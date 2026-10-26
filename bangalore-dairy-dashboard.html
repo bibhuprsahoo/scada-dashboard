@@ -586,11 +586,11 @@ a.panel{text-decoration:none;color:inherit;display:flex}
 
   <!-- Milk Dispatch -->
   <a class="panel p-disp reveal clickable" style="animation-delay:.32s" href="./milk-dispatch-details.html" aria-label="Open milk dispatch details" data-detail>
-    <div style="text-align:center;flex:none;margin-bottom:6px">
+    <div style="text-align:center;flex:none;margin-bottom:6px;width:100%">
       <span class="step-tag"></span>
-      <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap">
-        <h3 style="line-height:1;margin:0;font-size:clamp(18px,1.6vw,26px);white-space:nowrap">Milk Dispatch</h3>
-        <span id="disp-foot"><span class="chip mute">Awaiting data</span></span>
+      <div style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap;overflow:hidden">
+        <h3 style="line-height:1;margin:0;white-space:nowrap;flex-shrink:0">Milk Dispatch</h3>
+        <span id="disp-foot" style="flex-shrink:0"><span class="chip mute">Awaiting data</span></span>
         <span style="color:var(--blue-deep);font-weight:800;font-size:1.1rem;line-height:1;flex-shrink:0">→</span>
       </div>
     </div>
