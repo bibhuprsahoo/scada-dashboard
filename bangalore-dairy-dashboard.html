@@ -143,7 +143,10 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   padding:6px 20px 0;
   display:grid;
   grid-template-columns:.95fr 22px 1fr 22px .82fr 22px 1fr 26px 1.1fr 22px 1fr;
-  grid-template-rows:minmax(380px,auto) 24px auto;
+  grid-template-rows:1fr 24px auto;
+  overflow-y:auto;
+  flex:1;
+  height:0;
   overflow-y:auto;
   flex:1;
 }
