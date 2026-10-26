@@ -1013,12 +1013,18 @@ async function pdDigitalAll(fromDate, toDate) {
   const perDay = await pdFetchRange(fromDate, toDate);
   const totals = pdAccumulate(perDay, dmap);
 
+  // Total active MPCS in each taluk (from the dcs→taluk map), independent of
+  // the date — this is the denominator "how many societies exist in the taluk".
+  const talukMpcs = {};
+  for (const taluk of dmap.values()) talukMpcs[taluk] = (talukMpcs[taluk] || 0) + 1;
+
   const taluks = Object.keys(PD_TALUKS).sort().map(name => {
     const rows = totals.get(name) || new Map();
     const qty = pdSumField(rows, 'qty'), autoQty = pdSumField(rows, 'autoQty'), entries = pdSumField(rows, 'entries');
     const { fow, fmw, fof, fmf } = pdSocietyFlags(rows);
     return {
-      taluk: name, auto_weight_pct: pdPct(autoQty, qty), auto_fat_pct: pdPct(pdSumField(rows, 'autoF'), entries),
+      taluk: name, total_mpcs: talukMpcs[name] || 0,
+      auto_weight_pct: pdPct(autoQty, qty), auto_fat_pct: pdPct(pdSumField(rows, 'autoF'), entries),
       total_dcs: rows.size, manual_weight_entries: pdSumField(rows, 'manW'), total_entries: entries,
       fully_online_weight: fow, fully_manual_weight: fmw, fully_online_fat: fof, fully_manual_fat: fmf,
     };
@@ -1028,6 +1034,7 @@ async function pdDigitalAll(fromDate, toDate) {
   for (const rows of totals.values()) for (const [k, v] of rows) all.set(k, v);
   const uQty = pdSumField(all, 'qty'), uEntries = pdSumField(all, 'entries');
   const union = {
+    total_mpcs: taluks.reduce((s, t) => s + t.total_mpcs, 0),
     auto_weight_pct: pdPct(pdSumField(all, 'autoQty'), uQty),
     auto_fat_pct: pdPct(pdSumField(all, 'autoF'), uEntries),
     total_dcs: all.size, manual_weight_entries: pdSumField(all, 'manW'), total_entries: uEntries,

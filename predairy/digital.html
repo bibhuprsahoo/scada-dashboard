@@ -210,7 +210,7 @@ iframe .topbar, .topbar{}
   <!-- taluk table -->
   <section class="card pcard">
     <div class="chead">
-      <h3 class="ct">100% Online-Weight Societies by Taluk</h3>
+      <h3 class="ct">AMCS Usage By Taluk</h3>
       <p class="cs" id="csTbl">—</p>
     </div>
     <div class="cbody tscroll">
@@ -464,24 +464,24 @@ function renderData(live, range, prev, prevLoading) {
     : `${fmtLabel(range.from)} – ${fmtLabel(range.to)} · ${span} days`;
   document.getElementById('csTbl').textContent = `Fully digital societies by taluk (${rangeTxt})`;
 
-  const head = '<thead><tr><th class="l">Taluk</th><th>100% Online Wt</th><th>100% Manual Wt</th>'
+  const head = '<thead><tr><th class="l">Taluk</th><th>Total MPCS</th><th>100% Online Wt</th><th>100% Manual Wt</th>'
     + '<th>100% Online Fat</th><th>100% Manual Fat</th><th>Manual Entries</th>'
     + '<th>Auto Wt %</th><th>Auto Fat %</th></tr></thead>';
   let rows = '';
   live.taluks.forEach(t => {
-    rows += `<tr><td class="l"><b>${t.taluk}</b></td><td>${t.fully_online_weight}</td>`
+    rows += `<tr><td class="l"><b>${t.taluk}</b></td><td>${fmtN(t.total_mpcs)}</td><td>${t.fully_online_weight}</td>`
       + `<td>${t.fully_manual_weight}</td>`
       + `<td>${t.fully_online_fat}</td>`
       + `<td>${t.fully_manual_fat}</td>`
       + `<td>${fmtN(t.manual_weight_entries)}</td>`
       + `<td>${t.auto_weight_pct.toFixed(1)}%</td><td>${t.auto_fat_pct.toFixed(1)}%</td></tr>`;
   });
-  rows += `<tr class="tot"><td class="l"><b>Grand Total</b></td><td>${u.fully_online_weight}</td>`
+  rows += `<tr class="tot"><td class="l"><b>Grand Total</b></td><td>${fmtN(u.total_mpcs)}</td><td>${u.fully_online_weight}</td>`
     + `<td>${u.fully_manual_weight}</td><td>${u.fully_online_fat}</td><td>${u.fully_manual_fat}</td>`
     + `<td>${fmtN(u.manual_weight_entries)}</td><td>${u.auto_weight_pct.toFixed(1)}%</td>`
     + `<td>${u.auto_fat_pct.toFixed(1)}%</td></tr>`;
   document.getElementById('tblOnline').innerHTML =
-    '<colgroup><col><col><col><col><col><col><col><col></colgroup>'
+    '<colgroup><col><col><col><col><col><col><col><col><col></colgroup>'
     + head + '<tbody>' + rows + '</tbody>';
 
   if (live.series) {
@@ -590,11 +590,11 @@ function renderFatBuckets(live) {
 /* ── placeholder states ──────────────────────────────────────────────────── */
 function tablePlaceholder(msg) {
   document.getElementById('tblOnline').innerHTML =
-    '<colgroup><col><col><col><col><col><col><col><col></colgroup>'
-    + '<thead><tr><th class="l">Taluk</th><th>100% Online Wt</th><th>100% Manual Wt</th>'
+    '<colgroup><col><col><col><col><col><col><col><col><col></colgroup>'
+    + '<thead><tr><th class="l">Taluk</th><th>Total MPCS</th><th>100% Online Wt</th><th>100% Manual Wt</th>'
     + '<th>100% Online Fat</th><th>100% Manual Fat</th><th>Manual Entries</th>'
     + '<th>Auto Wt %</th><th>Auto Fat %</th></tr></thead>'
-    + `<tbody><tr><td class="tmsg" colspan="8">${msg}</td></tr></tbody>`;
+    + `<tbody><tr><td class="tmsg" colspan="9">${msg}</td></tr></tbody>`;
 }
 
 function showLoading(range) {
