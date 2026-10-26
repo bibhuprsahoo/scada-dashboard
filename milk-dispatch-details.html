@@ -516,7 +516,7 @@ async function loadProductDairy(){
   }catch(e){}
   const el = document.getElementById('sec-pd'); if(el) el.innerHTML='';
   if(!d || !d.length){ renderSection([], 'sec-pd', 'tot-pd', 'No product dairy transfers for this range.'); return; }
-  renderSection(combineLines(d, 'To Production Dairy', true), 'sec-pd', 'tot-pd', 'No product dairy transfers for this range.');
+  renderSection(combineLines(d, 'To Products', true), 'sec-pd', 'tot-pd', 'No product dairy transfers for this range.');
 }
 
 async function loadNMP(){

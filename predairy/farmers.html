@@ -112,6 +112,15 @@ main{width:100%;max-width:100%;margin:0;padding:26px 30px 60px;display:flex;flex
 .tcard{padding:1.125rem 1.25rem}
 .tcard.pad-lg{padding:1.75rem 1.25rem}
 h3.ct{font-size:1.4375rem;font-weight:700;color:var(--navy);line-height:1.33}
+/* Top-10 carousel header: title left, ‹ 1/2 › control right (sized like the title). */
+.tcard-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+.tnav{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+.tnav-arrow{font-size:1.4375rem;line-height:1;font-weight:700;color:var(--navy);background:var(--seg-bg);
+  border:1px solid var(--line);border-radius:var(--r-segbtn);cursor:pointer;font-family:inherit;
+  padding:.1rem .6rem;transition:.15s}
+.tnav-arrow:hover{background:var(--navy);color:#fff}
+.tnav-arrow:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.tnav-pos{font-size:1.4375rem;font-weight:700;color:var(--navy);min-width:2.5rem;text-align:center}
 p.cs{font-size:0.875rem;color:var(--muted);line-height:1.36;margin-top:.125rem}
 .tscroll{width:100%;overflow-x:auto;padding-top:.625rem}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
@@ -216,10 +225,19 @@ iframe .topbar, .topbar{}
   <!-- KPI row -->
   <div class="kpis" id="kpiRow"></div>
 
-  <!-- Top 10 by quantity -->
-  <section class="card tcard">
-    <h3 class="ct">Top 10 Highest-Quantity Pourers</h3>
-    <div class="tscroll">
+  <!-- Top 10 pourers — one card, cycle between tables with the ‹ 1/2 › control -->
+  <section class="card tcard pad-lg">
+    <div class="tcard-head">
+      <h3 class="ct" id="topTitle">Top 10 Highest-Quantity Pourers</h3>
+      <div class="tnav">
+        <button type="button" id="topPrev" class="tnav-arrow" aria-label="Previous table">‹</button>
+        <span class="tnav-pos" id="topPos">1/2</span>
+        <button type="button" id="topNext" class="tnav-arrow" aria-label="Next table">›</button>
+      </div>
+    </div>
+
+    <!-- Top 10 by quantity -->
+    <div class="tscroll topPane" data-pane="0">
       <table id="tblTopP">
         <colgroup><col><col><col><col><col><col><col></colgroup>
         <thead><tr>
@@ -229,12 +247,9 @@ iframe .topbar, .topbar{}
         <tbody id="bodyTopP"><tr><td class="tmsg" colspan="7">—</td></tr></tbody>
       </table>
     </div>
-  </section>
 
-  <!-- Top 10 by fat -->
-  <section class="card tcard pad-lg">
-    <h3 class="ct">Top 10 Highest-Fat Pourers</h3>
-    <div class="tscroll">
+    <!-- Top 10 by fat -->
+    <div class="tscroll topPane" data-pane="1" hidden>
       <table id="tblTopF">
         <colgroup><col><col><col><col><col><col></colgroup>
         <thead><tr>
@@ -585,6 +600,27 @@ function setReportingPeriod(){
   if(!el) return;
   el.textContent = getDateRange().label;
 }
+
+/* ── Top-10 table carousel ───────────────────────────────────────────────────
+   One card cycles through N tables. Add a new tab by appending {title,pane}
+   here — the ‹ 1/2 › control, title and looping all adapt automatically. */
+const TOP_TABS = [
+  { title: 'Top 10 Highest-Quantity Pourers', pane: 0 },
+  { title: 'Top 10 Highest-Fat Pourers',      pane: 1 },
+];
+let topIdx = 0;
+function showTopTab(i){
+  topIdx = (i + TOP_TABS.length) % TOP_TABS.length;   // wrap-around both ways
+  const tab = TOP_TABS[topIdx];
+  document.getElementById('topTitle').textContent = tab.title;
+  document.getElementById('topPos').textContent = `${topIdx + 1}/${TOP_TABS.length}`;
+  document.querySelectorAll('.topPane').forEach(p => {
+    p.hidden = Number(p.dataset.pane) !== tab.pane;
+  });
+}
+document.getElementById('topPrev').addEventListener('click', () => showTopTab(topIdx - 1));
+document.getElementById('topNext').addEventListener('click', () => showTopTab(topIdx + 1));
+showTopTab(0);
 
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
 if(basis==='custom'){
