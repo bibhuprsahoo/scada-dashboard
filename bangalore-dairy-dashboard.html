@@ -681,7 +681,7 @@ async function loadSummary(){
   setText('sum-in',  milkIn  > 0 ? formatIN(milkIn)  : '0');
   setText('sum-out', milkOut > 0 ? formatIN(milkOut) : '0');
   setText('sum-used',used    > 0 ? formatIN(used)    : '0');
-  setHTML('truck-count', trucks > 0 ? `From <b>${trucks} trucks</b>` : 'Awaiting data');
+  setHTML('truck-count', trucks > 0 ? `From <b>${trucks} trucks-trips</b>` : 'Awaiting data');
   setHTML('used-meta', milkIn > 0 ? `<b>${((used/milkIn)*100).toFixed(1)}%</b> of received milk` : 'Awaiting data');
   setHTML('dispatch-count', dispatched > 0 ? `<b>${dispatched}</b> trucks dispatched` : 'Awaiting data');
 }
