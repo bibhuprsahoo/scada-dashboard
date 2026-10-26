@@ -549,7 +549,7 @@ a.panel{text-decoration:none;color:inherit;display:flex}
       <div class="rows stacked">
         <div class="rw"><span class="l">Milk received</span><span class="v none" id="hmst-net">—<small>Kg</small></span></div>
       </div>
-      <div class="panel-foot" id="hmst-foot"><span class="chip mute">Awaiting data</span><span class="chip blue">Click for tank-wise details</span></div>
+      <div class="panel-foot" id="hmst-foot"><span class="chip mute">Awaiting data</span><span class="chip blue">Click for Milk HMST details</span></div>
     </a>
   </div>
 
@@ -720,7 +720,7 @@ async function loadRMST(){
   setHTML('rmst-fat', `${fat}<small>%</small>`);
   setHTML('rmst-snf', `${snf}<small>%</small>`);
   clearNone('#rmst-net,#rmst-fat,#rmst-snf');
-  setFoot('rmst-foot', '<span class="chip blue">Click for Milk HMST details</span>');
+  setFoot('rmst-foot', '<span class="chip blue">Click for Milk RMST details</span>');
 }
 
 /* ---------- Stage 3 · Cream ---------- */
@@ -779,7 +779,7 @@ async function loadHMST(){
   setHTML('hmst-fat', `${fat}<small>%</small>`);
   setHTML('hmst-snf', `${snf}<small>%</small>`);
   clearNone('#hmst-net,#hmst-fat,#hmst-snf');
-  setFoot('hmst-foot', '<span class="chip blue">Click for tank-wise details</span>');
+  setFoot('hmst-foot', '<span class="chip blue">Click for Milk HMST details</span>');
 }
 
 /* ---------- Outbound · Milk Dispatch ---------- */
