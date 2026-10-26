@@ -245,7 +245,7 @@ tfoot td.kg{font-family:'Bricolage Grotesque',sans-serif;font-size:32px;color:va
       <div class="kpi reveal">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span>
         <div>
-          <div class="tag">Total milk received</div>
+          <div class="tag">Milk received</div>
           <div class="value num"><span id="kpi-net">—</span><small>Kg</small></div>
           <div class="meta"></div>
         </div>
@@ -424,7 +424,7 @@ async function loadAll(){
   }
 
   // Exclude Butter and Cream — they are not counted as milk received, so they
-  // drop out of the Total milk received KPI and don't get their own category.
+  // drop out of the Milk received KPI and don't get their own category.
   const EXCLUDED = /^(butter|cream)$/i;
   d = d.filter(r => !EXCLUDED.test((r.ProductCode || '').trim()));
   if(!d.length){
