@@ -286,7 +286,7 @@ a.panel{text-decoration:none;color:inherit;display:flex}
   grid-column:3 / 8;grid-row:3;
   display:flex;flex-direction:column;align-items:stretch;gap:6px;
 }
-.p-disp .minis{flex:1;min-width:0;display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.p-disp .minis{flex:1;min-width:0;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .mini{
   background:var(--milk);border-radius:10px;padding:5px 10px;min-width:0;min-height:0;
   display:flex;flex-direction:column;justify-content:center;overflow:hidden;
@@ -375,7 +375,7 @@ a.panel{text-decoration:none;color:inherit;display:flex}
 @media (max-width:820px){
   .p-disp{flex-direction:column;align-items:stretch;gap:10px}
   .p-disp .head{min-width:0}
-  .p-disp .minis{grid-template-columns:repeat(4,1fr)}
+  .p-disp .minis{grid-template-columns:repeat(3,1fr)}
 }
 @media (max-width:620px){
   .sync{display:none}
@@ -586,12 +586,12 @@ a.panel{text-decoration:none;color:inherit;display:flex}
 
   <!-- Milk Dispatch -->
   <a class="panel p-disp reveal clickable" style="animation-delay:.32s" href="./milk-dispatch-details.html" aria-label="Open milk dispatch details" data-detail>
-    <div style="text-align:center;flex:none;margin-bottom:6px">
+    <div style="text-align:center;flex:none;margin-bottom:6px;width:100%">
       <span class="step-tag"></span>
-      <h3 style="text-align:center">Milk Dispatch</h3>
-      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px">
-        <span id="disp-foot"><span class="chip mute">Awaiting data</span></span>
-        <span style="color:var(--blue-deep);font-weight:800;font-size:1.1rem;line-height:1">→</span>
+      <div style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap;overflow:hidden">
+        <h3 style="line-height:1;margin:0;white-space:nowrap;flex-shrink:0">Milk Dispatch</h3>
+        <span id="disp-foot" style="flex-shrink:0"><span class="chip mute">Awaiting data</span></span>
+        <span style="color:var(--blue-deep);font-weight:800;font-size:1.1rem;line-height:1;flex-shrink:0">→</span>
       </div>
     </div>
     <div class="minis">
