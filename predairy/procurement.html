@@ -314,9 +314,9 @@ function renderShare(){
     datalabels:{color:'#fff',font:{size:10,weight:'bold'},
       formatter:(v,ctx)=>{const p=100*v/total;return p>=3? p.toFixed(1)+'%':'';}}}}});
   document.getElementById('shareLegend').innerHTML=rows.map((x,i)=>
-    `<div style="display:flex;align-items:center;gap:12px">
-      <div style="width:26px;height:26px;border-radius:6px;background:${PALETTE[i]};flex-shrink:0"></div>
-      <span style="font-size:13px;font-weight:800;color:#1c2b3a;text-transform:uppercase;letter-spacing:.4px">${x.t} <span style="color:#68788c;font-weight:600">(${(100*x.v/total).toFixed(1)}%)</span></span>
+    `<div style="display:flex;align-items:center;gap:14px">
+      <div style="width:30px;height:30px;border-radius:7px;background:${PALETTE[i]};flex-shrink:0"></div>
+      <span style="font-size:26px;font-weight:800;color:#1c2b3a;text-transform:uppercase;letter-spacing:.4px;line-height:1.25">${x.t} <span style="color:#68788c;font-weight:600">(${(100*x.v/total).toFixed(1)}%)</span></span>
     </div>`).join('');
 }
 
