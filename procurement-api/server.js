@@ -54,6 +54,7 @@ function pool(res) {
     if (!sqlPool) { res.status(503).json({ success: false, error: 'SQL Server not connected' }); return null; }
     return sqlPool;
 }
+
 // ----- Mojro BEARER TOKEN ------------
 app.get('/api/mojro/token', async (req, res) => {
     try {
