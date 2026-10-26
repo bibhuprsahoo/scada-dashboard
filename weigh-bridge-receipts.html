@@ -138,15 +138,14 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offse
 table{width:100%;border-collapse:collapse}
 thead th{
   font-size:26px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
-  background:var(--milk);text-align:left;padding:12px 0;border-bottom:1px solid var(--sky-line);white-space:nowrap;
+  background:var(--milk);text-align:center;padding:12px 0;border-bottom:1px solid var(--sky-line);white-space:nowrap;
 }
-/* All value columns left-aligned (start at the same left edge, ragged right),
-   matching the Source column. */
-thead th.r, td.r{text-align:left}
+/* All value columns center-aligned */
+thead th.r, td.r{text-align:center}
 /* …except the last column (Completed), which hugs the right edge. */
-thead th:last-child, tbody td:last-child, tfoot td:last-child{text-align:right}
+thead th:last-child, tbody td:last-child, tfoot td:last-child{text-align:center}
 tbody td{
-  font-size:28px;padding:14px 0;border-bottom:1px solid var(--sky-line);white-space:nowrap;
+  font-size:28px;padding:14px 0;border-bottom:1px solid var(--sky-line);white-space:nowrap;text-align:center;
 }
 tbody tr:last-child td{border-bottom:none}
 tbody tr{transition:background .12s}
@@ -164,9 +163,9 @@ td .time{font-size:22px;color:var(--muted)}
 .chip.blue{background:var(--sky);color:var(--blue-deep)}
 tfoot td{
   padding:9px 0;background:var(--milk);border-top:1px solid var(--sky-line);
-  font-size:24px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;
+  font-size:24px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;text-align:center;
 }
-tfoot td.kg{font-family:'Bricolage Grotesque',sans-serif;font-size:32px;color:var(--blue-ink);text-transform:none;letter-spacing:0}
+tfoot td.kg{font-family:'Bricolage Grotesque',sans-serif;font-size:32px;color:var(--blue-ink);text-transform:none;letter-spacing:0;text-align:center}
 
 /* Reveal */
 .reveal{opacity:0;transform:translateY(8px);animation:rise .5s ease forwards}
@@ -378,7 +377,7 @@ function renderSection(product, rows, catIndex){
       : '';
     return `<tr>
       <td><span class="src">${src}</span></td>
-      <td class="r kg">${srows.length} <small>trucks</small></td>
+      <td class="r kg">${srows.length}</td>
       <td class="r kg">${formatIN(Math.round(sNet))}<small>Kg</small></td>
       ${fatSnfCells}
       <td class="r"><span class="chip ${sDone===srows.length?'green':'amber'}">${sDone}/${srows.length}</span></td>
