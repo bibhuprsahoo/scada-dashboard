@@ -344,7 +344,6 @@ function render(rows){
 function renderKpis(rows){
   if(!rows || !rows.length){
     document.getElementById('kpi-total').innerHTML = '—<small>Kg</small>';
-    document.getElementById('kpi-quality').innerHTML = '—<small>% Fat</small> &nbsp;&nbsp; —<small>% SNF</small>';
     return;
   }
   const total = rows.reduce((s,r)=>s+num(r.TotalQty),0);
@@ -357,7 +356,6 @@ function renderKpis(rows){
   const tanks = new Set(rows.map(r=>String(r.HMSTID))).size;
   document.getElementById('kpi-total').innerHTML = `${formatIN(Math.round(total))}<small>Kg</small>`;
   document.getElementById('kpi-tanks').textContent = tanks || 5;
-  document.getElementById('kpi-quality').innerHTML = `${fat}<small>% Fat</small> &nbsp;&nbsp; ${snf}<small>% SNF</small>`;
 }
 
 async function loadData(){
