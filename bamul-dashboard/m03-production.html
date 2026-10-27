@@ -15,6 +15,7 @@
 .gauge .tg{font-size:12px;color:var(--muted)}
 .flash{animation:flash .6s ease}
 @keyframes flash{0%{color:var(--sky)}100%{color:inherit}}
+.m.loading,.s.loading{opacity:.5}
 </style>
 </head>
 <body>
@@ -22,7 +23,7 @@
 <main class="wrap">
   <div class="phead">
     <div><div class="kicker">Module 03 · Production Data</div><h1>Live plant output, measured against SCADA efficiency</h1>
-    <p>Curated tag set from the SCADA historian, refreshed every 60 seconds. Efficiency measures, not raw PLC registers.</p></div>
+    <p>Aggregated from the plant historian (SQL Server · BAMUL / BAMUL_MIS) via the existing <code>/api/bangalore/*</code> endpoints. Refreshed every 60 s. Today's SCADA batches are sparse, so the live view shows the last completed dairy-day.</p></div>
     <div class="filters">
       <select aria-label="Plant"><option>Bangalore Mega Dairy</option><option>Kanakapura Dairy</option><option>Bangalore Dairy</option><option>All plants</option></select>
       <select aria-label="Shift"><option>Shift B · 14:00–22:00</option><option>Shift A</option><option>Shift C</option><option>Today</option></select>
@@ -30,7 +31,7 @@
   </div>
 
   <div class="kpis">
-    <div class="kpi good"><div class="v" id="k-intake">8,42,600 L</div><div class="l">Milk intake today</div><div class="d"><span class="up">▲ 3.1%</span> vs same day last week</div></div>
+    <div class="kpi good"><div class="v" id="k-intake">—</div><div class="l">Milk intake · last dairy-day</div><div class="d" id="k-intake-d">loading…</div></div>
     <div class="kpi good"><div class="v">98.4%</div><div class="l">Yield efficiency</div><div class="d">Target 98.0%</div></div>
     <div class="kpi warn"><div class="v">0.42%</div><div class="l">Process loss</div><div class="d">Norm ≤ 0.40%</div></div>
     <div class="kpi"><div class="v">46 min</div><div class="l">Downtime this shift</div><div class="d">3 stoppages, all coded</div></div>
@@ -48,41 +49,29 @@
   <!-- FLOW -->
   <section class="panel" id="flow">
     <div class="card" style="margin-bottom:16px">
-      <div class="card-h"><div><h3>Intake to dispatch</h3><div class="sub">Bangalore Mega Dairy · last tag update <span id="upd">just now</span></div></div><span class="pill ok"><span class="dot-live" style="display:inline-block;margin-right:6px;vertical-align:0"></span>SCADA live</span></div>
+      <div class="card-h"><div><h3>Intake to dispatch</h3><div class="sub">Bangalore Mega Dairy · as of <span id="upd">loading…</span></div></div><span class="pill ok"><span class="dot-live" style="display:inline-block;margin-right:6px;vertical-align:0"></span>DB · last dairy-day</span></div>
       <div class="pipe"></div>
       <div class="flow">
         <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M1 6h13v10H1zM14 10h4l3 3v3h-7"/><circle cx="5.5" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/></svg></div>
-          <h4>Reception</h4><div class="m" data-live="35200">35,200</div><div class="s">L/hr · 6 bays</div><div class="st"><span class="pill ok">4.1 °C in</span></div></div>
+          <h4>Reception</h4><div class="m" id="s-reception">—</div><div class="s">L received</div></div>
         <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M4.9 4.9l14.2 14.2M2 12h20M4.9 19.1L19.1 4.9"/></svg></div>
-          <h4>Chilling</h4><div class="m" data-live="34900">34,900</div><div class="s">L/hr · silo 72%</div><div class="st"><span class="pill ok">3.6 °C</span></div></div>
+          <h4>Chilling</h4><div class="m" id="s-chilling">—</div><div class="s">L to raw silos</div></div>
         <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2c3 4 5 7 5 10a5 5 0 0 1-10 0c0-3 2-6 5-10z"/></svg></div>
-          <h4>Pasteurisation</h4><div class="m" data-live="34600">34,600</div><div class="s">L/hr · 2 of 3 PHE</div><div class="st"><span class="pill ok">72.4 °C · 15 s</span></div></div>
+          <h4>Pasteurisation</h4><div class="m" id="s-pasteurisation">—</div><div class="s">L processed</div></div>
         <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></div>
-          <h4>Packing</h4><div class="m" data-live="68400">68,400</div><div class="s">pouches/hr · 11 of 12</div><div class="st"><span class="pill warn">FFS-07 down</span></div></div>
+          <h4>Packing</h4><div class="m" id="s-packing">—</div><div class="s">pouches packed</div></div>
         <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10h14v11M9 21v-5h6v5M3 10l9-7 9 7"/></svg></div>
-          <h4>Dispatch</h4><div class="m" data-live="31800">31,800</div><div class="s">L/hr · 71 routes</div><div class="st"><span class="pill ok">3.9 °C load</span></div></div>
+          <h4>Dispatch</h4><div class="m" id="s-dispatch">—</div><div class="s">L dispatched</div></div>
       </div>
     </div>
     <div class="g g3">
-      <div class="card"><h3>Silo levels</h3><div class="sub">Raw and pasteurised milk</div>
-        <div class="bars">
-          <div class="bar"><span class="lab">RMS-1 raw</span><span class="trk"><span class="fill" data-v="72"></span></span><span class="val">72%</span></div>
-          <div class="bar"><span class="lab">RMS-2 raw</span><span class="trk"><span class="fill" data-v="58"></span></span><span class="val">58%</span></div>
-          <div class="bar"><span class="lab">PMS-1 past.</span><span class="trk"><span class="fill" data-v="81"></span></span><span class="val">81%</span></div>
-          <div class="bar"><span class="lab">PMS-2 past.</span><span class="trk"><span class="fill warn" data-v="93"></span></span><span class="val">93%</span></div>
-        </div></div>
-      <div class="card"><h3>Hourly throughput</h3><div class="sub">Thousand litres, today</div>
-        <div class="cols" style="height:150px">
-          <div class="col"><span class="c" data-h="62"></span></div><div class="col"><span class="c" data-h="78"></span></div><div class="col"><span class="c" data-h="91"></span></div>
-          <div class="col"><span class="c" data-h="96"></span></div><div class="col"><span class="c" data-h="100"></span></div><div class="col"><span class="c" data-h="87"></span></div>
-          <div class="col"><span class="c" data-h="44"></span></div><div class="col"><span class="c" data-h="92"></span></div></div>
-        <div class="cols-x"><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span></div></div>
-      <div class="card"><h3>Active alarms</h3><div class="sub">Curated, last 4 hours</div>
-        <div class="score">
-          <div class="row"><span>FFS-07 film break</span><span class="pill warn">14:38</span></div>
-          <div class="row"><span>PMS-2 high level</span><span class="pill warn">15:02</span></div>
-          <div class="row"><span>CIP-3 return temp low</span><span class="pill">13:10</span></div>
-        </div></div>
+      <div class="card"><h3>Silo throughput</h3><div class="sub">Raw & pasteurised · last dairy-day (L)</div>
+        <div class="bars" id="silo-bars"><div class="bar"><span class="lab">loading…</span><span class="trk"><span class="fill" style="--v:0%"></span></span><span class="val">—</span></div></div></div>
+      <div class="card"><h3>Hourly throughput</h3><div class="sub">Raw milk to silos · last dairy-day (L)</div>
+        <div class="cols" style="height:150px" id="hourly-cols"></div>
+        <div class="cols-x" id="hourly-x"></div></div>
+      <div class="card"><h3>Dispatch by type</h3><div class="sub">Last dairy-day · by product</div>
+        <div class="score" id="disp-type"><div class="row"><span>loading…</span></div></div></div>
     </div>
   </section>
 
@@ -178,18 +167,107 @@
       <div class="note bad" style="margin-top:14px"><span class="ic">!</span><span>Curd batch <b>MD-CD-261026-B01</b> held on antibiotic residue. The source silo traces to routes T-02 and T-11; see <a href="m06-quality.html">Quality</a>.</span></div></div>
   </section>
 
-  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: SCADA historian (60-s curated tags) + EBS production · all figures illustrative</span></div>
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: SQL Server historian (BAMUL · BAMUL_MIS) via <code>/api/bangalore/*</code> · #flow figures real for the last dairy-day</span></div>
 </main>
 <script src="js/app.js"></script>
 <script>
-// Simulated live tag refresh — replace with the warehouse/SCADA feed
-(function(){
-  const els=[...document.querySelectorAll('[data-live]')];let t=0;
-  setInterval(()=>{
-    t=0;els.forEach(e=>{const b=+e.dataset.live;const v=Math.round(b*(1+(Math.random()-.5)*.02)/10)*10;e.textContent=v.toLocaleString('en-IN');e.classList.remove('flash');void e.offsetWidth;e.classList.add('flash')});
-    document.getElementById('upd').textContent='just now';
-  },5000);
-  setInterval(()=>{t+=1;document.getElementById('upd').textContent=t+'s ago'},1000);
+/* Module 03 · #flow — real data from the existing /api/bangalore/* endpoints
+   on the OCI server (SQL Server historian). No new endpoint added; the page
+   calls the same APIs the other dashboards use, with filter=yesterday because
+   today's SCADA batch tables are sparse. */
+(function () {
+  const FILTER = 'yesterday';
+  const MILK = ['RAW MILK', 'PAST MILK', 'SKIM MILK', 'SKIM MILK POWDER', 'Homogenised milk'];
+  const $ = id => document.getElementById(id);
+  const num = x => Number(x) || 0;
+  const fmt = n => Math.round(num(n)).toLocaleString('en-IN');
+  const fmtL = n => fmt(n) + ' L';
+  async function j(url) { const r = await fetch(url); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url); return r.json(); }
+
+  function renderSilos(raw, past) {
+    const box = $('silo-bars'); if (!box) return;
+    const pastMap = {};
+    (past || []).forEach(r => { const id = r.PMSID || r.id; pastMap[id] = (pastMap[id] || 0) + num(r.TotalProcessed); });
+    const pastRows = Object.keys(pastMap).sort().map(id => ({ id, qty: pastMap[id] }));
+    const rows = [];
+    const maxR = Math.max(1, ...(raw || []).map(r => num(r.TotalQty)));
+    const maxP = Math.max(1, ...pastRows.map(r => r.qty));
+    (raw || []).forEach(r => rows.push({ lab: (r.RMSID || r.id) + ' raw', qty: num(r.TotalQty), fat: r.AvgFat, snf: r.AvgSNF, pct: Math.round(num(r.TotalQty) / maxR * 100) }));
+    pastRows.forEach(r => rows.push({ lab: r.id + ' past.', qty: r.qty, pct: Math.round(r.qty / maxP * 100) }));
+    if (!rows.length) { box.innerHTML = '<div class="bar"><span class="lab">No silo batches in this window</span><span class="trk"><span class="fill" style="--v:0%"></span></span><span class="val">—</span></div>'; return; }
+    box.innerHTML = rows.map(r =>
+      `<div class="bar"><span class="lab">${r.lab}${r.fat != null ? ' · F ' + r.fat + '/' + r.snf : ''}</span><span class="trk"><span class="fill" data-v="${r.pct}" style="--v:${r.pct}%"></span></span><span class="val">${fmt(r.qty)} L</span></div>`
+    ).join('');
+  }
+
+  function renderHourly(detail) {
+    const box = $('hourly-cols'), x = $('hourly-x'); if (!box) return;
+    const hours = {};
+    (detail || []).forEach(r => {
+      const d = new Date(r.LogTime); if (isNaN(d)) return;
+      const ist = new Date(d.getTime() + 5.5 * 3600 * 1000);   // server stores LogTime in UTC
+      const h = ist.getUTCHours();
+      hours[h] = (hours[h] || 0) + num(r.TransferredQty);
+    });
+    const keys = Object.keys(hours).map(Number).sort((a, b) => a - b);
+    if (!keys.length) { box.innerHTML = '<div class="sub" style="grid-column:1/-1">No batches logged in this window.</div>'; if (x) x.innerHTML = ''; return; }
+    const max = Math.max(1, ...keys.map(k => hours[k]));
+    box.innerHTML = keys.map(h => {
+      const pct = Math.round(hours[h] / max * 100);
+      return `<div class="col"><span class="cv">${Math.round(hours[h] / 1000)}</span><span class="c" data-h="${pct}" style="--h:${pct}%"></span></div>`;
+    }).join('');
+    if (x) x.innerHTML = keys.map(h => `<span>${String(h).padStart(2, '0')}</span>`).join('');
+  }
+
+  function renderDispType(data) {
+    const box = $('disp-type'); if (!box) return;
+    const rows = (data || []).slice().sort((a, b) => num(b.TotalQty) - num(a.TotalQty)).slice(0, 6);
+    if (!rows.length) { box.innerHTML = '<div class="row"><span>No dispatch in this window.</span></div>'; return; }
+    box.innerHTML = rows.map(r =>
+      `<div class="row"><span>${r.ProductCode || r.Type || '—'} · ${(r.DairyCode || '').trim()}</span><span class="pill">${fmt(r.TotalQty)} L · ${r.Trucks || 0} trk</span></div>`
+    ).join('');
+  }
+
+  async function load() {
+    try {
+      const [proc, rmst, pmst, ai, disp, det] = await Promise.all([
+        j('/api/bangalore/milk-procurement-summary?filter=' + FILTER),
+        j('/api/bangalore/rmst?filter=' + FILTER),
+        j('/api/bangalore/pmst?filter=' + FILTER),
+        j('/api/bangalore/ai-production?filter=' + FILTER),
+        j('/api/bangalore/milk-dispatch?filter=' + FILTER),
+        j('/api/bangalore/rmst-detail?filter=' + FILTER)
+      ]);
+
+      const intake   = num(proc.totalReceived);
+      const chill    = (rmst.data || []).reduce((a, s) => a + num(s.TotalQty), 0);
+      const past     = (pmst.data || []).reduce((a, s) => a + num(s.TotalProcessed), 0);
+      const pouches  = num(ai.milkPkts) + num(ai.curdPkts);
+      const dispMilk = (disp.data || []).filter(d => MILK.includes(d.ProductCode)).reduce((a, d) => a + num(d.TotalQty), 0);
+
+      $('s-reception').textContent = fmtL(intake);
+      $('s-chilling').textContent = fmtL(chill);
+      $('s-pasteurisation').textContent = fmtL(past);
+      $('s-packing').textContent = fmt(pouches) + ' pouches';
+      $('s-dispatch').textContent = fmtL(dispMilk);
+
+      const k = $('k-intake'); if (k) k.textContent = fmtL(intake);
+      const kd = $('k-intake-d'); if (kd) kd.textContent = (proc.byType || []).length + ' product types dispatched';
+
+      renderSilos(rmst.data || [], pmst.data || []);
+      renderHourly(det.data || []);
+      renderDispType(disp.data || []);
+
+      const upd = $('upd'); if (upd) upd.textContent = new Date().toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    } catch (e) {
+      console.error('production flow load failed', e);
+      const upd = $('upd'); if (upd) upd.textContent = 'data unavailable';
+      ['s-reception', 's-chilling', 's-pasteurisation', 's-packing', 's-dispatch'].forEach(id => { const el = $(id); if (el) el.textContent = '—'; });
+    }
+  }
+
+  load();
+  setInterval(load, 60000);
 })();
 </script>
 </body>
