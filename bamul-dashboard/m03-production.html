@@ -178,6 +178,15 @@ button[data-tab].soon::after{content:"Coming soon";position:absolute;bottom:-17p
 </main>
 <script src="js/app.js"></script>
 <script>
+// Override topbar clock on this page to show data date (yesterday) instead of live time
+window.addEventListener('DOMContentLoaded', function() {
+  var yesterday = new Date(Date.now() - 86400000);
+  var label = yesterday.toLocaleString('en-IN', { weekday:'short', day:'2-digit', month:'short', year:'numeric' });
+  var clk = document.getElementById('clk');
+  if (clk) clk.textContent = 'Data: ' + label;
+});
+</script>
+<script>
 // Disable tabs that are not yet connected to real data
 ['eff','down','util','output','batch'].forEach(function(id){
   var btn = document.querySelector('button[data-tab="'+id+'"]');
