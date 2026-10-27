@@ -32,9 +32,11 @@ jobs:
             sudo mkdir -p "$WEB"/predairy
             sudo cp "$REPO"/predairy/*.html "$WEB"/predairy/
 
-            # Add this alongside your predairy copy step
             sudo mkdir -p "$WEB"/Transport-vehicle
             sudo cp "$REPO"/Transport-vehicle/* "$WEB"/Transport-vehicle/
+
+            sudo mkdir -p "$WEB"/bamul-dashboard
+            sudo cp "$REPO"/bamul-dashboard/* "$WEB"/bamul-dashboard/
             
             for f in "$REPO"/*.html "$REPO"/predairy/*.html; do
               rel=${f#"$REPO"/}
