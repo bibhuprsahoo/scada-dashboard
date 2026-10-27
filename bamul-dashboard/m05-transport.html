@@ -83,48 +83,6 @@
     <body>
         <header id="topbar"></header>
         <main class="wrap">
-            <div class="phead">
-                <div>
-                    <div class="kicker">Module 05 · Transportation</div>
-                    <h1>162 vehicles on the road, three distinct jobs</h1>
-                    <p>
-                        GPS narrows the trip; the weighbridge and lab evidence
-                        it. Every alert carries a status and an owner.
-                    </p>
-                </div>
-                <div class="filters">
-                    <select aria-label="Fleet">
-                        <option>All fleets</option>
-                        <option>Procurement</option>
-                        <option>Marketing</option>
-                        <option>Field staff</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="kpis">
-                <div class="kpi good">
-                    <div class="v">147</div>
-                    <div class="l">Reporting now</div>
-                    <div class="d">of 162 fitted</div>
-                </div>
-                <div class="kpi">
-                    <div class="v">58</div>
-                    <div class="l">Procurement vehicles</div>
-                    <div class="d">Tankers &amp; BMC</div>
-                </div>
-                <div class="kpi">
-                    <div class="v">64</div>
-                    <div class="l">Delivery vehicles</div>
-                    <div class="d">Reefer &amp; parlour</div>
-                </div>
-                <div class="kpi">
-                    <div class="v">25</div>
-                    <div class="l">Field staff live</div>
-                    <div class="d">of 40 · officer mobility</div>
-                </div>
-            </div>
-
             <nav class="tabs" data-tabs>
                 <button data-tab="fleet">Fleet overview</button>
                 <button data-tab="live">Live tracker</button>
@@ -138,6 +96,49 @@
 
             <!-- FLEET -->
             <section class="panel" id="fleet">
+                <div class="phead">
+                    <div>
+                        <div class="kicker">Module 05 · Transportation</div>
+                        <h1>162 vehicles on the road, three distinct jobs</h1>
+                        <p>
+                            GPS narrows the trip; the weighbridge and lab
+                            evidence it. Every alert carries a status and an
+                            owner.
+                        </p>
+                    </div>
+                    <div class="filters">
+                        <select aria-label="Fleet">
+                            <option>All fleets</option>
+                            <option>Procurement</option>
+                            <option>Marketing</option>
+                            <option>Field staff</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="kpis">
+                    <div class="kpi good">
+                        <div class="v">147</div>
+                        <div class="l">Reporting now</div>
+                        <div class="d">of 162 fitted</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="v">58</div>
+                        <div class="l">Procurement vehicles</div>
+                        <div class="d">Tankers &amp; BMC</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="v">64</div>
+                        <div class="l">Delivery vehicles</div>
+                        <div class="d">Reefer &amp; parlour</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="v">25</div>
+                        <div class="l">Field staff live</div>
+                        <div class="d">of 40 · officer mobility</div>
+                    </div>
+                </div>
+
                 <div class="g g3">
                     <div class="card job">
                         <div class="hd">
@@ -248,6 +249,14 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="foot">
+                    <span>BAMUL Executive Dashboard · Confidential</span
+                    ><span
+                        >Source: GPS provider feed + weighbridge + flow meters ·
+                        all figures illustrative</span
+                    >
                 </div>
             </section>
 
@@ -693,8 +702,8 @@
                         id="mojroIframe"
                         src="https://shipper.mojro.com/embedded"
                         title="Mojro Shipper Dashboard"
-                        width="1300"
-                        height="600"
+                        width="1400"
+                        height="850"
                     >
                     </iframe>
                 </div>
@@ -1079,19 +1088,11 @@
                     </div>
                 </div>
             </section>-->
-
-            <div class="foot">
-                <span>BAMUL Executive Dashboard · Confidential</span
-                ><span
-                    >Source: GPS provider feed + weighbridge + flow meters · all
-                    figures illustrative</span
-                >
-            </div>
         </main>
         <script src="/bamul-dashboard/js/mojro.js"></script>
         <script src="js/app.js"></script>
         <script>
-            getMojroAuthToken();
+            // getMojroAuthToken();
             // Clearing an exception requires a name and reason
             document.querySelectorAll("#exc .stsel").forEach((s) => {
                 let prev = s.value;
