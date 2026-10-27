@@ -199,9 +199,7 @@ window.addEventListener('DOMContentLoaded', function() {
    today's SCADA batch tables are sparse. */
 (function () {
   const FILTER = 'yesterday';
-  // For intake we use 'week' because the dairy-day window for 'yesterday'
-  // is empty until the current dairy-day completes — week gives real data.
-  const FILTER_INTAKE = 'week';
+  const FILTER_INTAKE = 'yesterday';
   const $ = id => document.getElementById(id);
   const num = x => Number(x) || 0;
   const fmt = n => Math.round(num(n)).toLocaleString('en-IN');
@@ -222,11 +220,10 @@ window.addEventListener('DOMContentLoaded', function() {
         j('/api/bangalore/milk-dispatch?filter=' + FILTER)
       ]);
 
-      // Use RMST total (dairy-day window) as intake — matches weigh bridge
-      const rmstTotal = (rmst.data || []).reduce((a, s) => a + num(s.TotalQty), 0);
-      const intake   = rmstTotal || num(proc.totalReceived);
-      const chill    = rmstTotal;
-      const past     = (pmst.data || []).reduce((a, s) => a + num(s.TotalProcessed), 0);
+      // Use milk-procurement-summary totalReceived for intake (works for yesterday)
+      const intake  = num(proc.totalReceived);
+      const chill   = (rmst.data || []).reduce((a, s) => a + num(s.TotalQty), 0) || intake;
+      const past    = (pmst.data || []).reduce((a, s) => a + num(s.TotalProcessed), 0) || '—';
       const pouches  = num(ai.milkPkts) + num(ai.curdPkts);
       const MILK     = ['RAW MILK','PAST MILK','SKIM MILK','SKIM MILK POWDER','Homogenised milk'];
       const dispL    = (disp.data || []).filter(d => MILK.includes(d.ProductCode)).reduce((a, d) => a + num(d.TotalQty), 0);
@@ -238,7 +235,7 @@ window.addEventListener('DOMContentLoaded', function() {
       $('s-dispatch').textContent       = fmtL(dispL);
 
       const k = $('k-intake'); if (k) k.textContent = fmtL(intake);
-      const kd = $('k-intake-d'); if (kd) kd.textContent = (rmst.data || []).length + ' raw silos · this week';
+      const kd = $('k-intake-d'); if (kd) kd.textContent = 'yesterday · calendar day';
 
       renderSilos(); renderHourly(); renderDispType();
 
