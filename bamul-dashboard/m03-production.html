@@ -16,6 +16,9 @@
 .flash{animation:flash .6s ease}
 @keyframes flash{0%{color:var(--sky)}100%{color:inherit}}
 .m.loading,.s.loading{opacity:.5}
+/* Coming-soon tabs */
+button[data-tab].soon{opacity:.45;cursor:not-allowed;pointer-events:none;position:relative}
+button[data-tab].soon::after{content:"Coming soon";position:absolute;bottom:-17px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:600;letter-spacing:.04em;color:var(--muted);white-space:nowrap;pointer-events:none}
 </style>
 </head>
 <body>
@@ -39,6 +42,7 @@
 
   <nav class="tabs" data-tabs>
     <button data-tab="flow">Live process</button>
+    <button data-tab="postdairy">Post Dairy</button>
     <button data-tab="eff">SCADA efficiency</button>
     <button data-tab="down">Downtime</button>
     <button data-tab="util">Utilities</button>
@@ -63,6 +67,19 @@
         <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10h14v11M9 21v-5h6v5M3 10l9-7 9 7"/></svg></div>
           <h4>Dispatch</h4><div class="m" id="s-dispatch">—</div><div class="s">L dispatched</div></div>
       </div>
+    </div>
+  </section>
+
+  <!-- POST DAIRY -->
+  <section class="panel" id="postdairy">
+    <div class="card" style="padding:0;overflow:hidden;border-radius:10px">
+      <iframe
+        src="http://129.159.231.57:3000/bangalore-dairy-dashboard.html"
+        title="Bangalore Dairy Dashboard"
+        style="width:100%;height:82vh;border:none;display:block"
+        loading="lazy"
+        allowfullscreen>
+      </iframe>
     </div>
   </section>
 
@@ -161,6 +178,13 @@
   <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: SQL Server historian (BAMUL · BAMUL_MIS) via <code>/api/bangalore/*</code> · #flow figures real for the last dairy-day</span></div>
 </main>
 <script src="js/app.js"></script>
+<script>
+// Disable tabs that are not yet connected to real data
+['eff','down','util','output','batch'].forEach(function(id){
+  var btn = document.querySelector('button[data-tab="'+id+'"]');
+  if(btn){ btn.classList.add('soon'); btn.setAttribute('aria-disabled','true'); }
+});
+</script>
 <script>
 /* Module 03 · #flow — real data from the existing /api/bangalore/* endpoints
    on the OCI server (SQL Server historian). No new endpoint added; the page
