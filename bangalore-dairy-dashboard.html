@@ -58,19 +58,19 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   box-shadow:0 3px 10px -3px rgba(37,99,235,.5);
 }
 .brand-mark svg{width:18px;height:18px}
-.brand h1{font-size:15px;font-weight:800;color:var(--blue-ink);letter-spacing:-.01em;line-height:1.1;white-space:nowrap}
-.brand p{font-size:11px;color:var(--muted);font-weight:500;white-space:nowrap}
+.brand h1{font-size:17px;font-weight:800;color:var(--blue-ink);letter-spacing:-.01em;line-height:1.1;white-space:nowrap}
+.brand p{font-size:17px;color:var(--muted);font-weight:500;white-space:nowrap}
 .live-dot{
-  display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;
+  display:inline-flex;align-items:center;gap:5px;font-size:17px;font-weight:600;
   color:var(--green);background:var(--green-soft);border-radius:99px;padding:3px 9px;
 }
 .live-dot::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 .range-group{position:relative;margin-left:auto}
-.range-pills{display:flex;gap:4px;background:var(--sky);padding:3px;border-radius:10px}
+.range-pills{display:flex;gap:4px;background:var(--sky);padding:3px;border-radius:10px;flex-wrap:nowrap;}
 .pill{
-  font:inherit;font-size:12px;font-weight:600;color:var(--muted);
-  border:none;background:transparent;border-radius:7px;padding:5px 12px;cursor:pointer;transition:.15s;
+  font:inherit;font-size:14px;font-weight:600;color:var(--muted);
+  border:none;background:transparent;border-radius:7px;padding:5px 12px;cursor:pointer;transition:.15s;white-space:nowrap;
 }
 .pill:hover{color:var(--blue-deep)}
 .pill.active{background:#fff;color:var(--blue-deep);box-shadow:0 1px 4px rgba(11,27,63,.12)}
@@ -83,21 +83,21 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 }
 .custom-range[hidden]{display:none}
 .cr-field{display:flex;flex-direction:column;gap:4px}
-.cr-field label{font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.cr-field label{font-size:13.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
 .date-input{
-  font:inherit;font-size:12.5px;color:var(--blue-ink);
+  font:inherit;font-size:14.5px;color:var(--blue-ink);
   padding:7px 9px;border:1px solid var(--sky-line);border-radius:8px;background:var(--card);
 }
 .date-input:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
 .custom-range .btn{align-self:stretch}
 .btn{
-  font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;border-radius:9px;
+  font:inherit;font-size:14.5px;font-weight:600;cursor:pointer;border-radius:9px;
   padding:7px 13px;border:1px solid var(--sky-line);background:var(--card);color:var(--blue-ink);transition:.15s;white-space:nowrap;
 }
 .btn:hover{background:var(--sky)}
 .btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
 .btn.primary:hover{background:var(--blue-deep)}
-.sync{font-size:11px;color:var(--muted);white-space:nowrap}
+.sync{font-size:17px;color:var(--muted);white-space:nowrap}
 
 /* ===== Hero KPI band ===== */
 .hero{
@@ -106,7 +106,16 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 }
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(500px 160px at 88% -30%,rgba(255,255,255,.16),transparent 70%)}
 .hero-inner{
-  max-width:1680px;margin:0 auto;width:100%;padding:10px 20px;position:relative;z-index:1;
+  max-width:1680px;margin:0 auto;width:100%;padding:10px 24px 16px;position:relative;z-index:1;
+  display:flex;flex-direction:column;gap:10px;
+}
+.hero-top{
+  display:flex;justify-content:flex-end;align-items:center;
+}
+.hero-date{
+  font-size:17px;color:#fff;font-weight:700;letter-spacing:.4px;
+}
+.hero-cards{
   display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;
 }
 .kpi{
@@ -116,10 +125,10 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 }
 .kpi .ico{width:32px;height:32px;border-radius:10px;background:var(--sky);flex:none;display:grid;place-items:center;color:var(--blue)}
 .kpi .ico svg{width:17px;height:17px}
-.kpi .tag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-deep)}
+.kpi .tag{font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-deep)}
 .kpi .value{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(17px,1.5vw,22px);font-weight:800;color:var(--blue-ink);letter-spacing:-.02em;line-height:1.15}
 .kpi .value small{font-size:.5em;font-weight:700;color:var(--muted);margin-left:3px}
-.kpi .meta{font-size:10.5px;color:var(--muted);font-weight:500}
+.kpi .meta{font-size:14.5px;color:var(--muted);font-weight:500}
 .kpi .meta b{color:var(--text)}
 .hero-arrow{align-self:center;padding:0 8px;color:rgba(255,255,255,.9)}
 .hero-arrow svg{width:20px;height:20px;display:block;animation:drift 2.6s ease-in-out infinite}
@@ -146,8 +155,8 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 }
 .panel:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(11,27,63,.06),0 12px 28px -14px rgba(37,99,235,.28)}
 .step-tag{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-deep);white-space:nowrap}
-.panel h3{font-size:13px;font-weight:800;color:var(--blue-ink);letter-spacing:-.01em;line-height:1.25;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.panel .hint{font-size:10px;color:var(--muted);font-weight:500;margin:1px 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.panel h3{font-size:13px;font-weight:800;color:var(--blue-ink);letter-spacing:-.01em;line-height:1.25;margin-top:1px;overflow:hidden;text-overflow:ellipsis}
+.panel .hint{font-size:11px;color:var(--muted);font-weight:500;margin:1px 0 6px;overflow:hidden;text-overflow:ellipsis}
 .rows{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-evenly;gap:2px}
 .rw{
   display:flex;align-items:baseline;justify-content:space-between;gap:8px;
@@ -156,14 +165,14 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .rw:first-child{border-top:none;padding-top:0}
 .stacked .rw{flex-direction:column;align-items:flex-start;gap:0}
 .stacked .rw .v{font-size:clamp(14px,1.15vw,18px);line-height:1.25}
-.rw .l{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rw .l{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rw .l.sub{padding-left:10px;text-transform:none;letter-spacing:0;font-weight:500}
 .rw .v{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(13px,1.02vw,16px);font-weight:800;color:var(--blue-ink);white-space:nowrap}
 .rw .v small{font-size:.62em;color:var(--muted);font-weight:600;margin-left:1px}
 .rw .v.none{color:var(--muted)}
 .rw .v.sm{font-size:clamp(11.5px,.85vw,13.5px)}
 .chip{
-  display:inline-block;font-size:9px;font-weight:700;border-radius:99px;padding:2px 7px;
+  display:inline-block;font-size:17px;font-weight:700;border-radius:99px;padding:2px 7px;
   white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;
 }
 .chip.blue{background:var(--sky);color:var(--blue-deep)}
@@ -191,7 +200,7 @@ a.panel{text-decoration:none;color:inherit;display:flex}
 }
 .bigval .v{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(22px,2vw,30px);font-weight:800;color:var(--muted)}
 .bigval .v small{font-size:.45em;font-weight:700}
-.bigval .cap{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+.bigval .cap{font-size:14px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
 
 /* ---- Horizontal connectors ---- */
 .hconn{grid-row:1;align-self:center;justify-self:stretch;position:relative;height:22px;display:flex;align-items:center;flex-direction:column;justify-content:center}
@@ -266,29 +275,46 @@ a.panel{text-decoration:none;color:inherit;display:flex}
 @keyframes nudgey{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,3px)}}
 .vlabel{
   grid-column:4 / 7;grid-row:2;align-self:center;justify-self:center;
-  font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-deep);white-space:nowrap;
+  font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-deep);white-space:nowrap;
 }
 
-/* ---- Dispatch panel (spans under Reception–PMST, beside cream) ---- */
+/* ---- Dispatch bar ---- */
 .p-disp{
-  grid-column:3 / 8;grid-row:3;
-  display:flex;flex-direction:row;align-items:stretch;gap:14px;
+  grid-column:1 / -1;grid-row:3;
+  display:flex!important;flex-direction:column!important;
+  background:var(--card);
+  border:1px solid var(--sky-line);border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;
+  padding:0!important;
 }
-.p-disp .head{flex:none;min-width:148px;display:flex;flex-direction:column;justify-content:center}
-.p-disp .minis{flex:1;min-width:0;display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.p-disp .db-label{
+  padding:10px 20px;border-bottom:1px solid var(--sky-line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;
+}
+.p-disp .db-label .db-tag{font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--blue-deep)}
+.p-disp .db-label h3{font-size:14px;font-weight:800;color:var(--blue-ink);margin:0}
+.p-disp .db-label .db-sub{font-size:11px;color:var(--muted)}
+.p-disp .db-minis{display:flex!important;flex-direction:row!important;flex:1}
 .mini{
-  background:var(--milk);border-radius:10px;padding:5px 10px;min-width:0;min-height:0;
-  display:flex;flex-direction:column;justify-content:center;overflow:hidden;
+  padding:14px 18px;border-right:1px solid var(--sky-line);
+  display:flex;flex-direction:column;justify-content:center;gap:3px;
+  background:var(--milk);flex:1;
 }
-.mini .lbl{font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mini .val{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(12.5px,1vw,16px);font-weight:800;color:var(--blue-ink);white-space:nowrap}
-.mini .val small{font-size:.6em;color:var(--muted);font-weight:600}
+.mini:last-child{border-right:none}
+.mini .lbl{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.mini .val{font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:800;color:var(--blue-ink);white-space:nowrap;line-height:1.2}
+.mini .val small{font-size:.5em;color:var(--muted);font-weight:600;margin-left:2px}
 .mini .val.none{color:var(--muted)}
+.mini .sub{font-size:11px;font-weight:600}
+.mini .sub.green{color:var(--green)}
+.mini .sub.muted{color:var(--muted)}
+.prog-wrap{background:var(--sky-line);border-radius:99px;height:5px;margin-top:4px;overflow:hidden;width:100%}
+.prog-bar{height:100%;border-radius:99px;background:var(--blue);transition:width .4s}
 
 /* Legend (bottom-left cell) */
 .legend{
   grid-column:1;grid-row:3;align-self:end;
-  font-size:10px;color:var(--muted);line-height:1.65;padding-right:8px;
+  font-size:14px;color:var(--muted);line-height:1.65;padding-right:8px;
 }
 .legend .sw{display:inline-block;width:18px;border-top:3.5px dashed var(--pipe);vertical-align:middle;margin-right:6px}
 
@@ -297,7 +323,7 @@ a.panel{text-decoration:none;color:inherit;display:flex}
   flex:none;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:6px;margin-bottom:7px;
 }
 .hmst-top .cell{background:var(--milk);border-radius:9px;padding:5px 9px;min-width:0;overflow:hidden}
-.hmst-top .lbl{font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hmst-top .lbl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hmst-top .v{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(15px,1.35vw,20px);font-weight:800;color:var(--blue-ink);white-space:nowrap;line-height:1.2}
 .hmst-top .v small{font-size:.55em;color:var(--muted);font-weight:600;margin-left:1px}
 .hmst-top .v.none{color:var(--muted)}
@@ -307,8 +333,8 @@ a.panel{text-decoration:none;color:inherit;display:flex}
   border-top:1px dashed var(--sky-line);padding-top:3px;min-width:0;
 }
 .vtable .vt-row.head{border-top:none;padding-top:0}
-.vtable .vt-row.head span{font-size:8.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.vtable .vt-row .name{font-size:10.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vtable .vt-row.head span{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vtable .vt-row .name{font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vtable .vt-row .d{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(11px,.9vw,13.5px);font-weight:800;color:var(--muted);white-space:nowrap;text-align:right}
 .vtable .vt-row .d small{font-size:.65em;font-weight:600}
 .vtable .vt-row.head span:not(:first-child){text-align:right}
@@ -350,18 +376,20 @@ a.panel{text-decoration:none;color:inherit;display:flex}
   .rw .l{white-space:normal}
   .panel-foot{margin-top:8px}
 
-  .hero-inner{grid-template-columns:1fr;gap:8px}
+  .hero-cards{grid-template-columns:1fr;gap:8px}
   .hero-arrow{display:none}
 }
 /* Tablet / small laptop: let the top bar wrap gracefully + stack dispatch */
-@media (max-width:820px){
+/* Wrap the top bar early — it carries pills, sync, and 5 buttons. */
+@media (max-width:1200px){
   .topbar-inner{flex-wrap:wrap;gap:8px 12px}
   .range-group{order:5;margin-left:0}
   .sync{order:6;margin-left:auto}
   .custom-range{right:auto;left:0}
-  .p-disp{flex-direction:column;align-items:stretch;gap:10px}
-  .p-disp .head{min-width:0}
-  .p-disp .minis{grid-template-columns:repeat(4,1fr)}
+}
+@media (max-width:820px){
+  .p-disp{flex-direction:column!important;align-items:stretch;gap:0}
+  .p-disp .db-minis{display:flex!important;flex-direction:row!important;flex:1}
 }
 @media (max-width:620px){
   .sync{display:none}
@@ -380,7 +408,7 @@ a.panel{text-decoration:none;color:inherit;display:flex}
   .p-disp .minis{grid-template-columns:1fr}
 }
 </style>
-</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script></head>
 <body>
 
 <!-- ===== Top bar ===== -->
@@ -395,7 +423,7 @@ a.panel{text-decoration:none;color:inherit;display:flex}
         <p>Plant flow · Milk logistics</p>
       </div>
     </div>
-    <span class="live-dot">Live</span>
+
     <div class="range-group">
       <div class="range-pills" role="tablist" aria-label="Date range">
         <button class="pill" role="tab" aria-selected="false" data-filter="yesterday">Yesterday</button>
@@ -411,7 +439,10 @@ a.panel{text-decoration:none;color:inherit;display:flex}
         <button class="btn primary" id="applyRange" type="button">Apply</button>
       </div>
     </div>
-    <span class="sync" id="sync-time">Syncing...</span>
+
+    <a class="btn" href="./procurement-network.html" data-detail>Procurement view</a>
+    <a class="btn" href="./milk-usage-products.html" data-detail>Milk Product</a>
+    <button class="btn" onclick="downloadPDF()">📥 PDF</button>
     <button class="btn">← Back</button>
     <button class="btn primary">Logout</button>
   </div>
@@ -420,6 +451,10 @@ a.panel{text-decoration:none;color:inherit;display:flex}
 <!-- ===== Hero KPI band ===== -->
 <section class="hero" aria-label="Milk balance">
   <div class="hero-inner">
+    <div class="hero-top">
+      <div class="hero-date" id="hero-date"></div>
+    </div>
+    <div class="hero-cards">
     <div class="kpi reveal">
       <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span>
       <div>
@@ -443,8 +478,9 @@ a.panel{text-decoration:none;color:inherit;display:flex}
       <div>
         <div class="tag">Milk dispatched</div>
         <div class="value num"><span id="sum-out">—</span><small>Kg</small></div>
-        <div class="meta" id="dispatch-count">Awaiting data</div>
+        <div class="meta" id="dispatch-count"></div>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -488,9 +524,10 @@ a.panel{text-decoration:none;color:inherit;display:flex}
     <h3>Cream Storage Tank</h3>
     <div class="hint">Cream removed before pasteurization</div>
     <div class="rows stacked">
-      <div class="rw"><span class="l">Cream received</span><span class="v none" id="cream-qty">—<small>Kg</small></span></div>
-      <div class="rw"><span class="l">To RMST</span><span class="v none" id="cream-to-rmst">—<small>Kg</small></span></div>
-      <div class="rw"><span class="l">To Product</span><span class="v none" id="cream-to-product">—<small>Kg</small></span></div>
+      <div class="rw"><span class="l">Cream produced</span><span class="v none" id="cream-qty">—<small>Kg</small></span></div>
+      <div class="rw"><span class="l">Cream dispatched</span></div>
+      <div class="rw" style="padding-left:10px"><span class="l">To RMST</span><span class="v none" id="cream-to-rmst">—<small>Kg</small></span></div>
+      <div class="rw" style="padding-left:10px"><span class="l">To Product Dairy</span><span class="v none" id="cream-to-product">—<small>Kg</small></span></div>
     </div>
     <div class="panel-foot" id="cream-foot"><span class="chip mute">Awaiting data</span><span class="chip cream">Cream in / out</span></div>
   </section>
@@ -504,8 +541,6 @@ a.panel{text-decoration:none;color:inherit;display:flex}
     <div class="hint">Pasteurized milk storage tanks</div>
     <div class="rows stacked">
       <div class="rw"><span class="l">Total milk into PMST</span><span class="v none" id="pmst-net">—<small>Kg</small></span></div>
-      <div class="rw"><span class="l">Average fat</span><span class="v none" id="pmst-fat">—<small>%</small></span></div>
-      <div class="rw"><span class="l">Average SNF</span><span class="v none" id="pmst-snf">—<small>%</small></span></div>
     </div>
     <div class="panel-foot" id="pmst-foot"><span class="chip mute">Awaiting data</span><span class="chip blue">Feeds dispatch ↓</span><span class="chip blue">Click for tank-wise details</span></div>
   </a>
@@ -545,20 +580,20 @@ a.panel{text-decoration:none;color:inherit;display:flex}
       <span class="step-tag">Stage 6A · AI Vision</span>
       <h3>Curd Production · AI</h3>
       <div class="bigval">
-        <div class="v num">—<small> Kg</small></div>
+        <div class="v num" id="ai-curd">—<small> Kg</small></div>
         <div class="cap">Total curd produced</div>
       </div>
-      <div class="panel-foot"><span class="chip ai">Counted by AI</span><span class="chip mute">Awaiting data</span></div>
+      <div class="panel-foot" id="ai-curd-foot"><span class="chip ai">Counted by AI</span><span class="chip mute">Awaiting data</span></div>
     </section>
 
     <section class="panel reveal" style="animation-delay:.32s">
       <span class="step-tag">Stage 6B · AI Vision</span>
       <h3>Milk Production · AI</h3>
       <div class="bigval">
-        <div class="v num">—<small> Kg</small></div>
+        <div class="v num" id="ai-milk">—<small> Kg</small></div>
         <div class="cap">Total milk produced</div>
       </div>
-      <div class="panel-foot"><span class="chip ai">Counted by AI</span><span class="chip mute">Awaiting data</span></div>
+      <div class="panel-foot" id="ai-milk-foot"><span class="chip ai">Counted by AI</span><span class="chip mute">Awaiting data</span></div>
     </section>
   </div>
 
@@ -567,25 +602,30 @@ a.panel{text-decoration:none;color:inherit;display:flex}
   <span class="vlabel">RMST / PMST → dispatch</span>
   <div class="vconn v2" aria-hidden="true"></div>
 
-  <!-- Legend -->
-  <div class="legend reveal" style="animation-delay:.3s">
-    <span class="sw"></span>Milk movement<br>
-    Dispatch draws from RMST &amp; PMST
-  </div>
-
   <!-- Milk Dispatch -->
   <a class="panel p-disp reveal clickable" style="animation-delay:.32s" href="./milk-dispatch-details.html" aria-label="Open milk dispatch details" data-detail>
-    <div class="head">
-      <span class="step-tag">Outbound · From RMST / PMST</span>
-      <h3>Milk Dispatch <span class="goto" aria-hidden="true">→</span></h3>
-      <div class="hint">To product block, NMP &amp; other unions</div>
-      <div class="panel-foot" id="disp-foot"><span class="chip mute">Awaiting data</span></div>
+    <div class="db-label">
+      <div class="db-tag">Outbound</div>
+      <h3>Milk Dispatch</h3>
+      <div class="db-sub">From RMST &amp; PMST</div>
     </div>
-    <div class="minis">
-      <div class="mini"><span class="lbl">Total milk transferred</span><span class="val num" id="disp-total">—<small>Kg</small></span></div>
-      <div class="mini"><span class="lbl">→ Product block</span><span class="val none" id="disp-product">—<small>Kg</small></span></div>
-      <div class="mini"><span class="lbl">→ NMP</span><span class="val none" id="disp-nmp">—<small>Kg</small></span></div>
-      <div class="mini"><span class="lbl">→ Other unions</span><span class="val none" id="disp-other">—<small>Kg</small></span></div>
+    <div class="db-minis">
+      <div class="mini">
+        <span class="lbl">Total Milk Transferred</span>
+        <span class="val num" id="disp-total">—<small>Kg</small></span>
+      </div>
+      <div class="mini">
+        <span class="lbl">→ Product Block</span>
+        <span class="val num" id="disp-product">—<small>Kg</small></span>
+      </div>
+      <div class="mini">
+        <span class="lbl">→ Nandini Milk Products</span>
+        <span class="val num" id="disp-nmp">—<small>Kg</small></span>
+      </div>
+      <div class="mini">
+        <span class="lbl">→ Other Unions</span>
+        <span class="val num" id="disp-other">—<small>Kg</small></span>
+      </div>
     </div>
   </a>
 
@@ -598,7 +638,7 @@ a.panel{text-decoration:none;color:inherit;display:flex}
  * is prefixed with BASE_URL (same approach as the Procurement
  * Dashboard's dairy-detail page).
  * ============================================================ */
-const BASE_URL = 'http://129.159.231.57';
+const BASE_URL = '';
 
 const params = new URLSearchParams(window.location.search);
 const dairy  = params.get('dairy') || 'bengaluru';
@@ -650,9 +690,9 @@ async function loadSummary(){
   if(dout){ milkOut = dout.reduce((s,r)=>s+num(r.NetWeight),0); dispatched = dout.length; }
   const used = milkIn - milkOut;
 
-  setText('sum-in',  milkIn  > 0 ? formatIN(milkIn)  : '—');
-  setText('sum-out', milkOut > 0 ? formatIN(milkOut) : '—');
-  setText('sum-used',used    > 0 ? formatIN(used)    : '—');
+  setText('sum-in',  milkIn  > 0 ? formatIN(milkIn)  : '0');
+  setText('sum-out', milkOut > 0 ? formatIN(milkOut) : '0');
+  setText('sum-used',used    > 0 ? formatIN(used)    : '0');
   setHTML('truck-count', trucks > 0 ? `From <b>${trucks} trucks</b>` : 'Awaiting data');
   setHTML('used-meta', milkIn > 0 ? `<b>${((used/milkIn)*100).toFixed(1)}%</b> of received milk` : 'Awaiting data');
   setHTML('dispatch-count', dispatched > 0 ? `<b>${dispatched}</b> trucks dispatched` : 'Awaiting data');
@@ -666,8 +706,8 @@ async function loadWeighBridge(){
   const net = d.reduce((s,r)=>{ const n=num(r.NetWeight); return s+(n>0?n:Math.max(0,num(r.GrossWeight)-num(r.TareWeight))); },0);
   const fatRows = d.filter(r=>num(r.Fat_First)>0);
   const snfRows  = d.filter(r=>num(r.SNF_First)>0);
-  const fat = fatRows.length ? (fatRows.reduce((s,r)=>s+num(r.Fat_First),0)/fatRows.length).toFixed(2) : '—';
-  const snf = snfRows.length ? (snfRows.reduce((s,r)=>s+num(r.SNF_First),0)/snfRows.length).toFixed(2) : '—';
+  const fat = fatRows.length ? (fatRows.reduce((s,r)=>s+num(r.Fat_First),0)/fatRows.length).toFixed(2) : '0';
+  const snf = snfRows.length ? (snfRows.reduce((s,r)=>s+num(r.SNF_First),0)/snfRows.length).toFixed(2) : '0';
   setHTML('wb-net', `${formatIN(net)}<small>Kg</small>`);
   setHTML('wb-fat', `${fat}<small>%</small>`);
   setHTML('wb-snf', `${snf}<small>%</small>`);
@@ -684,12 +724,12 @@ async function loadRMST(){
   const snfRows2  = d.filter(r=>num(r.AvgSNF)>0);
   const fatTotalQty = fatRows2.reduce((s,r)=>s+num(r.TotalQty),0);
   const snfTotalQty = snfRows2.reduce((s,r)=>s+num(r.TotalQty),0);
-  const fat = fatTotalQty>0 ? (fatRows2.reduce((s,r)=>s+num(r.AvgFat)*num(r.TotalQty),0)/fatTotalQty).toFixed(2) : '—';
-  const snf = snfTotalQty>0 ? (snfRows2.reduce((s,r)=>s+num(r.AvgSNF)*num(r.TotalQty),0)/snfTotalQty).toFixed(2) : '—';
+  const fat = fatTotalQty>0 ? (fatRows2.reduce((s,r)=>s+num(r.AvgFat)*num(r.TotalQty),0)/fatTotalQty).toFixed(2) : '0';
+  const snf = snfTotalQty>0 ? (snfRows2.reduce((s,r)=>s+num(r.AvgSNF)*num(r.TotalQty),0)/snfTotalQty).toFixed(2) : '0';
   const tanks = new Set(d.map(r=>r.RMSID)).size;
   setHTML('rmst-net', `${formatIN(Math.round(qty))}<small>Kg</small>`);
-  setHTML('rmst-fat', fat !== '—' ? `${fat}<small>%</small>` : '—');
-  setHTML('rmst-snf', snf !== '—' ? `${snf}<small>%</small>` : '—');
+  setHTML('rmst-fat', `${fat}<small>%</small>`);
+  setHTML('rmst-snf', `${snf}<small>%</small>`);
   clearNone('#rmst-net,#rmst-fat,#rmst-snf');
   setFoot('rmst-foot', `<span class="chip green">${tanks} tanks</span><span class="chip blue">Feeds dispatch ↓</span>`);
 }
@@ -698,14 +738,17 @@ async function loadRMST(){
 async function loadCream(){
   const d = await fetchData('cream');
   if(!d) return;
-  // Only "Cream received" maps unambiguously (LineType D1=12, received line).
-  // "To RMST" and "To Product" are left as their original "—" placeholder —
-  // the endpoint doesn't provide a confirmed value for either.
-  const received = d.find(r=>r.LineType && r.LineType.includes('Received'));
+  // Cream flows through the Cream Storage Tank (CST). Endpoint lines:
+  //   Received  → CBT → CST   → "Cream received"
+  //   To RMST   → CST → RMST  → "To RMST"
+  //   To Product→ CST → Product Dairy → "To Product"
+  const received  = d.find(r=>r.LineType && r.LineType.includes('Received'));
+  const toRmst    = d.find(r=>r.LineType && r.LineType.includes('RMST'));
+  const toProduct = d.find(r=>r.LineType && r.LineType.includes('Product'));
   const entries  = d.reduce((s,r)=>s+int(r.Entries),0);
-  const qtyIn  = received ? num(received.TotalQty) : d.reduce((s,r)=>s+num(r.TotalQty),0);
-  setHTML('cream-qty', `${formatIN(Math.round(qtyIn))}<small>Kg</small>`);
-  clearNone('#cream-qty');
+  if(received){ setHTML('cream-qty', `${formatIN(Math.round(num(received.TotalQty)))}<small>Kg</small>`); clearNone('#cream-qty'); }
+  if(toRmst){ setHTML('cream-to-rmst', `${formatIN(Math.round(num(toRmst.TotalQty)))}<small>Kg</small>`); clearNone('#cream-to-rmst'); }
+  if(toProduct){ setHTML('cream-to-product', `${formatIN(Math.round(num(toProduct.TotalQty)))}<small>Kg</small>`); clearNone('#cream-to-product'); }
   setFoot('cream-foot', `<span class="chip green">${entries} entries</span><span class="chip cream">Cream in / out</span>`);
 }
 
@@ -716,9 +759,7 @@ async function loadPMST(){
   const qty = d.reduce((s,r)=>s+num(r.TotalProcessed),0);
   const tanks = new Set(d.map(r=>r.PMSID)).size;
   setHTML('pmst-net', `${formatIN(Math.round(qty))}<small>Kg</small>`);
-  setHTML('pmst-fat', '—');
-  setHTML('pmst-snf', '—');
-  clearNone('#pmst-net,#pmst-fat,#pmst-snf');
+  clearNone('#pmst-net');
   setFoot('pmst-foot', `<span class="chip green">${tanks} tanks</span><span class="chip blue">Feeds dispatch ↓</span><span class="chip blue">Click for tank-wise details</span>`);
 }
 
@@ -742,12 +783,12 @@ async function loadHMST(){
   const hsnfRows  = d.filter(r=>num(r.AvgSNF)>0);
   const hfatQty = hfatRows.reduce((s,r)=>s+num(r.TotalQty),0);
   const hsnfQty = hsnfRows.reduce((s,r)=>s+num(r.TotalQty),0);
-  const fat = hfatQty>0 ? (hfatRows.reduce((s,r)=>s+num(r.AvgFat)*num(r.TotalQty),0)/hfatQty).toFixed(2) : '—';
-  const snf = hsnfQty>0 ? (hsnfRows.reduce((s,r)=>s+num(r.AvgSNF)*num(r.TotalQty),0)/hsnfQty).toFixed(2) : '—';
+  const fat = hfatQty>0 ? (hfatRows.reduce((s,r)=>s+num(r.AvgFat)*num(r.TotalQty),0)/hfatQty).toFixed(2) : '0';
+  const snf = hsnfQty>0 ? (hsnfRows.reduce((s,r)=>s+num(r.AvgSNF)*num(r.TotalQty),0)/hsnfQty).toFixed(2) : '0';
   const tanks = new Set(d.map(r=>r.HMSTID)).size;
   setHTML('hmst-net', `${formatIN(Math.round(qty))}<small>Kg</small>`);
-  setHTML('hmst-fat', fat !== '—' ? `${fat}<small>%</small>` : '—');
-  setHTML('hmst-snf', snf !== '—' ? `${snf}<small>%</small>` : '—');
+  setHTML('hmst-fat', `${fat}<small>%</small>`);
+  setHTML('hmst-snf', `${snf}<small>%</small>`);
   clearNone('#hmst-net,#hmst-fat,#hmst-snf');
   setFoot('hmst-foot', `<span class="chip green">${tanks} tanks</span><span class="chip blue">Click for tank-wise details</span>`);
 }
@@ -757,18 +798,53 @@ async function loadDispatch(){
   const d = await fetchData('milk-dispatch-truck');
   if(!d) return;
   const net = d.reduce((s,r)=>{ const n=num(r.NetWeight); return s+(n>0?n:Math.max(0,num(r.GrossWeight)-num(r.TareWeight))); },0);
-  const completed = d.filter(r=>r.IsCompleted).length;
-  const pct = d.length ? ((completed/d.length)*100).toFixed(1) : 0;
-  // Only the total transferred is filled. The destination split
-  // (→ Product block / → NMP / → Other unions) needs a DairyCode→destination
-  // mapping we don't have, so those rows keep their original "—" placeholder.
-  setHTML('disp-total', `${formatIN(net)}<small>Kg</small>`);
+  setHTML('disp-total', `${formatIN(Math.round(net))}<small>Kg</small>`);
   clearNone('#disp-total');
-  setFoot('disp-foot', `<span class="chip green">${completed}/${d.length} trucks · ${pct}%</span>`);
+  const prod = await fetchData('product-dispatch');
+  if(prod && prod.length){ const q=prod.reduce((s,r)=>s+num(r.TotalQty),0); setHTML('disp-product',`${formatIN(Math.round(q))}<small>Kg</small>`); clearNone('#disp-product'); }
+  const nmp = await fetchData('nmp-dispatch');
+  if(nmp && nmp.length){ const q=nmp.reduce((s,r)=>s+num(r.TotalQty),0); setHTML('disp-nmp',`${formatIN(Math.round(q))}<small>Kg</small>`); clearNone('#disp-nmp'); }
+  const others = await fetchData('milk-dispatch');
+  if(others && others.length){
+    const milkProducts=['RAW MILK','PAST MILK','SKIM MILK','HOMOGENISED MILK'];
+    const q=others.filter(r=>milkProducts.includes((r.ProductCode||'').toUpperCase())&&!(r.DairyCode||'').toUpperCase().includes('NMP')).reduce((s,r)=>s+num(r.TotalQty),0);
+    setHTML('disp-other',`${formatIN(Math.round(q))}<small>Kg</small>`); clearNone('#disp-other');
+  }
+}
+
+/* ---------- Stage 6 · AI Production ---------- */
+async function loadAIProduction(){
+  try{
+    const res = await fetch(`${BASE_URL}/papi/bangalore/ai-production?filter=${getActiveFilter()}`);
+    const json = await res.json();
+    if(!json.success) return;
+    const { milkKg, curdKg, milkPkts, curdPkts } = json;
+    if(milkKg > 0){
+      setHTML('ai-milk', `${formatIN(Math.round(milkKg))}<small> Kg</small>`);
+      setFoot('ai-milk-foot', `<span class="chip ai">Counted by AI</span><span class="chip green">${formatIN(milkPkts)} pkts</span>`);
+    }
+    if(curdKg > 0){
+      setHTML('ai-curd', `${formatIN(Math.round(curdKg))}<small> Kg</small>`);
+      setFoot('ai-curd-foot', `<span class="chip ai">Counted by AI</span><span class="chip green">${formatIN(curdPkts)} pkts</span>`);
+    }
+  }catch(e){}
 }
 
 /* ---------- Load everything ---------- */
+function resetCards(){
+  ['sum-in','sum-out','sum-used'].forEach(id=>setText(id,'0'));
+  ['truck-count','used-meta','dispatch-count'].forEach(id=>setHTML(id,'Awaiting data'));
+  ['wb-net','rmst-net','cream-qty','cream-to-rmst','cream-to-product','pmst-net','curd-qty','hmst-net','disp-total'].forEach(id=>setHTML(id,'0<small>Kg</small>'));
+  ['wb-fat','wb-snf','rmst-fat','rmst-snf','cream-fat','pmst-fat','pmst-snf','hmst-fat','hmst-snf'].forEach(id=>setHTML(id,'0<small>%</small>'));
+  ['cream-entries','disp-trucks','disp-completed','disp-avg'].forEach(id=>setHTML(id,'0'));
+  ['wb-foot','rmst-foot','cream-foot','pmst-foot','curd-foot','hmst-foot','disp-foot'].forEach(id=>setFoot(id,''));
+  setHTML('ai-milk','—<small> Kg</small>'); setHTML('ai-curd','—<small> Kg</small>');
+  setFoot('ai-milk-foot','<span class="chip ai">Counted by AI</span><span class="chip mute">Awaiting data</span>');
+  setFoot('ai-curd-foot','<span class="chip ai">Counted by AI</span><span class="chip mute">Awaiting data</span>');
+}
+
 function loadAllData(){
+  resetCards();
   loadSummary();
   loadWeighBridge();
   loadRMST();
@@ -777,17 +853,65 @@ function loadAllData(){
   loadCurd();
   loadHMST();
   loadDispatch();
+  loadAIProduction();
 }
-loadAllData();
-document.getElementById('sync-time').textContent = 'Last sync ' + new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-
-/* Pass active filter to detail pages */
+/* Restore filter from sessionStorage on page load */
+(function(){
+  const f = sessionStorage.getItem('dashFilter');
+  if(f){
+    if(f.startsWith('custom')){
+      const cp = new URLSearchParams(f.replace(/^custom&?/,''));
+      const sd = cp.get('start'), ed = cp.get('end');
+      if(sd && ed){
+        document.getElementById('startDate').value = sd;
+        document.getElementById('endDate').value = ed;
+        document.getElementById('startTime').value = (cp.get('startTime')||'04:45:00').slice(0,5);
+        document.getElementById('endTime').value = (cp.get('endTime')||'04:44:00').slice(0,5);
+        document.querySelectorAll('.pill').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');});
+        document.querySelector('[data-custom]').classList.add('active');
+        document.querySelector('[data-custom]').setAttribute('aria-selected','true');
+      }
+    } else {
+      const pill = document.querySelector(`.pill[data-filter="${f}"]`);
+      if(pill){
+        document.querySelectorAll('.pill').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');});
+        pill.classList.add('active'); pill.setAttribute('aria-selected','true');
+      }
+    }
+  }
+  loadAllData();
+})();
+function heroDateLabel(){
+  const f = getActiveFilter();
+  const el = document.getElementById('hero-date');
+  if(!el) return;
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmt = d => { const x=new Date(d); return x.getDate()+' '+MONTHS[x.getMonth()]+' '+x.getFullYear(); };
+  const fmtD = d => d.getDate()+' '+MONTHS[d.getMonth()]+' '+d.getFullYear();
+  const today = new Date();
+  const yest = new Date(today); yest.setDate(yest.getDate()-1);
+  if(f === 'yesterday'){
+    el.textContent = fmtD(yest);
+  } else if(f === 'week'){
+    const mon = new Date(today); mon.setDate(today.getDate() - today.getDay() + (today.getDay()===0?-6:1));
+    el.textContent = fmtD(mon) + ' – ' + fmtD(today);
+  } else if(f === 'month'){
+    const s = new Date(today.getFullYear(), today.getMonth(), 1);
+    el.textContent = fmtD(s) + ' – ' + fmtD(today);
+  } else if(f.startsWith('custom')){
+    const cp = new URLSearchParams(f.replace(/^custom&?/,''));
+    const sd = cp.get('start'), ed = cp.get('end');
+    if(sd && ed) el.textContent = fmt(sd) + ' – ' + fmt(ed);
+  }
+}
 function updateDetailLinks(){
   const f = getActiveFilter();
+  sessionStorage.setItem('dashFilter', f);
   document.querySelectorAll('[data-detail]').forEach(a=>{
     const base = a.getAttribute('href').split('?')[0];
     a.setAttribute('href', base + '?filter=' + f);
   });
+  heroDateLabel();
 }
 updateDetailLinks();
 
@@ -833,5 +957,8 @@ document.addEventListener('click',(ev)=>{
   }
 });
 </script>
+<script>function downloadPDF(){const opt={margin:0.3,filename:document.title+'.pdf',image:{type:'png'},html2canvas:{scale:3,useCORS:true,backgroundColor:'#ffffff',logging:false},jsPDF:{unit:'in',format:'a4',orientation:'landscape'}};html2pdf().set(opt).from(document.body).save();}
+</script>
+<script>(function(){var t=new Date();var mn=new Date(t);mn.setMonth(mn.getMonth()-4);var fmt=d=>d.toISOString().split("T")[0];["startDate","endDate"].forEach(function(id){var el=document.getElementById(id);if(el){el.min=fmt(mn);el.max=fmt(t);}});})();/*dateLimit*/</script>
 </body>
 </html>
