@@ -71,7 +71,7 @@ button[data-tab].soon::after{content:"Coming soon";font-size:9px;font-weight:600
   <!-- POST DAIRY -->
   <section class="panel" id="postdairy" style="padding:0;margin:0;border:none;background:none;box-shadow:none">
     <iframe
-      src="http://129.159.231.57:8080/bangalore-dairy-dashboard.html?filter=week"
+      src="http://129.159.231.57:8080/bangalore-dairy-dashboard.html?filter=yesterday"
       title="Bangalore Dairy Dashboard"
       style="width:100%;min-height:100vh;height:1200px;border:none;display:block"
       loading="lazy">
@@ -213,11 +213,11 @@ window.addEventListener('DOMContentLoaded', function() {
   async function load() {
     try {
       const [proc, rmst, pmst, ai, disp] = await Promise.all([
-        j('/api/bangalore/milk-procurement-summary?filter=' + FILTER),
+        j('/api/bangalore/milk-procurement-summary?filter=' + FILTER_INTAKE),
         j('/api/bangalore/rmst?filter=' + FILTER_INTAKE),
         j('/api/bangalore/pmst?filter=' + FILTER_INTAKE),
         j('/api/bangalore/ai-production?filter=' + FILTER),
-        j('/api/bangalore/milk-dispatch?filter=' + FILTER)
+        j('/api/bangalore/milk-dispatch?filter=' + FILTER_INTAKE)
       ]);
 
       // Use milk-procurement-summary totalReceived for intake (works for yesterday)
@@ -235,7 +235,7 @@ window.addEventListener('DOMContentLoaded', function() {
       $('s-dispatch').textContent       = fmtL(dispL);
 
       const k = $('k-intake'); if (k) k.textContent = fmtL(intake);
-      const kd = $('k-intake-d'); if (kd) kd.textContent = 'yesterday · calendar day';
+      const kd = $('k-intake-d'); if (kd) kd.textContent = 'yesterday';
 
       renderSilos(); renderHourly(); renderDispType();
 
