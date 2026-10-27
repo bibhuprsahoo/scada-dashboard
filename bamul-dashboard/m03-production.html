@@ -212,18 +212,20 @@ window.addEventListener('DOMContentLoaded', function() {
 
   async function load() {
     try {
-      const [proc, rmst, pmst, ai, disp] = await Promise.all([
-        j('/api/bangalore/milk-procurement-summary?filter=' + FILTER_INTAKE),
+      const [wb, rmst, pmst, ai, disp] = await Promise.all([
+        j('/api/bangalore/truck-entry?filter=' + FILTER_INTAKE),
         j('/api/bangalore/rmst?filter=' + FILTER_INTAKE),
         j('/api/bangalore/pmst?filter=' + FILTER_INTAKE),
         j('/api/bangalore/ai-production?filter=' + FILTER),
         j('/api/bangalore/milk-dispatch?filter=' + FILTER_INTAKE)
       ]);
 
-      // Use milk-procurement-summary totalReceived for intake (works for yesterday)
-      const intake  = num(proc.totalReceived);
-      const chill   = (rmst.data || []).reduce((a, s) => a + num(s.TotalQty), 0) || intake;
-      const past    = (pmst.data || []).reduce((a, s) => a + num(s.TotalProcessed), 0) || '—';
+      // Use truck-entry (weigh bridge API) for intake — same as Post Dairy
+      const wbTotal = (wb.data || []).reduce((a, r) => {
+        const n = num(r.NetWeight); return a + (n > 0 ? n : Math.max(0, num(r.GrossWeight) - num(r.TareWeight)));
+      }, 0);
+      const intake  = wbTotal;
+      const chill   = (rmst.data || []).reduce((a, s) => a + num(s.TotalQty), 0);
       const pouches  = num(ai.milkPkts) + num(ai.curdPkts);
       const MILK     = ['RAW MILK','PAST MILK','SKIM MILK','SKIM MILK POWDER','Homogenised milk'];
       const dispL    = (disp.data || []).filter(d => MILK.includes(d.ProductCode)).reduce((a, d) => a + num(d.TotalQty), 0);
@@ -235,7 +237,7 @@ window.addEventListener('DOMContentLoaded', function() {
       $('s-dispatch').textContent       = fmtL(dispL);
 
       const k = $('k-intake'); if (k) k.textContent = fmtL(intake);
-      const kd = $('k-intake-d'); if (kd) kd.textContent = 'yesterday';
+      const kd = $('k-intake-d'); if (kd) kd.textContent = 'yesterday · weigh bridge';
 
       renderSilos(); renderHourly(); renderDispType();
 
