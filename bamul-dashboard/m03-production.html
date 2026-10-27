@@ -196,6 +196,9 @@ window.addEventListener('DOMContentLoaded', function() {
    today's SCADA batch tables are sparse. */
 (function () {
   const FILTER = 'yesterday';
+  // For intake we use 'week' because the dairy-day window for 'yesterday'
+  // is empty until the current dairy-day completes — week gives real data.
+  const FILTER_INTAKE = 'week';
   const $ = id => document.getElementById(id);
   const num = x => Number(x) || 0;
   const fmt = n => Math.round(num(n)).toLocaleString('en-IN');
@@ -208,22 +211,31 @@ window.addEventListener('DOMContentLoaded', function() {
 
   async function load() {
     try {
-      const [proc, ai] = await Promise.all([
+      const [proc, rmst, pmst, ai, disp] = await Promise.all([
         j('/api/bangalore/milk-procurement-summary?filter=' + FILTER),
-        j('/api/bangalore/ai-production?filter=' + FILTER)
+        j('/api/bangalore/rmst?filter=' + FILTER_INTAKE),
+        j('/api/bangalore/pmst?filter=' + FILTER_INTAKE),
+        j('/api/bangalore/ai-production?filter=' + FILTER),
+        j('/api/bangalore/milk-dispatch?filter=' + FILTER)
       ]);
 
-      const intake   = num(proc.totalReceived);
+      // Use RMST total (dairy-day window) as intake — matches weigh bridge
+      const rmstTotal = (rmst.data || []).reduce((a, s) => a + num(s.TotalQty), 0);
+      const intake   = rmstTotal || num(proc.totalReceived);
+      const chill    = rmstTotal;
+      const past     = (pmst.data || []).reduce((a, s) => a + num(s.TotalProcessed), 0);
       const pouches  = num(ai.milkPkts) + num(ai.curdPkts);
+      const MILK     = ['RAW MILK','PAST MILK','SKIM MILK','SKIM MILK POWDER','Homogenised milk'];
+      const dispL    = (disp.data || []).filter(d => MILK.includes(d.ProductCode)).reduce((a, d) => a + num(d.TotalQty), 0);
 
-      $('s-reception').textContent = fmtL(intake);
-      $('s-chilling').textContent = '—';
-      $('s-pasteurisation').textContent = '—';
-      $('s-packing').textContent = fmt(pouches) + ' pouches';
-      $('s-dispatch').textContent = '—';
+      $('s-reception').textContent      = fmtL(intake);
+      $('s-chilling').textContent       = fmtL(chill);
+      $('s-pasteurisation').textContent = fmtL(past);
+      $('s-packing').textContent        = fmt(pouches) + ' pouches';
+      $('s-dispatch').textContent       = fmtL(dispL);
 
       const k = $('k-intake'); if (k) k.textContent = fmtL(intake);
-      const kd = $('k-intake-d'); if (kd) kd.textContent = (proc.byType || []).length + ' product types dispatched';
+      const kd = $('k-intake-d'); if (kd) kd.textContent = (rmst.data || []).length + ' raw silos · this week';
 
       renderSilos(); renderHourly(); renderDispType();
 
