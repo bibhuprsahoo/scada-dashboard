@@ -465,8 +465,6 @@ a.panel{text-decoration:none;color:inherit;display:flex}
       <div>
         <div class="tag">Milk dispatched</div>
         <div class="value num"><span id="sum-out">—</span><small>Kg</small></div>
-        <div class="meta" id="dispatch-count">Awaiting data</div>
-        <div class="meta" id="dispatch-count">Awaiting data</div>
       </div>
     </div>
     </div>
@@ -685,7 +683,7 @@ async function loadSummary(){
   setText('sum-used',used    > 0 ? formatIN(used)    : '0');
   setHTML('truck-count', trucks > 0 ? `From <b>${trucks} trucks-trips</b>` : 'Awaiting data');
   setHTML('used-meta', milkIn > 0 ? `<b>${((used/milkIn)*100).toFixed(1)}%</b> of received milk` : 'Awaiting data');
-  setHTML('dispatch-count', dispatched > 0 ? `<b>${dispatched}</b> trucks dispatched` : 'Awaiting data');
+  setHTML('dispatch-count', dispatched > 0 ? `<b>${dispatched}</b> trucks dispatched` : '');
 }
 
 /* ---------- Stage 1 · Weigh Bridge ---------- */
@@ -836,7 +834,7 @@ async function loadAIProduction(){
 /* ---------- Load everything ---------- */
 function resetCards(){
   ['sum-in','sum-out','sum-used'].forEach(id=>setText(id,'0'));
-  ['truck-count','used-meta','dispatch-count'].forEach(id=>setHTML(id,'Awaiting data'));
+  ['truck-count','used-meta'].forEach(id=>setHTML(id,'Awaiting data'));
   ['wb-net','rmst-net','cream-qty','cream-to-rmst','cream-to-product','pmst-net','curd-qty','hmst-net','disp-total'].forEach(id=>setHTML(id,'0<small>Kg</small>'));
   ['wb-fat','wb-snf','rmst-fat','rmst-snf','cream-fat','pmst-fat','pmst-snf','hmst-fat','hmst-snf'].forEach(id=>setHTML(id,'0<small>%</small>'));
   ['cream-entries','disp-trucks','disp-completed','disp-avg'].forEach(id=>setHTML(id,'0'));
