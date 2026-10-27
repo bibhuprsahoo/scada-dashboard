@@ -10,26 +10,26 @@
 :root{--navy:#0b3a5c;--blue:#0f6fb5;--blue-2:#1c8ad6;--sky:#1e9be0;--sky-soft:#e8f5fd;--white:#fff;--text:#10314d;--muted:#5a7186;--line:#dbe8f3}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;
-  background:#f6fbff;
+  background:#1e88d8;
   font-family:'Inter','Segoe UI',system-ui,sans-serif;color:var(--text)}
 .page{display:grid;grid-template-rows:50vh 50vh;width:100%;height:100%}
 img{background:var(--sky-soft)}
 
 /* TOP : WELCOME | PLANT | CHAIRMAN */
 .top{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.4fr 26vw;
-  border-bottom:3px solid var(--sky);background:linear-gradient(160deg,#ffffff 0%,#e3f3fd 100%)}
+  background:#1e88d8}
 .welcome{padding:2.4vh 2.5vw;display:flex;flex-direction:column;min-width:0}
-.welcome img.logo{height:12vh;width:auto;max-width:100%;object-fit:contain;align-self:flex-start;background:transparent;border-radius:8px}
+.welcome img.logo{height:12vh;width:auto;max-width:100%;object-fit:contain;align-self:flex-start;background:#fff;padding:1vh 1.2vw;border-radius:1.4vh;box-shadow:0 .6vh 2vh rgba(10,34,64,.18)}
 .welcome .text{margin:auto 0;display:flex;flex-direction:column;gap:1.6vh;padding-left:1vw}
-.welcome h1{font-family:'Bricolage Grotesque',sans-serif;font-size:4.4vh;font-weight:800;letter-spacing:-.015em;line-height:1.12;color:var(--navy)}
-.welcome p{font-size:1.9vh;color:var(--muted);line-height:1.4}
+.welcome h1{font-family:'Bricolage Grotesque',sans-serif;font-size:4.4vh;font-weight:800;letter-spacing:-.015em;line-height:1.12;color:#fff}
+.welcome p{font-size:1.9vh;color:rgba(255,255,255,.92);line-height:1.4}
 .enter{align-self:flex-start;display:inline-flex;align-items:center;gap:1vw;margin-top:1vh;
-  background:var(--sky);color:#fff;text-decoration:none;font-weight:700;font-size:1.9vh;
-  padding:1.3vh 1.6vw;border-radius:99px;transition:transform .15s,box-shadow .15s;box-shadow:0 .6vh 2vh rgba(30,155,224,.35)}
-.enter:hover{transform:translateX(3px);box-shadow:0 0 0 .6vh rgba(30,155,224,.2)}
+  background:#fff;color:var(--blue);text-decoration:none;font-weight:700;font-size:1.9vh;
+  padding:1.3vh 1.6vw;border-radius:99px;transition:transform .15s,box-shadow .15s;box-shadow:0 .6vh 2vh rgba(10,34,64,.2)}
+.enter:hover{transform:translateX(3px);box-shadow:0 0 0 .6vh rgba(255,255,255,.25)}
 .enter svg{width:2vh;height:2vh}
 
-.plant{position:relative;overflow:hidden;min-width:0;border-left:1px solid var(--line);border-right:1px solid var(--line);background:var(--sky-soft)}
+.plant{position:relative;overflow:hidden;min-width:0;border-left:1px solid rgba(255,255,255,.35);border-right:1px solid rgba(255,255,255,.35);background:var(--sky-soft)}
 .plant img{width:100%;height:100%;object-fit:cover;object-position:center 65%;display:block}
 .plant::after{content:"";position:absolute;left:0;right:0;bottom:0;height:35%;
   background:linear-gradient(to top,rgba(10,34,64,.9) 0%,rgba(10,34,64,0) 100%);pointer-events:none}
@@ -42,15 +42,15 @@ img{background:var(--sky-soft)}
 .plant .stats span{font-size:1.25vh;color:rgba(255,255,255,.8);letter-spacing:.06em}
 
 .chairman{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.6vh 1.6vw;min-width:0;
-  background:radial-gradient(ellipse 80% 60% at 50% 35%,rgba(30,155,224,.16) 0%,rgba(30,155,224,0) 70%)}
+  background:radial-gradient(ellipse 80% 60% at 50% 35%,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 70%)}
 .chairman img{width:100%;height:33vh;object-fit:cover;object-position:center 20%;border-radius:1.4vh;
-  border:.35vh solid var(--sky);box-shadow:0 1vh 4vh rgba(16,49,77,.18);background:#fff}
-.chairman .name{font-family:'Bricolage Grotesque',sans-serif;font-size:min(4.6vh,2.2vw);font-weight:800;line-height:1.05;letter-spacing:-.02em;white-space:nowrap;margin-top:1.6vh;text-align:center;color:var(--navy)}
-.chairman .tag{display:inline-block;margin-top:1vh;font-size:1.5vh;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:#fff;background:var(--sky);padding:.6vh 1.1vw;border-radius:99px}
+  border:.35vh solid #fff;box-shadow:0 1vh 4vh rgba(10,34,64,.25);background:#fff}
+.chairman .name{font-family:'Bricolage Grotesque',sans-serif;font-size:min(4.6vh,2.2vw);font-weight:800;line-height:1.05;letter-spacing:-.02em;white-space:nowrap;margin-top:1.6vh;text-align:center;color:#fff}
+.chairman .tag{display:inline-block;margin-top:1vh;font-size:1.5vh;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--blue);background:#fff;padding:.6vh 1.1vw;border-radius:99px}
 
 /* BOTTOM : MD + DIRECTORS */
 .board{display:flex;flex-direction:column;min-height:0}
-.section-label{padding:1.6vh 3vw 0;font-size:1.4vh;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--blue-2);text-align:center}
+.section-label{padding:1.6vh 3vw 0;font-size:1.4vh;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:#fff;text-align:center}
 .grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(2,1fr);gap:1.4vh .8vw;padding:1.2vh 2.5vw 2vh}
 .card{min-width:0;min-height:0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:1.2vh;box-shadow:0 .2vh .4vh rgba(16,49,77,.04),0 .8vh 2.4vh rgba(16,49,77,.06);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7vh;padding:1vh .5vw}
@@ -122,19 +122,19 @@ img{background:var(--sky-soft)}
     <div class="section-label">MD and Board of Directors</div>
     <div class="grid">
       <div class="card vc"><img src="images/tm015.png" loading="eager" alt=""><div class="name">Sri H.K Manjunath</div><div class="role">Managing Director</div></div>
-      <div class="card vc"><img src="images/tm02.png" loading="eager" alt=""><div class="name">Dr. Rajanna</div><div class="role">Vice Chairman</div></div>
-      <div class="card"><img src="images/tm03.png" loading="eager" alt=""><div class="name">Sri P. Nagaraju</div><div class="role">Director (Ramanagara)</div></div>
-      <div class="card"><img src="images/tm04.png" loading="eager" alt=""><div class="name">Sri R.K. Ramesh</div><div class="role">Director (Anekal)</div></div>
-      <div class="card"><img src="images/tm05.png" loading="eager" alt=""><div class="name">Sri M. Manjunath</div><div class="role">Director (Bengaluru East)</div></div>
-      <div class="card"><img src="images/tm06.png" loading="eager" alt=""><div class="name">Sri Lingesh Kumar</div><div class="role">Director (Channapatna)</div></div>
-      <div class="card"><img src="images/tm07.png" loading="eager" alt=""><div class="name">Sri B.C Anand Kumar</div><div class="role">Director (Doddaballapura)</div></div>
-      <div class="card"><img src="images/tm08.png" loading="eager" alt=""><div class="name">Sri H.S Harish Kumar</div><div class="role">Director (Harohalli)</div></div>
-      <div class="card"><img src="images/tm09.png" loading="eager" alt=""><div class="name">Sri H.N Ashok</div><div class="role">Director (Magadi)</div></div>
-      <div class="card"><img src="images/tm010.png" loading="eager" alt=""><div class="name">Sri K.M Krishnaiah</div><div class="role">Director (Bengaluru South)</div></div>
-      <div class="card"><img src="images/tm011.png" loading="eager" alt=""><div class="name">Sri K.R Satish Kadathanamale</div><div class="role">Director (Bengaluru North)</div></div>
-      <div class="card"><img src="images/tm012.png" loading="eager" alt=""><div class="name">Sri S.P Muniraju</div><div class="role">Director (Devanahalli)</div></div>
-      <div class="card"><img src="images/tm013.png" loading="eager" alt=""><div class="name">Sri B.V Satish Gowda</div><div class="role">Director (Hosakote)</div></div>
-      <div class="card"><img src="images/tm014.png" loading="eager" alt=""><div class="name">Sri Byre Gowda</div><div class="role">Director (Nelamangala)</div></div>
+      <div class="card vc"><img src="images/tm07.png" loading="eager" alt=""><div class="name">Dr. Rajanna</div><div class="role">Vice Chairman</div></div>
+      <div class="card"><img src="images/tm08.png" loading="eager" alt=""><div class="name">Sri P. Nagaraju</div><div class="role">Director (Ramanagara)</div></div>
+      <div class="card"><img src="images/tm09.png" loading="eager" alt=""><div class="name">Sri R.K. Ramesh</div><div class="role">Director (Anekal)</div></div>
+      <div class="card"><img src="images/tm010.png" loading="eager" alt=""><div class="name">Sri M. Manjunath</div><div class="role">Director (Bengaluru East)</div></div>
+      <div class="card"><img src="images/tm011.png" loading="eager" alt=""><div class="name">Sri Lingesh Kumar</div><div class="role">Director (Channapatna)</div></div>
+      <div class="card"><img src="images/tm012.png" loading="eager" alt=""><div class="name">Sri B.C Anand Kumar</div><div class="role">Director (Doddaballapura)</div></div>
+      <div class="card"><img src="images/tm013.png" loading="eager" alt=""><div class="name">Sri H.S Harish Kumar</div><div class="role">Director (Harohalli)</div></div>
+      <div class="card"><img src="images/tm014.png" loading="eager" alt=""><div class="name">Sri H.N Ashok</div><div class="role">Director (Magadi)</div></div>
+      <div class="card"><img src="images/tm02.png" loading="eager" alt=""><div class="name">Sri K.M Krishnaiah</div><div class="role">Director (Bengaluru South)</div></div>
+      <div class="card"><img src="images/tm03.png" loading="eager" alt=""><div class="name">Sri K.R Satish Kadathanamale</div><div class="role">Director (Bengaluru North)</div></div>
+      <div class="card"><img src="images/tm04.png" loading="eager" alt=""><div class="name">Sri S.P Muniraju</div><div class="role">Director (Devanahalli)</div></div>
+      <div class="card"><img src="images/tm05.png" loading="eager" alt=""><div class="name">Sri B.V Satish Gowda</div><div class="role">Director (Hosakote)</div></div>
+      <div class="card"><img src="images/tm06.png" loading="eager" alt=""><div class="name">Sri Byre Gowda</div><div class="role">Director (Nelamangala)</div></div>
     </div>
   </section>
 
