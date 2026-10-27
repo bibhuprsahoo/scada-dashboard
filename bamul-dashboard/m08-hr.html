@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HR &amp; Manpower · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 08 · HR &amp; Manpower</div><h1>1,842 people across three plants and the field</h1>
+    <p>Sanctioned vs working strength, rosters, contract labour and the retirement pipeline.</p></div>
+    <div class="filters"><select aria-label="Location"><option>All locations</option><option>Mega Dairy</option><option>Kanakapura</option><option>Bangalore Dairy</option><option>Field</option></select></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">1,842</div><div class="l">Total manpower</div></div>
+    <div class="kpi"><div class="v">1,284</div><div class="l">On the union's rolls</div></div>
+    <div class="kpi"><div class="v">558</div><div class="l">Contract and seasonal</div></div>
+    <div class="kpi good"><div class="v">94.6%</div><div class="l">Attendance rate</div></div>
+  </div>
+
+  <nav class="tabs" data-tabs>
+    <button data-tab="strength">Strength</button>
+    <button data-tab="attendance">Shifts &amp; attendance</button>
+    <button data-tab="contract">Contract labour</button>
+    <button data-tab="training">Training &amp; retirement</button>
+  </nav>
+
+  <section class="panel" id="strength">
+    <div class="g g21">
+      <div class="card"><h3>Sanctioned vs working strength</h3><div class="sub">By category</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Category</th><th class="n">Sanction</th><th class="n">Working</th><th class="n">Vacant</th><th>Fill</th></tr></thead>
+          <tbody>
+            <tr><td>Plant operations — processing and packing</td><td class="n">742</td><td class="n">698</td><td class="n t-warn">44</td><td style="min-width:110px"><div class="meter"><span style="--v:94%"></span></div></td></tr>
+            <tr><td>Procurement and field supervision</td><td class="n">386</td><td class="n">352</td><td class="n t-warn">34</td><td><div class="meter"><span style="--v:91%"></span></div></td></tr>
+            <tr><td>Veterinary and animal husbandry</td><td class="n">184</td><td class="n">168</td><td class="n">16</td><td><div class="meter"><span style="--v:91%"></span></div></td></tr>
+            <tr><td>Quality and laboratory</td><td class="n">96</td><td class="n">91</td><td class="n">5</td><td><div class="meter"><span style="--v:95%"></span></div></td></tr>
+            <tr><td>Transport and distribution</td><td class="n">248</td><td class="n">226</td><td class="n t-warn">22</td><td><div class="meter"><span style="--v:91%"></span></div></td></tr>
+            <tr><td>Accounts, administration and IT</td><td class="n">142</td><td class="n">131</td><td class="n">11</td><td><div class="meter"><span style="--v:92%"></span></div></td></tr>
+            <tr><td>Contract and seasonal labour</td><td class="n">—</td><td class="n">558</td><td class="n">—</td><td>—</td></tr>
+            <tr class="total"><td>Total</td><td class="n">1,798</td><td class="n">2,224</td><td class="n">132</td><td></td></tr>
+          </tbody></table></div>
+        <div class="note warn" style="margin-top:14px"><span class="ic">!</span><span>The category rows sum to <b>1,666 regular + 558 contract = 2,224</b>, but the headline is 1,842 (1,284 + 558). The two need reconciling before go-live.</span></div></div>
+      <div class="card"><h3>Mix</h3><div class="sub">Headline split</div>
+        <div class="donut-wrap" style="justify-content:center"><div class="donut" style="--seg:#1e9be0 0 70%,#e3a21a 70% 100%"><div class="c"><b>1,842</b><span>people</span></div></div></div>
+        <div class="legend" style="margin-top:14px"><span><i style="background:#1e9be0"></i>Union rolls · 1,284 (70%)</span><span><i style="background:#e3a21a"></i>Contract &amp; seasonal · 558 (30%)</span></div>
+        <dl class="kv" style="margin-top:18px"><dt>Manpower cost / L</dt><dd>₹1.42</dd><dt>Avg age (rolls)</dt><dd>46.2 years</dd></dl></div>
+    </div>
+  </section>
+
+  <section class="panel" id="attendance">
+    <div class="card"><h3>Attendance by line — today</h3><div class="sub">Shift rosters vs present</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Plant · line</th><th>Shift</th><th class="n">Rostered</th><th class="n">Present</th><th>Attendance</th></tr></thead>
+        <tbody>
+          <tr><td>Mega Dairy · Reception</td><td>B</td><td class="n">42</td><td class="n">41</td><td style="min-width:120px"><div class="meter"><span style="--v:98%;background:var(--good)"></span></div></td></tr>
+          <tr><td>Mega Dairy · Processing</td><td>B</td><td class="n">68</td><td class="n">64</td><td><div class="meter"><span style="--v:94%"></span></div></td></tr>
+          <tr><td>Mega Dairy · Packing</td><td>B</td><td class="n">96</td><td class="n">86</td><td><div class="meter"><span style="--v:90%;background:var(--warn)"></span></div></td></tr>
+          <tr><td>Kanakapura · Ghee</td><td>B</td><td class="n">24</td><td class="n">23</td><td><div class="meter"><span style="--v:96%"></span></div></td></tr>
+          <tr><td>Bangalore Dairy · Curd</td><td>B</td><td class="n">31</td><td class="n">28</td><td><div class="meter"><span style="--v:90%;background:var(--warn)"></span></div></td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <section class="panel" id="contract">
+    <div class="g g2">
+      <div class="card"><h3>Contract deployment</h3><div class="sub">558 workers by area</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">Packing</span><span class="trk"><span class="fill" data-v="100"></span></span><span class="val">232</span></div>
+          <div class="bar"><span class="lab">Loading</span><span class="trk"><span class="fill" data-v="55"></span></span><span class="val">128</span></div>
+          <div class="bar"><span class="lab">Housekeeping</span><span class="trk"><span class="fill" data-v="37"></span></span><span class="val">86</span></div>
+          <div class="bar"><span class="lab">Security</span><span class="trk"><span class="fill" data-v="28"></span></span><span class="val">64</span></div>
+          <div class="bar"><span class="lab">Seasonal</span><span class="trk"><span class="fill" data-v="21"></span></span><span class="val">48</span></div>
+        </div></div>
+      <div class="card"><h3>Contract cost</h3><div class="sub">October MTD</div>
+        <dl class="kv"><dt>Wage bill</dt><dd>₹1.18 Cr</dd><dt>Agency margin</dt><dd>₹0.09 Cr</dd><dt>PF / ESI compliance</dt><dd><span class="pill ok">Verified for 4 of 5 agencies</span></dd><dt>Cost per litre</dt><dd>₹0.16</dd></dl></div>
+    </div>
+  </section>
+
+  <section class="panel" id="training">
+    <div class="g g2">
+      <div class="card"><h3>Training &amp; certification</h3><div class="sub">FY YTD</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">Food safety (FSSAI)</span><span class="trk"><span class="fill good" data-v="92"></span></span><span class="val">92%</span></div>
+          <div class="bar"><span class="lab">Boiler operation</span><span class="trk"><span class="fill" data-v="100"></span></span><span class="val">100%</span></div>
+          <div class="bar"><span class="lab">AI technicians</span><span class="trk"><span class="fill warn" data-v="74"></span></span><span class="val">74%</span></div>
+          <div class="bar"><span class="lab">Fire &amp; safety</span><span class="trk"><span class="fill" data-v="81"></span></span><span class="val">81%</span></div>
+        </div><div class="sub" style="margin:10px 0 0">2,860 training days delivered</div></div>
+      <div class="card"><h3>Retirement pipeline</h3><div class="sub">Union rolls, next 5 years</div>
+        <div class="cols" style="height:150px">
+          <div class="col"><span class="cv">48</span><span class="c" data-h="52"></span></div><div class="col"><span class="cv">61</span><span class="c" data-h="66"></span></div>
+          <div class="col"><span class="cv">74</span><span class="c" data-h="80"></span></div><div class="col"><span class="cv">92</span><span class="c" data-h="100"></span></div><div class="col"><span class="cv">85</span><span class="c" data-h="92"></span></div></div>
+        <div class="cols-x"><span>FY27</span><span>FY28</span><span>FY29</span><span>FY30</span><span>FY31</span></div>
+        <div class="note warn" style="margin-top:14px"><span class="ic">!</span><span>Skill gap: 11 of 14 boiler operators retire by FY30.</span></div></div>
+    </div>
+  </section>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: EBS HR · all figures illustrative</span></div>
+</main>
+<script src="js/app.js"></script>
+</body>
+</html>

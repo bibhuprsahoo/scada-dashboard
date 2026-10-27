@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Transportation · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<style>
+.veh{cursor:pointer}
+.veh circle.pulse{animation:vp 2s infinite;transform-origin:center;transform-box:fill-box}
+@keyframes vp{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+.map text{font:600 10px var(--body);fill:#36556f}
+.map .hub text{font:700 11px var(--head);fill:var(--navy)}
+.legend-row{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}
+.legend-row i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.stsel{background:#fff;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:4px 6px;font:500 12px var(--body)}
+.stsel option{color:var(--text)}
+.job{display:flex;flex-direction:column;gap:10px}
+.job .hd{display:flex;align-items:center;gap:12px}
+.job .n{font:800 34px var(--head)}
+</style>
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 05 · Transportation</div><h1>162 vehicles on the road, three distinct jobs</h1>
+    <p>GPS narrows the trip; the weighbridge and lab evidence it. Every alert carries a status and an owner.</p></div>
+    <div class="filters"><select aria-label="Fleet"><option>All fleets</option><option>Procurement</option><option>Marketing</option><option>Field staff</option></select></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi good"><div class="v">147</div><div class="l">Reporting now</div><div class="d">of 162 fitted</div></div>
+    <div class="kpi"><div class="v">58</div><div class="l">Procurement vehicles</div><div class="d">Tankers &amp; BMC</div></div>
+    <div class="kpi"><div class="v">64</div><div class="l">Delivery vehicles</div><div class="d">Reefer &amp; parlour</div></div>
+    <div class="kpi"><div class="v">25</div><div class="l">Field staff live</div><div class="d">of 40 · officer mobility</div></div>
+  </div>
+
+  <nav class="tabs" data-tabs>
+    <button data-tab="fleet">Fleet overview</button>
+    <button data-tab="live">Live tracker</button>
+    <button data-tab="exceptions">Exceptions &amp; integrity</button>
+    <button data-tab="water">Water risk &amp; trip efficiency</button>
+  </nav>
+
+  <!-- FLEET -->
+  <section class="panel" id="fleet">
+    <div class="g g3">
+      <div class="card job"><div class="hd"><span class="n">58</span><div><div class="kicker">Procurement</div><h3>Milk tankers &amp; BMC routes</h3></div></div>
+        <ul class="ticks"><li>58 insulated road tankers, 12,000–16,000 L</li><li>33 BMC collection routes across 3 districts</li><li>Route-wise litre-km and cost per litre</li><li>Transit temperature and pour-timing compliance</li></ul>
+        <div class="bars"><div class="bar"><span class="lab">Cost / L</span><span class="trk"><span class="fill" data-v="48"></span></span><span class="val">₹0.48</span></div><div class="bar"><span class="lab">On-time</span><span class="trk"><span class="fill good" data-v="94"></span></span><span class="val">94%</span></div></div></div>
+      <div class="card job"><div class="hd"><span class="n">64</span><div><div class="kicker">Marketing</div><h3>Chilled distribution</h3></div></div>
+        <ul class="ticks"><li>64 reefer vehicles on 71 distribution routes</li><li>Retail, franchise outlet and parlour supply</li><li>Cost per crate and per litre delivered</li><li>Route adherence against the dispatch plan</li></ul>
+        <div class="bars"><div class="bar"><span class="lab">Cost / crate</span><span class="trk"><span class="fill" data-v="62"></span></span><span class="val">₹11.2</span></div><div class="bar"><span class="lab">Adherence</span><span class="trk"><span class="fill warn" data-v="88"></span></span><span class="val">88%</span></div></div></div>
+      <div class="card job"><div class="hd"><span class="n">40</span><div><div class="kicker">Field staff</div><h3>Officer mobility</h3></div></div>
+        <ul class="ticks"><li>40 vehicles for field and veterinary staff</li><li>MPCS visits, AI rounds and camp attendance</li><li>Fuel, maintenance and km per visit</li><li>GPS track against the declared visit plan</li></ul>
+        <div class="bars"><div class="bar"><span class="lab">Km / visit</span><span class="trk"><span class="fill" data-v="36"></span></span><span class="val">18.4</span></div><div class="bar"><span class="lab">Plan match</span><span class="trk"><span class="fill good" data-v="91"></span></span><span class="val">91%</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- LIVE -->
+  <section class="panel" id="live">
+    <div class="g g21">
+      <div class="card"><div class="card-h"><div><h3>Live positions</h3><div class="sub">Schematic — swap for the GPS provider's map tiles</div></div><span class="pill ok"><span class="dot-live" style="display:inline-block;margin-right:6px;vertical-align:0"></span>Live</span></div>
+        <div class="map">
+          <svg viewBox="0 0 640 380" role="img" aria-label="Schematic map of vehicles around Bengaluru">
+            <defs><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="rgba(16,49,77,.07)"/></pattern></defs>
+            <rect width="640" height="380" fill="url(#grid)"/>
+            <!-- corridors -->
+            <g stroke="rgba(30,155,224,.35)" stroke-width="3" fill="none" stroke-linecap="round">
+              <path d="M320 190 L190 300"/><path d="M320 190 L470 300"/><path d="M320 190 L150 120"/><path d="M320 190 L500 90"/><path d="M320 190 L240 330"/><path d="M320 190 L560 210"/>
+            </g>
+            <path d="M250 249 Q262 270 236 268" stroke="var(--bad)" stroke-width="3" fill="none" stroke-dasharray="5 4"/>
+            <!-- hubs -->
+            <g class="hub"><rect x="292" y="172" width="56" height="36" rx="8" fill="#1e9be0"/><text x="320" y="194" text-anchor="middle" style="fill:#ffffff">Mega</text></g>
+            <g class="hub"><circle cx="190" cy="300" r="9" fill="#ffffff" stroke="#1e9be0" stroke-width="3"/><text x="190" y="324" text-anchor="middle">Kanakapura</text></g>
+            <text x="470" y="320" text-anchor="middle">Anekal CC</text><circle cx="470" cy="300" r="6" fill="#ffffff" stroke="#1e9be0" stroke-width="2"/>
+            <text x="150" y="108" text-anchor="middle">Dodballapur</text><circle cx="150" cy="120" r="6" fill="#ffffff" stroke="#1e9be0" stroke-width="2"/>
+            <text x="500" y="78" text-anchor="middle">Hosakote</text><circle cx="500" cy="90" r="6" fill="#ffffff" stroke="#1e9be0" stroke-width="2"/>
+            <text x="240" y="352" text-anchor="middle">Harohalli</text><circle cx="240" cy="330" r="6" fill="#ffffff" stroke="#1e9be0" stroke-width="2"/>
+            <!-- vehicles -->
+            <g class="veh"><title>KA-51-ML-4471 · inbound · ETA 0:38</title><circle class="pulse" cx="262" cy="288" r="6" fill="#13966b"/><circle cx="262" cy="288" r="6" fill="#13966b"/></g>
+            <g class="veh"><title>KA-51-ML-2238 · inbound · ETA 1:04</title><circle cx="420" cy="262" r="6" fill="#13966b"/></g>
+            <g class="veh"><title>KA-52-ML-1104 · route deviation</title><circle class="pulse" cx="238" cy="266" r="7" fill="#d9434b"/><circle cx="238" cy="266" r="7" fill="#d9434b"/></g>
+            <g class="veh"><title>KA-51-ML-8890 · outbound</title><circle cx="404" cy="146" r="6" fill="#1e9be0"/></g>
+            <g class="veh"><title>KA-53-ML-3312 · speed anomaly</title><circle cx="214" cy="290" r="6" fill="#e3a21a"/></g>
+            <g class="veh"><title>KA-51-DL-7765 · Route M-14</title><circle cx="510" cy="206" r="6" fill="#1e9be0"/></g>
+            <g class="veh"><title>KA-52-DL-4419 · late on M-07</title><circle class="pulse" cx="236" cy="156" r="6" fill="#e3a21a"/><circle cx="236" cy="156" r="6" fill="#e3a21a"/></g>
+            <g class="veh"><title>KA-53-DL-9902 · inbound</title><circle cx="452" cy="116" r="6" fill="#13966b"/></g>
+            <g class="veh"><title>KA-52-GC-5540 · no signal (last known)</title><circle cx="560" cy="210" r="6" fill="none" stroke="#d9434b" stroke-width="2" stroke-dasharray="3 2"/></g>
+          </svg>
+        </div>
+        <div class="legend-row"><span><i style="background:var(--good)"></i>Inbound OK</span><span><i style="background:var(--sky)"></i>Outbound OK</span><span><i style="background:var(--warn)"></i>Late / anomaly</span><span><i style="background:var(--bad)"></i>Deviation</span><span><i style="border:2px dashed var(--bad)"></i>No signal</span></div></div>
+      <div class="card"><h3>Status now</h3><div class="sub">147 reporting</div>
+        <div class="donut-wrap" style="justify-content:center">
+          <div class="donut" style="--seg:#13966b 0 52%,#1e9be0 52% 89%,#e3a21a 89% 96%,#d9434b 96% 100%"><div class="c"><b>147</b><span>live</span></div></div>
+        </div>
+        <div class="legend" style="margin-top:14px"><span><i style="background:#13966b"></i>Inbound · 77</span><span><i style="background:#1e9be0"></i>Outbound · 54</span><span><i style="background:#e3a21a"></i>Idle at halt · 10</span><span><i style="background:#d9434b"></i>Exception · 6</span></div>
+        <div class="note warn" style="margin-top:14px"><span class="ic">!</span><span>15 fitted units not reporting. 1 of them is on an open trip.</span></div></div>
+    </div>
+    <div class="card"><div class="card-h"><div><h3>Vehicle board</h3><div class="sub">Direction, distance remaining and ETA</div></div><input class="inp" style="width:220px" type="search" placeholder="Search vehicle or place…" data-filter="vtbl"></div>
+      <div class="tw"><table class="t" id="vtbl">
+        <thead><tr><th>Vehicle</th><th>Type</th><th>From</th><th>To</th><th>State</th><th class="n">Dist km</th><th class="n">ETA</th><th>Flag</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">KA-51-ML-4471</td><td>Tanker</td><td>BMC Harohalli</td><td>Mega Dairy</td><td>Inbound</td><td class="n">41.2</td><td class="n">0:38</td><td><span class="pill ok">OK</span></td></tr>
+          <tr><td class="mono">KA-51-ML-2238</td><td>Tanker</td><td>Chilling ctr Anekal</td><td>Mega Dairy</td><td>Inbound</td><td class="n">63.8</td><td class="n">1:04</td><td><span class="pill ok">OK</span></td></tr>
+          <tr class="flag"><td class="mono">KA-52-ML-1104</td><td>Tanker</td><td>BMC Byrapatna</td><td>Kanakapura</td><td>Inbound</td><td class="n">28.4</td><td class="n">0:31</td><td><span class="pill bad">Deviation</span></td></tr>
+          <tr><td class="mono">KA-51-ML-8890</td><td>Tanker</td><td>Mega Dairy</td><td>KMF transfer</td><td>Outbound</td><td class="n">52.6</td><td class="n">1:12</td><td><span class="pill ok">OK</span></td></tr>
+          <tr><td class="mono">KA-53-ML-3312</td><td>Tanker</td><td>BMC Kanakapura</td><td>Kanakapura</td><td>Inbound</td><td class="n">18.9</td><td class="n">0:22</td><td><span class="pill ok">OK</span></td></tr>
+          <tr><td class="mono">KA-51-DL-7765</td><td>Reefer</td><td>Mega Dairy</td><td>Route M-14</td><td>Outbound</td><td class="n">34.1</td><td class="n">0:41</td><td><span class="pill ok">OK</span></td></tr>
+          <tr class="flag"><td class="mono">KA-52-DL-4419</td><td>Reefer</td><td>Mega Dairy</td><td>Route M-07</td><td>Outbound</td><td class="n">22.7</td><td class="n">0:29</td><td><span class="pill warn">Late</span></td></tr>
+          <tr><td class="mono">KA-53-DL-9902</td><td>Reefer</td><td>Route M-22</td><td>Mega Dairy</td><td>Inbound</td><td class="n">45.3</td><td class="n">0:52</td><td><span class="pill ok">OK</span></td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <!-- EXCEPTIONS -->
+  <section class="panel" id="exceptions">
+    <div class="g g2">
+      <div class="card"><div class="card-h"><div><h3>Open exceptions today</h3><div class="sub">Set a status; clearing asks who and why</div></div><span class="pill bad">5 open</span></div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Vehicle</th><th>Exception</th><th>Detail</th><th>Status</th></tr></thead>
+          <tbody id="exc">
+            <tr><td class="mono">KA-52-ML-1104</td><td>Route deviation</td><td>1.8 km off corridor, 12 min</td><td><select class="stsel"><option>Open</option><option selected>Investigating</option><option>Cleared</option></select></td></tr>
+            <tr><td class="mono">KA-52-GC-5540</td><td>GPS no signal</td><td>No ping for 47 min</td><td><select class="stsel"><option selected>Open</option><option>Investigating</option><option>Cleared</option></select></td></tr>
+            <tr><td class="mono">KA-51-ML-6683</td><td>Unauthorised stop</td><td>18 min, no society or BMC</td><td><select class="stsel"><option selected>Open</option><option>Investigating</option><option>Cleared</option></select></td></tr>
+            <tr><td class="mono">KA-52-DL-4419</td><td>Late against plan</td><td>26 min over on M-07</td><td><select class="stsel"><option>Open</option><option selected>Investigating</option><option>Cleared</option></select></td></tr>
+            <tr><td class="mono">KA-53-ML-3312</td><td>Speed anomaly</td><td>62 km/h on rural stretch</td><td><select class="stsel"><option selected>Open</option><option>Investigating</option><option>Cleared</option></select></td></tr>
+          </tbody></table></div>
+        <div id="clearlog" class="sub" style="margin:12px 0 0">Cleared today: KA-51-DL-3301 · late · cleared by <b>R. Prakash</b> — “traffic diversion at Hosur Rd, confirmed by police advisory”.</div></div>
+      <div class="card"><h3>GPS integrity alerts</h3><div class="sub">Rules that fire on the tracking unit itself</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Rule</th><th>Trigger</th><th>Sev</th></tr></thead>
+          <tbody>
+            <tr><td>No signal</td><td>No ping for 15 min on an open trip</td><td><span class="pill bad">High</span></td></tr>
+            <tr><td>Power cut to unit</td><td>Unit power lost with ignition on</td><td><span class="pill bad">High</span></td></tr>
+            <tr><td>Tamper / open cover</td><td>Housing opened, antenna cut</td><td><span class="pill bad">High</span></td></tr>
+            <tr><td>Jamming suspected</td><td>Signal lost across several units, one stretch</td><td><span class="pill bad">High</span></td></tr>
+            <tr><td>Position spoofing</td><td>Coordinates jump beyond possible speed</td><td><span class="pill bad">High</span></td></tr>
+            <tr><td>Odometer mismatch</td><td>GPS distance diverges from odometer</td><td><span class="pill warn">Medium</span></td></tr>
+          </tbody></table></div>
+        <div class="note" style="margin-top:14px"><span class="ic">i</span><span>Every alert carries a status (open, investigating or cleared), plus who cleared it and why. An alert that cannot be closed becomes noise, and then it gets ignored.</span></div></div>
+    </div>
+  </section>
+
+  <!-- WATER RISK -->
+  <section class="panel" id="water">
+    <div class="g g3">
+      <div class="kpi warn"><div class="v">3</div><div class="l">Trips flagged today</div></div>
+      <div class="kpi bad"><div class="v">1</div><div class="l">Escalated for testing</div></div>
+      <div class="kpi"><div class="v">12,480</div><div class="l">Litres tested on flag</div></div>
+    </div>
+    <div class="g g2">
+      <div class="card"><h3>Suspicion score — contributing signals</h3><div class="sub">Score 4+ escalates the trip for FAT/SNF, density and antibiotic screening</div>
+        <div class="score">
+          <div class="row"><span>Stop beyond permitted threshold, outside a declared halt point</span><span class="pts">+2</span></div>
+          <div class="row"><span>Route deviation beyond the allowed corridor</span><span class="pts">+2</span></div>
+          <div class="row"><span>Volume gain against the BMC dispatched reading</span><span class="pts hi">+3</span></div>
+          <div class="row"><span>Flow-meter total short of receiving dock intake</span><span class="pts hi">+3</span></div>
+          <div class="row"><span>Unexplained slow transit on a stretch with no cause</span><span class="pts lo">+1</span></div>
+        </div>
+        <h3 style="margin-top:18px">Flagged trips</h3>
+        <table class="t" style="margin-top:8px"><thead><tr><th>Trip</th><th>Signals</th><th class="n">Score</th><th>Outcome</th></tr></thead><tbody>
+          <tr class="flag"><td class="mono">KA-52-ML-1104</td><td>Deviation + volume gain</td><td class="n"><b>5</b></td><td><span class="pill bad">Escalated · 12,480 L</span></td></tr>
+          <tr><td class="mono">KA-51-ML-6683</td><td>Unauthorised stop + slow</td><td class="n"><b>3</b></td><td><span class="pill warn">Watch</span></td></tr>
+          <tr><td class="mono">KA-53-ML-3312</td><td>Slow transit</td><td class="n"><b>1</b></td><td><span class="pill">Logged</span></td></tr>
+        </tbody></table></div>
+      <div class="card"><h3>Trip efficiency — selected routes</h3><div class="sub">Planned vs actual transit time</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Route</th><th class="n">Planned</th><th class="n">Actual</th><th class="n">Km</th><th class="n">Var</th></tr></thead>
+          <tbody>
+            <tr><td>T-04 Harohalli</td><td class="n">0:35</td><td class="n">0:38</td><td class="n">41.2</td><td class="n">+9%</td></tr>
+            <tr><td>T-11 Anekal</td><td class="n">1:00</td><td class="n">1:04</td><td class="n">63.8</td><td class="n">+7%</td></tr>
+            <tr><td>T-02 Byrapatna</td><td class="n">0:25</td><td class="n">0:31</td><td class="n">28.4</td><td class="n t-warn">+24%</td></tr>
+            <tr><td>M-14 East</td><td class="n">0:38</td><td class="n">0:41</td><td class="n">34.1</td><td class="n">+8%</td></tr>
+            <tr class="flag"><td>M-07 North</td><td class="n">0:26</td><td class="n">0:52</td><td class="n">22.7</td><td class="n t-bad">+100%</td></tr>
+          </tbody></table></div>
+        <div class="bars" style="margin-top:14px">
+          <div class="bar"><span class="lab">T-04</span><span class="trk"><span class="fill" data-v="9"></span></span><span class="val">+9%</span></div>
+          <div class="bar"><span class="lab">T-11</span><span class="trk"><span class="fill" data-v="7"></span></span><span class="val">+7%</span></div>
+          <div class="bar"><span class="lab">T-02</span><span class="trk"><span class="fill warn" data-v="24"></span></span><span class="val">+24%</span></div>
+          <div class="bar"><span class="lab">M-14</span><span class="trk"><span class="fill" data-v="8"></span></span><span class="val">+8%</span></div>
+          <div class="bar"><span class="lab">M-07</span><span class="trk"><span class="fill bad" data-v="100"></span></span><span class="val">+100%</span></div>
+        </div>
+        <div class="note warn" style="margin-top:14px"><span class="ic">!</span><span>M-07 North is running at twice its planned time. Investigate before blaming the route.</span></div></div>
+    </div>
+  </section>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: GPS provider feed + weighbridge + flow meters · all figures illustrative</span></div>
+</main>
+<script src="js/app.js"></script>
+<script>
+// Clearing an exception requires a name and reason
+document.querySelectorAll('#exc .stsel').forEach(s => {
+  let prev = s.value;
+  s.addEventListener('change', () => {
+    if (s.value === 'Cleared') {
+      const who = prompt('Cleared by (name):'); if (!who) { s.value = prev; return; }
+      const why = prompt('Reason for clearing:'); if (!why) { s.value = prev; return; }
+      const row = s.closest('tr');
+      document.getElementById('clearlog').innerHTML += `<br>${row.cells[0].textContent} · ${row.cells[1].textContent.toLowerCase()} · cleared by <b>${who.replace(/</g,'&lt;')}</b> — “${why.replace(/</g,'&lt;')}”.`;
+      row.style.opacity = .45;
+    } else { s.closest('tr').style.opacity = 1; }
+    prev = s.value;
+  });
+});
+</script>
+</body>
+</html>

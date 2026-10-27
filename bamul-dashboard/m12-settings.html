@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings / Admin · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 12 · Settings / Admin</div><h1>Sources, refresh, thresholds and who sees what</h1>
+    <p>The dashboard never queries EBS directly. Every module reads one governed layer.</p></div>
+  </div>
+
+  <nav class="tabs" data-tabs>
+    <button data-tab="sources">Data sources</button>
+    <button data-tab="arch">Architecture</button>
+    <button data-tab="refresh">Refresh schedules</button>
+    <button data-tab="thresholds">Targets &amp; alerts</button>
+    <button data-tab="roles">Roles &amp; permissions</button>
+    <button data-tab="status">Build status</button>
+  </nav>
+
+  <section class="panel" id="sources">
+    <div class="g g2">
+      <div class="card"><div class="card-h"><div><h3>Oracle EBS</h3><div class="sub">Transactions · owner Sujata (MIS)</div></div><span class="pill bad">Not connected</span></div>
+        <div class="form-row"><label>Host</label><input class="inp" placeholder="ebs-prod.bamul.local"></div>
+        <div class="form-row"><label>Service / SID</label><input class="inp" placeholder="PROD"></div>
+        <div class="form-row"><label>Read-only user</label><input class="inp" placeholder="DASH_RO"></div>
+        <div class="form-row"><label>Credential</label><input class="inp" type="password" placeholder="Stored in vault"></div>
+        <div style="margin-top:12px"><button class="btn" type="button">Test connection</button></div></div>
+      <div class="card"><div class="card-h"><div><h3>Data warehouse</h3><div class="sub">History &amp; marts · owner Sujata (MIS)</div></div><span class="pill bad">Not connected</span></div>
+        <div class="form-row"><label>Endpoint</label><input class="inp" placeholder="dw.bamul.local:5432"></div>
+        <div class="form-row"><label>Database</label><input class="inp" placeholder="bamul_dw"></div>
+        <div class="form-row"><label>Row-level security</label><span><span class="switch on"></span> By district and module</span></div>
+        <div style="margin-top:12px"><button class="btn" type="button">Test connection</button></div></div>
+      <div class="card"><div class="card-h"><div><h3>SCADA historian</h3><div class="sub">Live plant tags · owner Mohan (Engg.)</div></div><span class="pill bad">Not connected</span></div>
+        <div class="form-row"><label>Historian</label><input class="inp" placeholder="OPC UA / PI endpoint"></div>
+        <div class="form-row"><label>Tag set</label><select class="inp"><option>Curated set (recommended)</option><option>All tags</option></select></div>
+        <div class="form-row"><label>Interval</label><select class="inp"><option>60 seconds</option><option>30 seconds</option></select></div>
+        <div style="margin-top:12px"><button class="btn" type="button">Test connection</button></div></div>
+      <div class="card"><div class="card-h"><div><h3>KMF feed</h3><div class="sub">Apex data</div></div><span class="pill bad">Not connected</span></div>
+        <div class="form-row"><label>Feed URL</label><input class="inp" placeholder="To be provided by KMF"></div>
+        <div class="form-row"><label>Datasets</label><span>Feed purchase · product transfer · group comparison</span></div>
+        <div style="margin-top:12px"><button class="btn" type="button">Test connection</button></div></div>
+    </div>
+  </section>
+
+  <section class="panel" id="arch">
+    <div class="card" style="margin-bottom:16px"><h3>Four sources feed one warehouse; the dashboard reads only the warehouse</h3><div class="sub">The number shown to the board is the same number shown to the auditor</div>
+      <div class="arch">
+        <div class="abox"><b>EBS</b><span>Transactions — procurement, payments, sales, HR, MPCS master, GL</span></div>
+        <div class="abox"><b>SCADA historian</b><span>Live plant tags — throughput, temperature, downtime, utilities</span></div>
+        <div class="abox"><b>KMF feed</b><span>Apex data — feed purchase, product transfer, group comparison</span></div>
+        <div class="abox"><b>LIMS / AMCS / GPS</b><span>Lab results, society analysers, vehicle tracking</span></div>
+      </div>
+      <div class="arrow-down">↓ Extract, transform, load · curated tag set only ↓</div>
+      <div class="abox" style="text-align:center;background:var(--sky-soft);border-color:rgba(30,155,224,.6)"><b>Data warehouse — history &amp; marts</b><span>Modelled facts and dimensions, KPI definitions, reconciliation controls, row-level security by district and module</span></div>
+      <div class="arrow-down">↓</div>
+      <div class="abox" style="text-align:center"><b>Dashboard</b><span>Tile portal, twelve modules, sub-tabs, drill-down, alerts, exports</span></div></div>
+    <div class="card"><h3>Integration requirements</h3><div class="sub">What the EBS and warehouse teams need to expose · field list to be confirmed against the EBS schema</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Data set</th><th>Source</th><th>Minimum fields required</th></tr></thead>
+        <tbody>
+          <tr><td>Society master</td><td>EBS</td><td>Society code, village, district, route, members, chilling type</td></tr>
+          <tr><td>Daily procurement</td><td>EBS</td><td>Society, date, shift, litres, FAT, SNF, rate, amount</td></tr>
+          <tr><td>Cattle feed issue</td><td>EBS</td><td>Society, date, product, bags, rate, value, recovery</td></tr>
+          <tr><td>Producer payments</td><td>EBS</td><td>Cycle, society, member, litres, rate, incentive, bonus, paid date</td></tr>
+          <tr><td>Sales &amp; dispatch</td><td>EBS</td><td>Product, pack, channel, quantity, value, route, dispatch date</td></tr>
+          <tr><td>General ledger</td><td>EBS</td><td>Account code, cost centre, period, debit, credit, narration</td></tr>
+          <tr><td>SCADA tags</td><td>SCADA</td><td>Curated set, 60-second interval, with tag quality flag</td></tr>
+          <tr><td>Plant production</td><td>SCADA + EBS</td><td>Product, batch, line, shift, input litres, output quantity</td></tr>
+          <tr><td>Lab results</td><td>LIMS / EBS</td><td>Sample, society or batch, FAT, SNF, MBRT, adulterant, result</td></tr>
+          <tr><td>Insurance policies</td><td>EBS</td><td>Policy, society, member, animal, premium, subsidy, cover</td></tr>
+          <tr><td>Insurance claims</td><td>EBS</td><td>Claim, animal, date of loss, cause, lodged, settled, amount</td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <section class="panel" id="refresh">
+    <div class="card"><h3>Refresh schedules per module</h3><div class="sub">Warehouse load → dashboard cache</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Module</th><th>Schedule</th><th>Last refresh</th><th>Enabled</th></tr></thead>
+        <tbody>
+          <tr><td>Production (SCADA)</td><td><select class="inp" style="width:auto"><option>Every 60 s</option><option>Every 5 min</option></select></td><td>—</td><td><span class="switch on"></span></td></tr>
+          <tr><td>Transportation (GPS)</td><td><select class="inp" style="width:auto"><option>Every 60 s</option></select></td><td>—</td><td><span class="switch on"></span></td></tr>
+          <tr><td>Procurement</td><td><select class="inp" style="width:auto"><option>Each shift</option><option>Hourly</option></select></td><td>—</td><td><span class="switch on"></span></td></tr>
+          <tr><td>Quality</td><td><select class="inp" style="width:auto"><option>Hourly</option></select></td><td>—</td><td><span class="switch on"></span></td></tr>
+          <tr><td>Finance</td><td><select class="inp" style="width:auto"><option>Nightly 02:00</option></select></td><td>—</td><td><span class="switch on"></span></td></tr>
+          <tr><td>HR, Animal Health, Insurance</td><td><select class="inp" style="width:auto"><option>Nightly 03:00</option></select></td><td>—</td><td><span class="switch on"></span></td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <section class="panel" id="thresholds">
+    <div class="g g21">
+      <div class="card"><h3>KPI targets and alert thresholds</h3><div class="sub">Changes are logged with a reason</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>KPI</th><th class="n">Target</th><th class="n">Alert at</th><th>Route to</th></tr></thead>
+          <tbody>
+            <tr><td>Process loss</td><td class="n"><input class="inp" style="width:80px" value="0.40%"></td><td class="n"><input class="inp" style="width:80px" value="0.50%"></td><td>Engg. · SMS</td></tr>
+            <tr><td>AMCS calibration age</td><td class="n"><input class="inp" style="width:80px" value="90 d"></td><td class="n"><input class="inp" style="width:80px" value="91 d"></td><td>Quality · email</td></tr>
+            <tr><td>Malpractice score</td><td class="n">—</td><td class="n"><input class="inp" style="width:80px" value="5"></td><td>Procurement · SMS + email</td></tr>
+            <tr><td>Water-risk score</td><td class="n">—</td><td class="n"><input class="inp" style="width:80px" value="4"></td><td>QC lab · SMS</td></tr>
+            <tr><td>GPS no-signal</td><td class="n">—</td><td class="n"><input class="inp" style="width:80px" value="15 min"></td><td>Transport · SMS</td></tr>
+            <tr><td>Transit temperature</td><td class="n"><input class="inp" style="width:80px" value="4 °C"></td><td class="n"><input class="inp" style="width:80px" value="5 °C"></td><td>Transport · SMS</td></tr>
+          </tbody></table></div>
+        <div style="margin-top:12px"><button class="btn" type="button">Save changes</button></div></div>
+      <div class="card"><h3>Manual overrides</h3><div class="sub">Every override needs a reason</div>
+        <div class="score">
+          <div class="row"><span><b>Production loss · 22 Oct</b><br><span class="t-muted">Mohan: “CIP flush counted twice in tag set”</span></span><span class="pill info">Logged</span></div>
+          <div class="row"><span><b>Cycle H1 Oct hold released · Kodihalli</b><br><span class="t-muted">Sujata: “Enquiry closed, readings verified”</span></span><span class="pill info">Logged</span></div>
+        </div></div>
+    </div>
+  </section>
+
+  <section class="panel" id="roles">
+    <div class="card"><h3>User roles and module permissions</h3><div class="sub">Tick to grant view access</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Role</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th></tr></thead>
+        <tbody>
+          <tr><td>Board</td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk"></span></td><td><span class="chk on"></span></td><td><span class="chk"></span></td></tr>
+          <tr><td>Managing Director</td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td></tr>
+          <tr><td>Head of MIS</td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td></tr>
+          <tr><td>Engineering</td><td><span class="chk on"></span></td><td><span class="chk"></span></td><td><span class="chk on"></span></td><td><span class="chk"></span></td><td><span class="chk"></span></td><td><span class="chk on"></span></td><td><span class="chk"></span></td><td><span class="chk"></span></td><td><span class="chk"></span></td><td><span class="chk"></span></td><td><span class="chk on"></span></td><td><span class="chk"></span></td></tr>
+          <tr><td>District officer</td><td><span class="chk on"></span></td><td><span class="chk"></span></td><td><span class="chk"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk on"></span></td><td><span class="chk"></span></td><td><span class="chk on"></span></td><td><span class="chk"></span></td><td><span class="chk on"></span></td><td><span class="chk"></span></td></tr>
+        </tbody></table></div>
+      <div class="sub" style="margin:10px 0 0">District officers are additionally restricted to their own district by row-level security in the warehouse.</div></div>
+  </section>
+
+  <section class="panel" id="status">
+    <div class="g g3">
+      <div class="card"><div class="card-h"><h3>Verified and sourced</h3><span class="pill ok">6</span></div>
+        <ul class="ticks"><li>Legal name, establishment year, operation</li><li>Processing capacity: 18.0 LLPD, three dairies</li><li>~2,200 societies, ~3,500 villages</li><li>FY26 procurement 59.39 crore litres</li><li>FY25 operating income ₹2,925.9 Cr, PAT ₹8.7 Cr</li><li>Ugadi bonus ₹1/litre to 1.27 lakh farmers</li></ul></div>
+      <div class="card"><div class="card-h"><h3>Illustrative placeholder</h3><span class="pill warn">6</span></div>
+        <ul class="ticks"><li>All production, SCADA and efficiency measures</li><li>MPCS-level volumes and cattle feed offtake</li><li>Route, vehicle and transport cost figures</li><li>Quality, veterinary and HR figures</li><li>Insurance premium and claim figures</li><li>All cost, ratio and receivables lines</li></ul></div>
+      <div class="card"><div class="card-h"><h3>Not connected in this build</h3><span class="pill bad">6</span></div>
+        <ul class="ticks"><li>EBS — no live connection</li><li>Data warehouse — no live connection</li><li>SCADA historian — no live connection</li><li>KMF data feed — no connection</li><li>No database, no scheduled refresh</li><li>Integration spec written, not implemented</li></ul></div>
+    </div>
+    <div class="card"><h3>Roadmap</h3><div class="sub">Four quarters to a live dashboard</div>
+      <div class="arch">
+        <div class="abox"><span class="pill info">Q1</span><b style="margin-top:8px">Foundation</b><span>Data layer, society and route masters, EBS extract agreed, security model</span></div>
+        <div class="abox"><span class="pill info">Q2</span><b style="margin-top:8px">Core four</b><span>Overview, Finance, Procurement, Production — first release to leadership</span></div>
+        <div class="abox"><span class="pill">Q3</span><b style="margin-top:8px">Operations</b><span>Quality, Animal Health, Transportation, Cattle Relief Funds</span></div>
+        <div class="abox"><span class="pill">Q4</span><b style="margin-top:8px">Complete</b><span>HR, MIS, Events, Settings; SCADA streaming; alerts and mobile view</span></div>
+      </div>
+      <div class="note" style="margin-top:14px"><span class="ic">i</span><span>Scope approved, owners named (Sujata: EBS and warehouse; Mohan: production and SCADA). Open item: fix the design workshop date.</span></div></div>
+  </section>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Admin changes are written to the audit trail</span></div>
+</main>
+<script src="js/app.js"></script>
+</body>
+</html>

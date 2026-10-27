@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cattle Relief Funds · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 09 · Cattle Relief Funds (Insurance)</div><h1>Insurance cover protects the producer's income, not just the animal</h1>
+    <p>Premium, subsidy, cover and claims by society and by animal type.</p></div>
+    <div class="filters"><select aria-label="Period"><option>FY 2026-27 YTD</option><option>FY 2025-26</option></select></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">₹18.4 Cr</div><div class="l">Premium collected YTD</div></div>
+    <div class="kpi"><div class="v">4.62 lakh</div><div class="l">Animals covered</div></div>
+    <div class="kpi good"><div class="v">₹6.28 Cr</div><div class="l">Claims settled</div></div>
+    <div class="kpi warn"><div class="v">58.3%</div><div class="l">Claim ratio</div></div>
+  </div>
+
+  <nav class="tabs" data-tabs>
+    <button data-tab="premium">Premium &amp; cover</button>
+    <button data-tab="claims">Claims</button>
+    <button data-tab="disease">By cause</button>
+  </nav>
+
+  <section class="panel" id="premium">
+    <div class="g g2">
+      <div class="card"><h3>Subsidy vs producer share</h3><div class="sub">Of ₹18.4 Cr premium</div>
+        <div class="donut-wrap"><div class="donut" style="--seg:#1e9be0 0 50%,#13966b 50% 75%,#e3a21a 75% 100%"><div class="c"><b>₹18.4</b><span>crore</span></div></div>
+        <div class="legend"><span><i style="background:#1e9be0"></i>Government subsidy · ₹9.2 Cr</span><span><i style="background:#13966b"></i>Union share · ₹4.6 Cr</span><span><i style="background:#e3a21a"></i>Producer share · ₹4.6 Cr</span></div></div></div>
+      <div class="card"><h3>Animals insured, renewed and lapsed</h3><div class="sub">YTD</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">New policies</span><span class="trk"><span class="fill" data-v="38"></span></span><span class="val">1.42 L</span></div>
+          <div class="bar"><span class="lab">Renewed</span><span class="trk"><span class="fill good" data-v="86"></span></span><span class="val">3.20 L</span></div>
+          <div class="bar"><span class="lab">Lapsed</span><span class="trk"><span class="fill bad" data-v="21"></span></span><span class="val">0.78 L</span></div>
+        </div>
+        <div class="sub" style="margin:12px 0 0">Renewal rate 80.4%</div></div>
+    </div>
+    <div class="card"><h3>Premium by society and animal type</h3><div class="sub">Top societies</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Society</th><th class="n">Cows (CB)</th><th class="n">Cows (local)</th><th class="n">Buffalo</th><th class="n">Premium</th><th class="n">Sum insured</th></tr></thead>
+        <tbody>
+          <tr><td>Bidadi</td><td class="n">1,840</td><td class="n">210</td><td class="n">64</td><td class="n">₹8.6 L</td><td class="n">₹10.1 Cr</td></tr>
+          <tr><td>Kodihalli</td><td class="n">1,620</td><td class="n">184</td><td class="n">52</td><td class="n">₹7.5 L</td><td class="n">₹8.9 Cr</td></tr>
+          <tr><td>Kanakapura</td><td class="n">1,510</td><td class="n">260</td><td class="n">88</td><td class="n">₹7.4 L</td><td class="n">₹8.6 Cr</td></tr>
+          <tr><td>Harohalli</td><td class="n">1,340</td><td class="n">142</td><td class="n">40</td><td class="n">₹6.2 L</td><td class="n">₹7.3 Cr</td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <section class="panel" id="claims">
+    <div class="g g21">
+      <div class="card"><h3>Claims by settlement status</h3><div class="sub">YTD, count</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">Lodged</span><span class="trk"><span class="fill" data-v="100"></span></span><span class="val">2,486</span></div>
+          <div class="bar"><span class="lab">Settled</span><span class="trk"><span class="fill good" data-v="64"></span></span><span class="val">1,592</span></div>
+          <div class="bar"><span class="lab">Pending</span><span class="trk"><span class="fill warn" data-v="27"></span></span><span class="val">672</span></div>
+          <div class="bar"><span class="lab">Rejected</span><span class="trk"><span class="fill bad" data-v="9"></span></span><span class="val">222</span></div>
+        </div>
+        <h3 style="margin-top:20px">Ageing of pending claims</h3><div class="sub">672 pending</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">0–30 days</span><span class="trk"><span class="fill" data-v="100"></span></span><span class="val">318</span></div>
+          <div class="bar"><span class="lab">31–60 days</span><span class="trk"><span class="fill warn" data-v="45"></span></span><span class="val">142</span></div>
+          <div class="bar"><span class="lab">&gt; 60 days</span><span class="trk"><span class="fill bad" data-v="67"></span></span><span class="val">212</span></div>
+        </div></div>
+      <div class="card"><h3>Oldest pending claims</h3><div class="sub">Past 60 days</div>
+        <table class="t"><thead><tr><th>Claim</th><th>Society</th><th class="n">Days</th><th class="n">Amount</th></tr></thead><tbody>
+          <tr class="flag"><td class="mono">CRF-26-0412</td><td>Kudur</td><td class="n">118</td><td class="n">₹62,000</td></tr>
+          <tr class="flag"><td class="mono">CRF-26-0498</td><td>Magadi</td><td class="n">104</td><td class="n">₹55,000</td></tr>
+          <tr><td class="mono">CRF-26-0533</td><td>Sathanur</td><td class="n">96</td><td class="n">₹48,000</td></tr>
+          <tr><td class="mono">CRF-26-0601</td><td>Hosakote</td><td class="n">88</td><td class="n">₹70,000</td></tr>
+        </tbody></table>
+        <div class="note warn" style="margin-top:14px"><span class="ic">!</span><span>Most of the 212 claims over 60 days are waiting on post-mortem reports.</span></div></div>
+    </div>
+  </section>
+
+  <section class="panel" id="disease">
+    <div class="card"><h3>Claim ratio and payout by cause</h3><div class="sub">YTD</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Cause of loss</th><th class="n">Claims</th><th class="n">Payout</th><th class="n">Share</th></tr></thead>
+        <tbody>
+          <tr><td>Disease (HS, FMD, others)</td><td class="n">684</td><td class="n">₹2.71 Cr</td><td class="n">43%</td></tr>
+          <tr><td>Calving complications</td><td class="n">402</td><td class="n">₹1.58 Cr</td><td class="n">25%</td></tr>
+          <tr><td>Accident</td><td class="n">286</td><td class="n">₹1.12 Cr</td><td class="n">18%</td></tr>
+          <tr><td>Snake bite / poisoning</td><td class="n">148</td><td class="n">₹0.58 Cr</td><td class="n">9%</td></tr>
+          <tr><td>Other</td><td class="n">72</td><td class="n">₹0.29 Cr</td><td class="n">5%</td></tr>
+          <tr class="total"><td>Total settled</td><td class="n">1,592</td><td class="n">₹6.28 Cr</td><td class="n">100%</td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: EBS insurance policies &amp; claims · all figures illustrative</span></div>
+</main>
+<script src="js/app.js"></script>
+</body>
+</html>

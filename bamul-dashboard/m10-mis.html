@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MIS &amp; Reports · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<style>
+.qb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media(max-width:900px){.qb{grid-template-columns:minmax(0,1fr)}}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.cal .d{background:var(--hover);border-radius:8px;min-height:62px;padding:6px;font-size:11px;color:var(--muted)}
+.cal .d b{display:block;color:var(--text);font-size:12px;margin-bottom:4px}
+.cal .d .ev{display:block;margin-top:2px;padding:2px 4px;border-radius:4px;background:var(--sky-soft);color:var(--sky);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal .d .ev.w{background:rgba(201,130,8,.15);color:var(--warn)}
+.cal .d.today{outline:2px solid var(--sky)}
+.cal .h{font-size:11px;color:var(--sky);text-align:center;font-weight:600;letter-spacing:.1em}
+</style>
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 10 · MIS &amp; Reports</div><h1>One definition, one owner, every export logged</h1>
+    <p>Scheduled reports, ad-hoc queries on the warehouse, the KPI dictionary and the statutory calendar.</p></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">64</div><div class="l">Scheduled reports</div><div class="d">Each with a named owner</div></div>
+    <div class="kpi"><div class="v">112</div><div class="l">KPIs defined</div><div class="d">In the dictionary</div></div>
+    <div class="kpi warn"><div class="v">3</div><div class="l">Submissions due this week</div></div>
+    <div class="kpi"><div class="v">1,284</div><div class="l">Exports logged MTD</div></div>
+  </div>
+
+  <nav class="tabs" data-tabs>
+    <button data-tab="library">Report library</button>
+    <button data-tab="query">Query builder</button>
+    <button data-tab="kpi">KPI dictionary</button>
+    <button data-tab="calendar">Statutory calendar</button>
+    <button data-tab="audit">Audit trail</button>
+  </nav>
+
+  <section class="panel" id="library">
+    <div class="card"><div class="card-h"><div><h3>Scheduled report library</h3><div class="sub">Who owns it, when it runs, where it goes</div></div><input class="inp" style="width:220px" type="search" placeholder="Search reports…" data-filter="rtbl"></div>
+      <div class="tw"><table class="t" id="rtbl">
+        <thead><tr><th>Report</th><th>Module</th><th>Frequency</th><th>Owner</th><th>Last run</th><th>Format</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Daily procurement summary</td><td>Procurement</td><td>Daily 07:00</td><td>Sujata (MIS)</td><td>Today 07:00</td><td><span class="pill">PDF · XLSX</span></td><td><a class="btn ghost" href="#">Run</a></td></tr>
+          <tr><td>Cycle payment register</td><td>Finance</td><td>Every 10 days</td><td>Accounts</td><td>21 Oct</td><td><span class="pill">XLSX</span></td><td><a class="btn ghost" href="#">Run</a></td></tr>
+          <tr><td>Plant efficiency report</td><td>Production</td><td>Daily 23:30</td><td>Mohan (Engg.)</td><td>Yesterday</td><td><span class="pill">PDF</span></td><td><a class="btn ghost" href="#">Run</a></td></tr>
+          <tr><td>AMCS calibration exceptions</td><td>Procurement</td><td>Weekly Mon</td><td>Procurement HoD</td><td>20 Oct</td><td><span class="pill">XLSX</span></td><td><a class="btn ghost" href="#">Run</a></td></tr>
+          <tr><td>Board MIS pack</td><td>All</td><td>Monthly</td><td>MD office</td><td>02 Oct</td><td><span class="pill">PDF</span></td><td><a class="btn ghost" href="#">Run</a></td></tr>
+          <tr><td>Transport exceptions</td><td>Transport</td><td>Daily 08:00</td><td>Transport mgr.</td><td>Today 08:00</td><td><span class="pill">PDF</span></td><td><a class="btn ghost" href="#">Run</a></td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <section class="panel" id="query">
+    <div class="card"><h3>Ad-hoc query builder</h3><div class="sub">Runs against the warehouse marts only — never EBS directly</div>
+      <div class="qb">
+        <div><label class="sub" style="display:block;margin-bottom:4px">Subject area</label><select class="inp"><option>Daily procurement</option><option>Cattle feed issue</option><option>Producer payments</option><option>Sales &amp; dispatch</option><option>Lab results</option></select></div>
+        <div><label class="sub" style="display:block;margin-bottom:4px">Group by</label><select class="inp"><option>Society</option><option>Route</option><option>District</option><option>Date</option></select></div>
+        <div><label class="sub" style="display:block;margin-bottom:4px">Measure</label><select class="inp"><option>Litres</option><option>Avg FAT</option><option>Avg SNF</option><option>Amount</option></select></div>
+        <div><label class="sub" style="display:block;margin-bottom:4px">Period</label><select class="inp"><option>Last 30 days</option><option>This cycle</option><option>FY YTD</option></select></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:14px"><button class="btn" type="button" id="runq">Run query</button><button class="btn ghost" type="button">Save as report</button></div>
+      <div id="qres" style="margin-top:16px;display:none">
+        <table class="t"><thead><tr><th>Society</th><th class="n">Litres</th></tr></thead><tbody>
+          <tr><td>Bidadi</td><td class="n">1,28,400</td></tr><tr><td>Kodihalli</td><td class="n">1,18,200</td></tr><tr><td>Kanakapura</td><td class="n">1,11,450</td></tr><tr><td>Harohalli</td><td class="n">1,04,400</td></tr>
+        </tbody></table><div class="sub" style="margin:8px 0 0">Sample result · this query is logged to the audit trail.</div></div></div>
+  </section>
+
+  <section class="panel" id="kpi">
+    <div class="card"><h3>KPI dictionary</h3><div class="sub">One definition, one owner</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>KPI</th><th>Definition</th><th>Grain</th><th>Owner</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td><b>Procurement LLPD</b></td><td>Litres received at dairy dock ÷ days ÷ 1,00,000</td><td>Day · society</td><td>Procurement HoD</td><td>EBS</td></tr>
+          <tr><td><b>Yield efficiency</b></td><td>Milk-equivalent output ÷ milk intake</td><td>Shift · plant</td><td>Mohan (Engg.)</td><td>SCADA + EBS</td></tr>
+          <tr><td><b>Process loss</b></td><td>(Intake − accounted output) ÷ intake</td><td>Day · plant</td><td>Mohan (Engg.)</td><td>SCADA + EBS</td></tr>
+          <tr><td><b>Feed offtake</b></td><td>kg feed issued ÷ litres poured</td><td>Month · society</td><td>Procurement HoD</td><td>EBS</td></tr>
+          <tr><td><b>Claim ratio</b></td><td>Claims paid ÷ premium earned</td><td>Year · society</td><td>Insurance cell</td><td>EBS</td></tr>
+          <tr><td><b>Calibration currency</b></td><td>AMCS units calibrated ≤ 90 days ÷ fleet</td><td>Day · society</td><td>Quality HoD</td><td>AMCS</td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <section class="panel" id="calendar">
+    <div class="card"><h3>Statutory submission calendar</h3><div class="sub">26 Oct – 22 Nov 2026</div>
+      <div class="cal">
+        <div class="h">MON</div><div class="h">TUE</div><div class="h">WED</div><div class="h">THU</div><div class="h">FRI</div><div class="h">SAT</div><div class="h">SUN</div>
+        <div class="d today"><b>26</b></div><div class="d"><b>27</b></div><div class="d"><b>28</b></div><div class="d"><b>29</b></div><div class="d"><b>30</b></div><div class="d"><b>31</b><span class="ev w">TDS Q2</span><span class="ev w">MMPO H1</span></div><div class="d"><b>1</b></div>
+        <div class="d"><b>2</b></div><div class="d"><b>3</b></div><div class="d"><b>4</b><span class="ev">Cycle pay</span></div><div class="d"><b>5</b><span class="ev">Board pack</span></div><div class="d"><b>6</b></div><div class="d"><b>7</b></div><div class="d"><b>8</b></div>
+        <div class="d"><b>9</b></div><div class="d"><b>10</b></div><div class="d"><b>11</b><span class="ev">GSTR-1</span></div><div class="d"><b>12</b></div><div class="d"><b>13</b></div><div class="d"><b>14</b><span class="ev">Cycle pay</span></div><div class="d"><b>15</b><span class="ev">EPF</span><span class="ev">ESI</span></div>
+        <div class="d"><b>16</b></div><div class="d"><b>17</b></div><div class="d"><b>18</b></div><div class="d"><b>19</b></div><div class="d"><b>20</b><span class="ev">GSTR-3B</span></div><div class="d"><b>21</b></div><div class="d"><b>22</b></div>
+      </div></div>
+  </section>
+
+  <section class="panel" id="audit">
+    <div class="g g21">
+      <div class="card"><h3>Audit trail</h3><div class="sub">Every export and view of sensitive data</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Object</th><th>IP</th></tr></thead>
+          <tbody>
+            <tr><td>20:14</td><td>md.office</td><td><span class="pill info">View</span></td><td>Finance › Balance sheet</td><td class="mono">10.4.2.18</td></tr>
+            <tr><td>19:52</td><td>sujata.mis</td><td><span class="pill warn">Export</span></td><td>Cycle payment register (XLSX)</td><td class="mono">10.4.1.7</td></tr>
+            <tr><td>18:30</td><td>dist.ramanagara</td><td><span class="pill info">View</span></td><td>Procurement › Malpractice</td><td class="mono">10.6.0.22</td></tr>
+            <tr><td>17:05</td><td>accounts.01</td><td><span class="pill warn">Export</span></td><td>Receivables ageing (PDF)</td><td class="mono">10.4.2.40</td></tr>
+          </tbody></table></div></div>
+      <div class="card"><h3>Access to financial data</h3><div class="sub">Views this week</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">MD office</span><span class="trk"><span class="fill" data-v="100"></span></span><span class="val">84</span></div>
+          <div class="bar"><span class="lab">Accounts</span><span class="trk"><span class="fill" data-v="71"></span></span><span class="val">60</span></div>
+          <div class="bar"><span class="lab">MIS</span><span class="trk"><span class="fill" data-v="45"></span></span><span class="val">38</span></div>
+          <div class="bar"><span class="lab">Board</span><span class="trk"><span class="fill" data-v="14"></span></span><span class="val">12</span></div>
+        </div></div>
+    </div>
+  </section>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Owner: Sujata, Head of MIS</span></div>
+</main>
+<script src="js/app.js"></script>
+<script>document.getElementById('runq').addEventListener('click',()=>document.getElementById('qres').style.display='block');</script>
+</body>
+</html>

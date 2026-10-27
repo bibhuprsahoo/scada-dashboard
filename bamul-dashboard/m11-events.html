@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Events &amp; Meetings · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 11 · Events &amp; Meetings</div><h1>Board, general body, melas and training — on record</h1>
+    <p>Embedded player, no external links. Minutes linked to each recording.</p></div>
+    <div class="filters">
+      <select id="ftype" aria-label="Type"><option value="">All types</option><option>Board</option><option>General body</option><option>Farmer event</option><option>Training</option></select>
+      <select id="fdist" aria-label="District"><option value="">All districts</option><option>Bengaluru Urban</option><option>Bengaluru Rural</option><option>Ramanagara</option></select>
+      <input type="month" value="2026-10" aria-label="Month">
+    </div>
+  </div>
+
+  <div class="g g21">
+    <div class="card">
+      <div class="player" id="player">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4z" fill="currentColor"/></svg>
+        <span id="ptitle">Select a recording</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap">
+        <div><h3 id="pname">Board meeting — September 2026</h3><div class="sub" style="margin:0" id="pmeta">Board · Mega Dairy · 28 Sep 2026 · 2:14:08</div></div>
+        <a class="btn ghost" href="#">Open minutes (PDF)</a>
+      </div>
+    </div>
+    <div class="card"><h3>Upcoming</h3><div class="sub">Next 30 days</div>
+      <div class="score">
+        <div class="row"><span><b>Board meeting</b><br><span class="t-muted">05 Nov · Mega Dairy</span></span><span class="pill info">Board</span></div>
+        <div class="row"><span><b>Ksheera mela</b><br><span class="t-muted">12 Nov · Kanakapura</span></span><span class="pill ok">Farmer</span></div>
+        <div class="row"><span><b>AI technician refresher</b><br><span class="t-muted">18 Nov · Doddaballapura</span></span><span class="pill warn">Training</span></div>
+        <div class="row"><span><b>Mastitis control demo</b><br><span class="t-muted">22 Nov · Magadi</span></span><span class="pill warn">Training</span></div>
+      </div></div>
+  </div>
+
+  <div class="card"><div class="card-h"><div><h3>Video library</h3><div class="sub" id="vcount">8 recordings</div></div></div>
+    <div class="vids" id="vids">
+      <div class="vid" data-type="Board" data-dist="Bengaluru Urban" data-name="Board meeting — September 2026" data-meta="Board · Mega Dairy · 28 Sep 2026 · 2:14:08"><div class="th"><span class="ty pill info">Board</span><span class="play"></span><span class="dur">2:14:08</span></div><div class="bd"><b>Board meeting — September 2026</b><span>28 Sep · Mega Dairy · minutes attached</span></div></div>
+      <div class="vid" data-type="General body" data-dist="Bengaluru Urban" data-name="Annual general body meeting FY25" data-meta="General body · 14 Sep 2026 · 3:02:41"><div class="th" style="background:linear-gradient(135deg,#16457c,#2a6fb8)"><span class="ty pill info">General body</span><span class="play"></span><span class="dur">3:02:41</span></div><div class="bd"><b>Annual general body meeting FY25</b><span>14 Sep · Palace grounds</span></div></div>
+      <div class="vid" data-type="Farmer event" data-dist="Ramanagara" data-name="Ksheera mela — Channapatna" data-meta="Farmer event · Ramanagara · 06 Oct 2026 · 0:42:10"><div class="th" style="background:linear-gradient(135deg,#0f5b4a,#1f8a6e)"><span class="ty pill ok">Farmer event</span><span class="play"></span><span class="dur">42:10</span></div><div class="bd"><b>Ksheera mela — Channapatna</b><span>06 Oct · Ramanagara</span></div></div>
+      <div class="vid" data-type="Training" data-dist="Bengaluru Rural" data-name="Clean milk production — field demo" data-meta="Training · Bengaluru Rural · 11 Oct 2026 · 0:28:55"><div class="th" style="background:linear-gradient(135deg,#6b4c12,#a3741f)"><span class="ty pill warn">Training</span><span class="play"></span><span class="dur">28:55</span></div><div class="bd"><b>Clean milk production — field demo</b><span>11 Oct · Doddaballapura</span></div></div>
+      <div class="vid" data-type="Farmer event" data-dist="Bengaluru Urban" data-name="Ugadi bonus distribution" data-meta="Farmer event · 30 Mar 2026 · 0:36:20"><div class="th" style="background:linear-gradient(135deg,#0f5b4a,#1f8a6e)"><span class="ty pill ok">Farmer event</span><span class="play"></span><span class="dur">36:20</span></div><div class="bd"><b>Ugadi bonus distribution</b><span>30 Mar · ₹59.39 Cr to 1.27 L farmers</span></div></div>
+      <div class="vid" data-type="Training" data-dist="Ramanagara" data-name="AMCS operator training" data-meta="Training · Ramanagara · 19 Oct 2026 · 0:51:04"><div class="th" style="background:linear-gradient(135deg,#6b4c12,#a3741f)"><span class="ty pill warn">Training</span><span class="play"></span><span class="dur">51:04</span></div><div class="bd"><b>AMCS operator training</b><span>19 Oct · Kanakapura</span></div></div>
+      <div class="vid" data-type="Board" data-dist="Bengaluru Urban" data-name="Board meeting — August 2026" data-meta="Board · Mega Dairy · 30 Aug 2026 · 1:58:12"><div class="th"><span class="ty pill info">Board</span><span class="play"></span><span class="dur">1:58:12</span></div><div class="bd"><b>Board meeting — August 2026</b><span>30 Aug · Mega Dairy · minutes attached</span></div></div>
+      <div class="vid" data-type="Farmer event" data-dist="Bengaluru Rural" data-name="New product launch — Nandini protein milk" data-meta="Farmer event · 02 Oct 2026 · 0:18:40"><div class="th" style="background:linear-gradient(135deg,#0f5b4a,#1f8a6e)"><span class="ty pill ok">Launch</span><span class="play"></span><span class="dur">18:40</span></div><div class="bd"><b>New product launch</b><span>02 Oct · Mega Dairy</span></div></div>
+    </div></div>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Recordings stored internally · titles and dates illustrative</span></div>
+</main>
+<script src="js/app.js"></script>
+<script>
+const vids=[...document.querySelectorAll('.vid')];
+vids.forEach(v=>v.addEventListener('click',()=>{
+  document.getElementById('ptitle').textContent='▶ Playing: '+v.dataset.name;
+  document.getElementById('pname').textContent=v.dataset.name;
+  document.getElementById('pmeta').textContent=v.dataset.meta;
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+function filt(){const t=ftype.value,d=fdist.value;let n=0;
+  vids.forEach(v=>{const ok=(!t||v.dataset.type===t)&&(!d||v.dataset.dist===d);v.style.display=ok?'':'none';if(ok)n++});
+  document.getElementById('vcount').textContent=n+' recordings';}
+ftype.addEventListener('change',filt);fdist.addEventListener('change',filt);
+</script>
+</body>
+</html>

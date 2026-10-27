@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Animal Health &amp; Vet · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 07 · Animal Health &amp; Veterinary</div><h1>Breeding and veterinary services drive tomorrow's yield</h1>
+    <p>AI, camps, vaccination, disease incidence and medicine consumption — by village and by society.</p></div>
+    <div class="filters"><select aria-label="Period"><option>October 2026</option><option>September 2026</option><option>FY YTD</option></select></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">1,42,600</div><div class="l">AI doses this month</div><div class="d">Conception rate 51.4%</div></div>
+    <div class="kpi"><div class="v">1,148</div><div class="l">Veterinary camps held</div><div class="d">2.84 lakh animals treated</div></div>
+    <div class="kpi good"><div class="v">4,62,000</div><div class="l">Vaccination doses</div><div class="d">FMD and HS</div></div>
+    <div class="kpi warn"><div class="v">3,120</div><div class="l">Disease cases</div><div class="d">Mastitis 42%</div></div>
+  </div>
+
+  <nav class="tabs" data-tabs>
+    <button data-tab="services">Service lines</button>
+    <button data-tab="breeding">Breeding</button>
+    <button data-tab="disease">Disease</button>
+    <button data-tab="vaccination">Vaccination</button>
+    <button data-tab="medicine">Medicine</button>
+  </nav>
+
+  <section class="panel" id="services">
+    <div class="card" style="margin-bottom:16px"><h3>Service lines</h3><div class="sub">Volume this month and measures carried</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Service line</th><th class="n">Volume this month</th><th>Share</th><th class="n">%</th><th>Measures carried</th></tr></thead>
+        <tbody>
+          <tr><td>Artificial insemination</td><td class="n">1,42,600 doses</td><td style="min-width:120px"><div class="meter"><span style="--v:38%"></span></div></td><td class="n">38%</td><td>Conception rate 51.4%</td></tr>
+          <tr><td>Veterinary camps held</td><td class="n">1,148 camps</td><td><div class="meter"><span style="--v:29%"></span></div></td><td class="n">29%</td><td>2.84 lakh animals treated</td></tr>
+          <tr><td>Vaccination coverage</td><td class="n">4,62,000 doses</td><td><div class="meter"><span style="--v:24%"></span></div></td><td class="n">24%</td><td>FMD and HS, by village</td></tr>
+          <tr><td>Disease incidence</td><td class="n">3,120 cases</td><td><div class="meter"><span style="--v:19%;background:var(--warn)"></span></div></td><td class="n">19%</td><td>Mastitis 42% of all cases</td></tr>
+          <tr><td>Medicine consumption</td><td class="n">₹4.86 Cr</td><td><div class="meter"><span style="--v:17%"></span></div></td><td class="n">17%</td><td>Cost per animal treated</td></tr>
+          <tr><td>Breeding stock registers</td><td class="n">2,214 societies</td><td><div class="meter"><span style="--v:12%"></span></div></td><td class="n">12%</td><td>Record completeness</td></tr>
+        </tbody></table></div>
+      <div class="sub" style="margin:10px 0 0">Share column reproduced from the requirement deck; the basis of the % needs to be confirmed (it does not sum to 100).</div></div>
+    <div class="note warn"><span class="ic">!</span><span><b>Mastitis is 42% of all cases reported.</b> It is the largest single driver of production loss and antibiotic use.</span></div>
+  </section>
+
+  <section class="panel" id="breeding">
+    <div class="g g2">
+      <div class="card"><h3>Conception rate by district</h3><div class="sub">First-service, last 90 days</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">Bengaluru Rural</span><span class="trk"><span class="fill good" data-v="54"></span></span><span class="val">54.2%</span></div>
+          <div class="bar"><span class="lab">Ramanagara</span><span class="trk"><span class="fill" data-v="51"></span></span><span class="val">51.0%</span></div>
+          <div class="bar"><span class="lab">Bengaluru Urban</span><span class="trk"><span class="fill warn" data-v="47"></span></span><span class="val">47.3%</span></div>
+        </div></div>
+      <div class="card"><h3>Breeding stock register completeness</h3><div class="sub">Societies with complete animal records</div>
+        <div class="donut-wrap" style="justify-content:center"><div class="donut" style="--seg:#13966b 0 68%,#e3a21a 68% 90%,#d9434b 90% 100%"><div class="c"><b>68%</b><span>complete</span></div></div></div>
+        <div class="legend" style="margin-top:14px"><span><i style="background:#13966b"></i>Complete · 1,506</span><span><i style="background:#e3a21a"></i>Partial · 487</span><span><i style="background:#d9434b"></i>Missing · 221</span></div></div>
+    </div>
+  </section>
+
+  <section class="panel" id="disease">
+    <div class="g g2">
+      <div class="card"><h3>Cases by disease</h3><div class="sub">3,120 cases this month</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">Mastitis</span><span class="trk"><span class="fill bad" data-v="100"></span></span><span class="val">1,310</span></div>
+          <div class="bar"><span class="lab">Repeat breeding</span><span class="trk"><span class="fill" data-v="42"></span></span><span class="val">552</span></div>
+          <div class="bar"><span class="lab">Lameness</span><span class="trk"><span class="fill" data-v="28"></span></span><span class="val">368</span></div>
+          <div class="bar"><span class="lab">Milk fever</span><span class="trk"><span class="fill" data-v="22"></span></span><span class="val">290</span></div>
+          <div class="bar"><span class="lab">Tick fever</span><span class="trk"><span class="fill" data-v="18"></span></span><span class="val">236</span></div>
+          <div class="bar"><span class="lab">Others</span><span class="trk"><span class="fill" data-v="28"></span></span><span class="val">364</span></div>
+        </div></div>
+      <div class="card"><h3>Mastitis hotspots</h3><div class="sub">Cases per 1,000 animals</div>
+        <table class="t"><thead><tr><th>Society</th><th class="n">Cases</th><th class="n">/1,000</th></tr></thead><tbody>
+          <tr class="flag"><td>Kudur</td><td class="n">48</td><td class="n t-bad">22.4</td></tr>
+          <tr class="flag"><td>Harohalli</td><td class="n">41</td><td class="n t-bad">19.8</td></tr>
+          <tr><td>Magadi</td><td class="n">36</td><td class="n t-warn">14.1</td></tr>
+          <tr><td>Hosakote</td><td class="n">29</td><td class="n">10.6</td></tr>
+        </tbody></table></div>
+    </div>
+  </section>
+
+  <section class="panel" id="vaccination">
+    <div class="card"><h3>Vaccination coverage by village cluster</h3><div class="sub">FMD and HS, current round</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Cluster</th><th class="n">Eligible</th><th class="n">FMD done</th><th>FMD</th><th class="n">HS done</th><th>HS</th></tr></thead>
+        <tbody>
+          <tr><td>Kanakapura</td><td class="n">62,400</td><td class="n">58,900</td><td style="min-width:110px"><div class="meter"><span style="--v:94%;background:var(--good)"></span></div></td><td class="n">55,100</td><td style="min-width:110px"><div class="meter"><span style="--v:88%"></span></div></td></tr>
+          <tr><td>Doddaballapura</td><td class="n">54,800</td><td class="n">49,300</td><td><div class="meter"><span style="--v:90%;background:var(--good)"></span></div></td><td class="n">46,600</td><td><div class="meter"><span style="--v:85%"></span></div></td></tr>
+          <tr><td>Magadi</td><td class="n">41,200</td><td class="n">32,100</td><td><div class="meter"><span style="--v:78%;background:var(--warn)"></span></div></td><td class="n">29,700</td><td><div class="meter"><span style="--v:72%;background:var(--warn)"></span></div></td></tr>
+          <tr><td>Anekal</td><td class="n">38,600</td><td class="n">36,200</td><td><div class="meter"><span style="--v:94%;background:var(--good)"></span></div></td><td class="n">33,900</td><td><div class="meter"><span style="--v:88%"></span></div></td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <section class="panel" id="medicine">
+    <div class="g g3">
+      <div class="card"><div class="sub" style="margin:0">Medicine consumption</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">₹4.86 Cr</div><div class="l">this month</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Cost per animal treated</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">₹171</div><div class="l">₹4.86 Cr ÷ 2.84 lakh</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Antibiotics share</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v t-warn">38%</div><div class="l">of medicine spend</div></div></div>
+    </div>
+  </section>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: animal husbandry records (confirmed digital) · all figures illustrative</span></div>
+</main>
+<script src="js/app.js"></script>
+</body>
+</html>

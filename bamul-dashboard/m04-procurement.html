@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Procurement &amp; Input · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<style>
+.chain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:center}
+.chain .abox{text-align:center}.chain .ar{color:var(--sky);font-size:22px}
+.chain .abox.gap{border-color:rgba(201,130,8,.6);background:rgba(201,130,8,.08)}
+@media(max-width:900px){.chain{grid-template-columns:1fr}.chain .ar{transform:rotate(90deg);text-align:center}}
+.rank{display:inline-flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;font:700 12px var(--head);background:var(--sky-soft);color:var(--sky)}
+.rank.lo{background:rgba(217,67,75,.15);color:var(--bad)}
+.delta{font-weight:700}
+</style>
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 04 · Procurement &amp; Input</div><h1>Every MPCS, and the cattle feed it receives</h1>
+    <p>Feed offtake per society ties input supply to milk output. Drill from the union down to a single society.</p></div>
+    <div class="filters">
+      <select aria-label="District"><option>All districts</option><option>Bengaluru Urban</option><option>Bengaluru Rural</option><option>Ramanagara</option></select>
+      <select aria-label="Period"><option>October 2026 MTD</option><option>September 2026</option><option>FY 2026-27 YTD</option></select>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">24.6 LLPD</div><div class="l">Procurement today</div><div class="d"><span class="up">▲ 4.2%</span> vs Oct last year</div></div>
+    <div class="kpi"><div class="v">2,214</div><div class="l">MPCS · 3,486 villages</div><div class="d">2,198 poured today</div></div>
+    <div class="kpi"><div class="v">1.27 L</div><div class="l">Producers paid</div><div class="d">Avg 19.4 L/producer/day</div></div>
+    <div class="kpi bad"><div class="v">217</div><div class="l">Societies flagged</div><div class="d">214 calibration · 3 malpractice</div></div>
+  </div>
+
+  <nav class="tabs" data-tabs>
+    <button data-tab="master">MPCS master</button>
+    <button data-tab="feed">Cattle feed</button>
+    <button data-tab="routes">Routes &amp; collection</button>
+    <button data-tab="chilling">Chilling &amp; cold chain</button>
+    <button data-tab="amcs">AMCS calibration</button>
+    <button data-tab="malpractice">Fat entry malpractice</button>
+    <button data-tab="performance">Performance</button>
+    <button data-tab="billing">Producer &amp; billing</button>
+  </nav>
+
+  <!-- MASTER -->
+  <section class="panel" id="master">
+    <div class="g g4">
+      <div class="card"><div class="sub" style="margin:0">Bengaluru Urban</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">742</div><div class="l">societies · 1,104 villages</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Bengaluru Rural</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">806</div><div class="l">societies · 1,288 villages</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Ramanagara</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">666</div><div class="l">societies · 1,094 villages</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Chilling type</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">1,186</div><div class="l">with BMC · 1,028 can-route</div></div></div>
+    </div>
+    <div class="card"><div class="card-h"><div><h3>Society master</h3><div class="sub">Showing 10 of 2,214 · click a row to drill in</div></div>
+      <input class="inp" style="width:240px" type="search" placeholder="Search code, village, route…" data-filter="mtbl"></div>
+      <div class="tw"><table class="t" id="mtbl">
+        <thead><tr><th>Code</th><th>Society</th><th>Village</th><th>District</th><th>Route</th><th class="n">Members</th><th>Chilling</th><th class="n">L/day</th><th>Flag</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">BU-0412</td><td>Bidadi MPCS</td><td>Bidadi</td><td>Ramanagara</td><td>T-07</td><td class="n">612</td><td>BMC 5,000 L</td><td class="n">4,280</td><td><span class="pill ok">OK</span></td></tr>
+          <tr><td class="mono">BR-0218</td><td>Kodihalli MPCS</td><td>Kodihalli</td><td>Bengaluru Rural</td><td>T-03</td><td class="n">584</td><td>BMC 5,000 L</td><td class="n">3,940</td><td><span class="pill ok">OK</span></td></tr>
+          <tr><td class="mono">RM-0091</td><td>Kanakapura MPCS</td><td>Kanakapura</td><td>Ramanagara</td><td>T-09</td><td class="n">540</td><td>BMC 4,000 L</td><td class="n">3,715</td><td><span class="pill ok">OK</span></td></tr>
+          <tr class="flag"><td class="mono">RM-0144</td><td>Harohalli MPCS</td><td>Harohalli</td><td>Ramanagara</td><td>T-04</td><td class="n">498</td><td>BMC 4,000 L</td><td class="n">3,480</td><td><span class="pill bad">Ratio</span></td></tr>
+          <tr><td class="mono">BR-0301</td><td>Dodballapur MPCS</td><td>Dodballapur</td><td>Bengaluru Rural</td><td>T-12</td><td class="n">476</td><td>BMC 4,000 L</td><td class="n">3,240</td><td><span class="pill ok">OK</span></td></tr>
+          <tr class="flag"><td class="mono">BR-0277</td><td>Kudur MPCS</td><td>Kudur</td><td>Bengaluru Rural</td><td>T-15</td><td class="n">402</td><td>Can route</td><td class="n">2,610</td><td><span class="pill bad">Repeat</span></td></tr>
+          <tr class="flag"><td class="mono">RM-0187</td><td>Sathanur MPCS</td><td>Sathanur</td><td>Ramanagara</td><td>T-09</td><td class="n">318</td><td>Can route</td><td class="n">1,940</td><td><span class="pill bad">Never tested</span></td></tr>
+          <tr><td class="mono">RM-0203</td><td>Maralavadi MPCS</td><td>Maralavadi</td><td>Ramanagara</td><td>T-11</td><td class="n">286</td><td>Can route</td><td class="n">1,720</td><td><span class="pill warn">Overdue</span></td></tr>
+          <tr><td class="mono">BU-0533</td><td>Guttal MPCS</td><td>Guttal</td><td>Bengaluru Urban</td><td>M-04</td><td class="n">96</td><td>Can route</td><td class="n">412</td><td><span class="pill warn">Low</span></td></tr>
+          <tr><td class="mono">BU-0561</td><td>Yelahanka colony MPCS</td><td>Yelahanka</td><td>Bengaluru Urban</td><td>M-02</td><td class="n">58</td><td>Can route</td><td class="n">244</td><td><span class="pill warn">Low</span></td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <!-- FEED -->
+  <section class="panel" id="feed">
+    <div class="note" style="margin-bottom:16px"><span class="ic">★</span><span><b>Build first.</b> Feed offtake per society is the measure that ties input supply to milk output.</span></div>
+    <div class="g g4">
+      <div class="card"><div class="sub" style="margin:0">Bags issued MTD</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">4,18,200</div><div class="l">50 kg bags</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Value issued</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">₹62.7 Cr</div><div class="l">@ ₹1,500 avg/bag</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Per member</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">3.3 bags</div><div class="l">this month</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Outstanding recovery</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v t-warn">₹8.4 Cr</div><div class="l">from 312 societies</div></div></div>
+    </div>
+    <div class="card"><h3>Society-by-society feed supply</h3><div class="sub">Feed offtake vs milk poured — kg feed per litre</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Society</th><th class="n">Bags</th><th class="n">Rate</th><th class="n">Value</th><th class="n">Per member</th><th class="n">Milk L/day</th><th class="n">kg feed / L</th><th class="n">Outstanding</th></tr></thead>
+        <tbody>
+          <tr><td>Bidadi</td><td class="n">2,840</td><td class="n">₹1,480</td><td class="n">₹42.0 L</td><td class="n">4.6</td><td class="n">4,280</td><td class="n">1.11</td><td class="n">—</td></tr>
+          <tr><td>Kodihalli</td><td class="n">2,410</td><td class="n">₹1,480</td><td class="n">₹35.7 L</td><td class="n">4.1</td><td class="n">3,940</td><td class="n">1.02</td><td class="n">₹1.2 L</td></tr>
+          <tr><td>Kanakapura</td><td class="n">2,180</td><td class="n">₹1,520</td><td class="n">₹33.1 L</td><td class="n">4.0</td><td class="n">3,715</td><td class="n">0.98</td><td class="n">—</td></tr>
+          <tr><td>Harohalli</td><td class="n">1,460</td><td class="n">₹1,520</td><td class="n">₹22.2 L</td><td class="n">2.9</td><td class="n">3,480</td><td class="n t-warn">0.70</td><td class="n t-warn">₹4.8 L</td></tr>
+          <tr><td>Kudur</td><td class="n">820</td><td class="n">₹1,480</td><td class="n">₹12.1 L</td><td class="n">2.0</td><td class="n">2,610</td><td class="n t-bad">0.52</td><td class="n t-bad">₹6.1 L</td></tr>
+          <tr><td>Guttal</td><td class="n">96</td><td class="n">₹1,500</td><td class="n">₹1.4 L</td><td class="n">1.0</td><td class="n">412</td><td class="n t-bad">0.39</td><td class="n">₹0.6 L</td></tr>
+        </tbody></table></div>
+      <div class="note warn" style="margin-top:14px"><span class="ic">!</span><span>Low feed per litre with steady milk volume (Harohalli, Kudur) suggests feed bought outside the union — or a volume reading that needs checking.</span></div></div>
+  </section>
+
+  <!-- ROUTES -->
+  <section class="panel" id="routes">
+    <div class="g g4">
+      <div class="card"><div class="sub" style="margin:0">Milk routes</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">129</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">BMC routes</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">33</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Avg route cost</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">₹0.58/L</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Pour-time compliance</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">92.4%</div></div></div>
+    </div>
+    <div class="card"><h3>Route economics</h3><div class="sub">Litre-km, cost, pour timing and transit temperature</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Route</th><th>Type</th><th class="n">Societies</th><th class="n">Litres/day</th><th class="n">Km</th><th class="n">Litre-km</th><th class="n">Cost / L</th><th class="n">On-time pour</th><th class="n">Transit °C</th></tr></thead>
+        <tbody>
+          <tr><td>T-04 Harohalli</td><td>BMC</td><td class="n">14</td><td class="n">38,400</td><td class="n">41.2</td><td class="n">15.8 L</td><td class="n">₹0.42</td><td class="n">96%</td><td class="n t-good">4.2</td></tr>
+          <tr><td>T-11 Anekal</td><td>BMC</td><td class="n">18</td><td class="n">44,100</td><td class="n">63.8</td><td class="n">28.1 L</td><td class="n">₹0.51</td><td class="n">94%</td><td class="n t-good">4.6</td></tr>
+          <tr><td>T-02 Byrapatna</td><td>BMC</td><td class="n">9</td><td class="n">21,600</td><td class="n">28.4</td><td class="n">6.1 L</td><td class="n">₹0.48</td><td class="n t-warn">81%</td><td class="n t-warn">6.8</td></tr>
+          <tr><td>M-14 Can route</td><td>Milk</td><td class="n">11</td><td class="n">6,800</td><td class="n">52.0</td><td class="n">3.5 L</td><td class="n t-bad">₹1.12</td><td class="n">90%</td><td class="n t-bad">9.4</td></tr>
+          <tr><td>M-22 Can route</td><td>Milk</td><td class="n">8</td><td class="n">5,200</td><td class="n">36.5</td><td class="n">1.9 L</td><td class="n">₹0.94</td><td class="n">93%</td><td class="n t-warn">7.6</td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <!-- CHILLING -->
+  <section class="panel" id="chilling">
+    <div class="g g21">
+      <div class="card"><h3>BMCs and chilling centres</h3><div class="sub">Capacity, utilisation, holding loss and temperature</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Unit</th><th class="n">Capacity L</th><th class="n">Held now</th><th>Utilisation</th><th class="n">Holding loss</th><th class="n">Temp °C</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Chilling centre Anekal</td><td class="n">1,00,000</td><td class="n">78,400</td><td style="min-width:110px"><div class="meter"><span style="--v:78%"></span></div></td><td class="n">0.08%</td><td class="n">3.8</td><td><span class="pill ok">OK</span></td></tr>
+            <tr><td>Chilling centre Kanakapura</td><td class="n">80,000</td><td class="n">71,200</td><td><div class="meter"><span style="--v:89%;background:var(--warn)"></span></div></td><td class="n">0.11%</td><td class="n">4.1</td><td><span class="pill warn">Near full</span></td></tr>
+            <tr><td>BMC Harohalli</td><td class="n">4,000</td><td class="n">3,120</td><td><div class="meter"><span style="--v:78%"></span></div></td><td class="n">0.06%</td><td class="n">4.0</td><td><span class="pill ok">OK</span></td></tr>
+            <tr><td>BMC Byrapatna</td><td class="n">3,000</td><td class="n">2,480</td><td><div class="meter"><span style="--v:83%"></span></div></td><td class="n t-warn">0.21%</td><td class="n t-bad">7.2</td><td><span class="pill bad">Excursion</span></td></tr>
+            <tr><td>BMC Kanakapura</td><td class="n">5,000</td><td class="n">3,600</td><td><div class="meter"><span style="--v:72%"></span></div></td><td class="n">0.07%</td><td class="n">3.9</td><td><span class="pill ok">OK</span></td></tr>
+          </tbody></table></div></div>
+      <div class="card"><h3>Cold-chain excursions</h3><div class="sub">Above 5 °C for &gt; 30 min, last 7 days</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">BMC Byrapatna</span><span class="trk"><span class="fill bad" data-v="100"></span></span><span class="val">5</span></div>
+          <div class="bar"><span class="lab">BMC Kudur</span><span class="trk"><span class="fill warn" data-v="60"></span></span><span class="val">3</span></div>
+          <div class="bar"><span class="lab">BMC Magadi</span><span class="trk"><span class="fill warn" data-v="40"></span></span><span class="val">2</span></div>
+          <div class="bar"><span class="lab">BMC Hosakote</span><span class="trk"><span class="fill" data-v="20"></span></span><span class="val">1</span></div>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- AMCS -->
+  <section class="panel" id="amcs">
+    <div class="card hl" style="margin-bottom:16px"><div class="kicker">AMCS data centre</div><h2 style="font-size:22px;margin-top:6px">An uncalibrated analyser pays the wrong price to every farmer on it</h2></div>
+    <div class="kpis">
+      <div class="kpi"><div class="v">2,214</div><div class="l">AMCS installations</div><div class="d">One per MPCS</div></div>
+      <div class="kpi good"><div class="v">1,906</div><div class="l">Calibrated in last 90 days</div><div class="d">86.1% of fleet</div></div>
+      <div class="kpi warn"><div class="v">214</div><div class="l">Overdue calibration</div><div class="d">Beyond the 90-day norm</div></div>
+      <div class="kpi bad"><div class="v">94</div><div class="l">Not tested at all</div><div class="d">No test record on file</div></div>
+    </div>
+    <div class="g g21">
+      <div class="card"><div class="card-h"><div><h3>Calibration register</h3><div class="sub">Tracked separately by analyser make</div></div>
+        <select class="inp" style="width:auto" data-status-filter="atbl"><option value="">All statuses</option><option value="current">Current</option><option value="due">Due</option><option value="overdue">Overdue</option><option value="never">Never tested</option></select></div>
+        <div class="tw"><table class="t" id="atbl">
+          <thead><tr><th>Society</th><th>Analyser</th><th>Last calibr.</th><th class="n">Days</th><th class="n">Fat vs dairy</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr data-status="current"><td>Kodihalli</td><td>Lactoscan</td><td>12 Aug</td><td class="n">75</td><td class="n">+0.02</td><td><span class="pill ok">Current</span></td></tr>
+            <tr data-status="due"><td>Harohalli</td><td>Lactoscan</td><td>03 Jul</td><td class="n">115</td><td class="n t-bad">+0.31</td><td><span class="pill warn">Due</span></td></tr>
+            <tr data-status="current"><td>Bidadi</td><td>Fossomatic</td><td>18 Sep</td><td class="n">38</td><td class="n">+0.01</td><td><span class="pill ok">Current</span></td></tr>
+            <tr data-status="overdue" class="flag"><td>Kudur</td><td>Lactoscan</td><td>21 Feb</td><td class="n">247</td><td class="n t-bad">+0.27</td><td><span class="pill bad">Overdue</span></td></tr>
+            <tr data-status="never" class="flag"><td>Sathanur</td><td>Analyser Mk-II</td><td>—</td><td class="n">—</td><td class="n t-warn">+0.18</td><td><span class="pill bad">Never tested</span></td></tr>
+            <tr data-status="current"><td>Kanakapura</td><td>Fossomatic</td><td>30 Aug</td><td class="n">57</td><td class="n">−0.01</td><td><span class="pill ok">Current</span></td></tr>
+            <tr data-status="overdue" class="flag"><td>Maralavadi</td><td>Lactoscan</td><td>11 May</td><td class="n">168</td><td class="n t-warn">+0.12</td><td><span class="pill bad">Overdue</span></td></tr>
+          </tbody></table></div>
+        <div class="sub" style="margin:10px 0 0">“Fat vs dairy” = society reading minus the dairy's receipt test for the same milk.</div></div>
+      <div class="card"><h3>Why analyser drift matters</h3><div class="sub">&nbsp;</div>
+        <ul class="ticks">
+          <li>A drifted analyser over- or under-reads fat for every farmer on it</li>
+          <li>Payment is made on that reading — the error is systematic, not random</li>
+          <li>Different analyser makes are tracked separately, not pooled</li>
+          <li>Each society's reading is compared against the dairy's receipt test</li>
+          <li>A society reading 0.3% above its route peers is drifting, not lucky</li>
+        </ul>
+        <h3 style="margin-top:18px">By make</h3>
+        <div class="bars" style="margin-top:10px">
+          <div class="bar"><span class="lab">Lactoscan</span><span class="trk"><span class="fill" data-v="84"></span></span><span class="val">84%</span></div>
+          <div class="bar"><span class="lab">Fossomatic</span><span class="trk"><span class="fill good" data-v="95"></span></span><span class="val">95%</span></div>
+          <div class="bar"><span class="lab">Analyser Mk-II</span><span class="trk"><span class="fill bad" data-v="61"></span></span><span class="val">61%</span></div>
+        </div><div class="sub" style="margin:6px 0 0">% calibrated within 90 days</div></div>
+    </div>
+  </section>
+
+  <!-- MALPRACTICE -->
+  <section class="panel" id="malpractice">
+    <div class="card hl" style="margin-bottom:16px"><div class="kicker">AMCS data centre</div><h2 style="font-size:22px;margin-top:6px">Manual fat entry is the malpractice — the ratio exposes it</h2></div>
+    <div class="g g3">
+      <div class="kpi warn"><div class="v">18,412</div><div class="l">Readings adjusted MTD</div><div class="d">0.31% of all entries</div></div>
+      <div class="kpi warn"><div class="v">96</div><div class="l">Societies with repeats</div><div class="d">5+ manual entries</div></div>
+      <div class="kpi bad"><div class="v">3</div><div class="l">Escalated for enquiry</div><div class="d">Confirmed pattern</div></div>
+    </div>
+    <div class="g g12">
+      <div class="card"><h3>Detection logic</h3><div class="sub">Score 5+ raises an enquiry notice to the MPCS and holds the cycle payment</div>
+        <div class="score">
+          <div class="row"><span>Manual entry pushed fat above the auto reading</span><span class="pts">+2</span></div>
+          <div class="row"><span>Implausible FAT to SNF ratio after correction</span><span class="pts hi">+3</span></div>
+          <div class="row"><span>Same operator adjusting repeatedly, same shift</span><span class="pts">+2</span></div>
+          <div class="row"><span>Adjustment always upward, never downward</span><span class="pts">+2</span></div>
+          <div class="row"><span>Corrected reading above every route peer</span><span class="pts lo">+1</span></div>
+        </div></div>
+      <div class="card"><h3>Adjusted readings — today</h3><div class="sub">Auto reading vs manually entered value</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Society</th><th class="n">Auto fat</th><th class="n">Entered</th><th class="n">Δ</th><th class="n">SNF</th><th class="n">Score</th><th>Flag</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr class="flag"><td>Harohalli</td><td class="n">3.82</td><td class="n">4.41</td><td class="n delta t-bad">+0.59</td><td class="n">8.10</td><td class="n"><b>7</b></td><td><span class="pill bad">Ratio</span></td><td><span class="pill bad">Payment held</span></td></tr>
+            <tr class="flag"><td>Kudur</td><td class="n">3.65</td><td class="n">4.12</td><td class="n delta t-bad">+0.47</td><td class="n">8.28</td><td class="n"><b>6</b></td><td><span class="pill warn">Repeat</span></td><td><span class="pill bad">Enquiry issued</span></td></tr>
+            <tr><td>Bidadi</td><td class="n">4.05</td><td class="n">4.07</td><td class="n delta">+0.02</td><td class="n">8.55</td><td class="n">0</td><td><span class="pill ok">OK</span></td><td>—</td></tr>
+            <tr class="flag"><td>Sathanur</td><td class="n">3.71</td><td class="n">4.38</td><td class="n delta t-bad">+0.67</td><td class="n">7.95</td><td class="n"><b>8</b></td><td><span class="pill bad">Ratio</span></td><td><span class="pill bad">Payment held</span></td></tr>
+            <tr><td>Kodihalli</td><td class="n">3.94</td><td class="n">3.96</td><td class="n delta">+0.02</td><td class="n">8.61</td><td class="n">0</td><td><span class="pill ok">OK</span></td><td>—</td></tr>
+          </tbody></table></div>
+        <div class="note bad" style="margin-top:14px"><span class="ic">!</span><span><b>Harohalli:</b> fat raised 0.59 points against an unchanged SNF. The milk cannot contain that.</span></div></div>
+    </div>
+  </section>
+
+  <!-- PERFORMANCE -->
+  <section class="panel" id="performance">
+    <div class="g g2">
+      <div class="card"><h3>High performers</h3><div class="sub">Ranked by litres/day, October MTD</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>#</th><th>Society</th><th class="n">Litres/day</th><th class="n">FAT</th><th class="n">SNF</th><th class="n">Growth</th></tr></thead>
+          <tbody>
+            <tr><td><span class="rank">1</span></td><td>Bidadi</td><td class="n">4,280</td><td class="n">4.12</td><td class="n">8.68</td><td class="n t-good">+8.2%</td></tr>
+            <tr><td><span class="rank">2</span></td><td>Kodihalli</td><td class="n">3,940</td><td class="n">4.08</td><td class="n">8.62</td><td class="n t-good">+6.5%</td></tr>
+            <tr><td><span class="rank">3</span></td><td>Kanakapura</td><td class="n">3,715</td><td class="n">4.05</td><td class="n">8.59</td><td class="n t-good">+5.9%</td></tr>
+            <tr><td><span class="rank">4</span></td><td>Harohalli</td><td class="n">3,480</td><td class="n">4.01</td><td class="n">8.55</td><td class="n t-good">+4.1%</td></tr>
+            <tr><td><span class="rank">5</span></td><td>Dodballapur</td><td class="n">3,240</td><td class="n">4.00</td><td class="n">8.51</td><td class="n t-good">+3.8%</td></tr>
+          </tbody></table></div></div>
+      <div class="card"><h3>Habitual low performers</h3><div class="sub">Bottom on volume and quality, 3+ months running</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>#</th><th>Society</th><th class="n">Litres/day</th><th class="n">FAT</th><th class="n">SNF</th><th class="n">Growth</th></tr></thead>
+          <tbody>
+            <tr><td><span class="rank lo">1</span></td><td>Yelahanka colony</td><td class="n">244</td><td class="n t-bad">3.38</td><td class="n t-bad">7.96</td><td class="n t-bad">−11.2%</td></tr>
+            <tr><td><span class="rank lo">2</span></td><td>Thalaghattapura</td><td class="n">298</td><td class="n">3.52</td><td class="n">8.18</td><td class="n t-bad">−8.4%</td></tr>
+            <tr><td><span class="rank lo">3</span></td><td>Hosadurga</td><td class="n">386</td><td class="n t-bad">3.41</td><td class="n">8.05</td><td class="n t-bad">−6.0%</td></tr>
+            <tr><td><span class="rank lo">4</span></td><td>Guttal</td><td class="n">412</td><td class="n">3.48</td><td class="n">8.12</td><td class="n t-bad">−4.7%</td></tr>
+          </tbody></table></div>
+        <div class="note warn" style="margin-top:14px"><span class="ic">!</span><span>Peri-urban societies are losing members to land sale; growth is unlikely to recover. Review route viability.</span></div></div>
+    </div>
+  </section>
+
+  <!-- BILLING -->
+  <section class="panel" id="billing">
+    <div class="card" style="margin-bottom:16px"><h3>Cycle settlement chain</h3><div class="sub">The gap between the two settlements is what the tracker watches</div>
+      <div class="chain">
+        <div class="abox"><b>Union → MPCS</b><span>Settled on the AMCS reading</span></div><div class="ar">→</div>
+        <div class="abox"><b>MPCS → Farmer</b><span>Each farmer paid on their own pour record</span></div><div class="ar">→</div>
+        <div class="abox gap"><b>Gap tracker</b><span>Union amount − farmer total, per society</span></div>
+      </div></div>
+    <div class="g g21">
+      <div class="card"><h3>Billing cycle</h3><div class="sub">Half-monthly view</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Cycle</th><th class="n">Litres</th><th class="n">Amount</th><th>Paid</th></tr></thead>
+          <tbody>
+            <tr><td>H1 Aug 2026</td><td class="n">7.94 Cr</td><td class="n">₹29.1 Cr</td><td><span class="pill ok">Settled</span></td></tr>
+            <tr><td>H2 Aug 2026</td><td class="n">8.42 Cr</td><td class="n">₹30.8 Cr</td><td><span class="pill ok">Settled</span></td></tr>
+            <tr><td>H1 Sep 2026</td><td class="n">8.66 Cr</td><td class="n">₹31.6 Cr</td><td><span class="pill ok">Settled</span></td></tr>
+            <tr><td>H2 Sep 2026</td><td class="n">8.79 Cr</td><td class="n">₹32.0 Cr</td><td><span class="pill ok">Settled</span></td></tr>
+            <tr><td>H1 Oct 2026</td><td class="n">8.90 Cr</td><td class="n">₹32.4 Cr</td><td><span class="pill warn">Part paid</span></td></tr>
+            <tr><td>H2 Oct 2026</td><td class="n">8.94 Cr</td><td class="n">₹32.6 Cr</td><td><span class="pill info">Due 31 Oct</span></td></tr>
+          </tbody></table></div>
+        <div class="sub" style="margin:10px 0 0">Litres shown are as given in the requirement deck; to be reconciled with daily procurement once EBS is connected.</div></div>
+      <div class="card"><h3>Largest settlement gaps</h3><div class="sub">H1 Oct · union paid vs farmers paid</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">Kudur</span><span class="trk"><span class="fill bad" data-v="100"></span></span><span class="val">₹1.84 L</span></div>
+          <div class="bar"><span class="lab">Harohalli</span><span class="trk"><span class="fill bad" data-v="82"></span></span><span class="val">₹1.51 L</span></div>
+          <div class="bar"><span class="lab">Maralavadi</span><span class="trk"><span class="fill warn" data-v="44"></span></span><span class="val">₹0.81 L</span></div>
+          <div class="bar"><span class="lab">Sathanur</span><span class="trk"><span class="fill warn" data-v="31"></span></span><span class="val">₹0.57 L</span></div>
+        </div>
+        <dl class="kv" style="margin-top:16px"><dt>Producers</dt><dd>1.27 lakh</dd><dt>Avg rate</dt><dd>₹36.6/L at 4.0 / 8.5</dd><dt>Incentive</dt><dd>₹0.50/L above 4.2 FAT</dd></dl></div>
+    </div>
+  </section>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: EBS procurement, AMCS feed · society-level figures illustrative</span></div>
+</main>
+<script src="js/app.js"></script>
+</body>
+</html>

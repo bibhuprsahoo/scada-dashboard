@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Production · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<style>
+.gauge{display:flex;flex-direction:column;align-items:center;gap:6px}
+.gauge .ring{width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--c,var(--sky)) calc(var(--v)*1%),var(--track) 0);position:relative}
+.gauge .ring::after{content:"";position:absolute;inset:14px;border-radius:50%;background:#fff}
+.gauge .ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;font:800 24px var(--head)}
+.gauge .lbl{font-weight:600}
+.gauge .tg{font-size:12px;color:var(--muted)}
+.flash{animation:flash .6s ease}
+@keyframes flash{0%{color:var(--sky)}100%{color:inherit}}
+</style>
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 03 · Production Data</div><h1>Live plant output, measured against SCADA efficiency</h1>
+    <p>Curated tag set from the SCADA historian, refreshed every 60 seconds. Efficiency measures, not raw PLC registers.</p></div>
+    <div class="filters">
+      <select aria-label="Plant"><option>Bangalore Mega Dairy</option><option>Kanakapura Dairy</option><option>Bangalore Dairy</option><option>All plants</option></select>
+      <select aria-label="Shift"><option>Shift B · 14:00–22:00</option><option>Shift A</option><option>Shift C</option><option>Today</option></select>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi good"><div class="v" id="k-intake">8,42,600 L</div><div class="l">Milk intake today</div><div class="d"><span class="up">▲ 3.1%</span> vs same day last week</div></div>
+    <div class="kpi good"><div class="v">98.4%</div><div class="l">Yield efficiency</div><div class="d">Target 98.0%</div></div>
+    <div class="kpi warn"><div class="v">0.42%</div><div class="l">Process loss</div><div class="d">Norm ≤ 0.40%</div></div>
+    <div class="kpi"><div class="v">46 min</div><div class="l">Downtime this shift</div><div class="d">3 stoppages, all coded</div></div>
+  </div>
+
+  <nav class="tabs" data-tabs>
+    <button data-tab="flow">Live process</button>
+    <button data-tab="eff">SCADA efficiency</button>
+    <button data-tab="down">Downtime</button>
+    <button data-tab="util">Utilities</button>
+    <button data-tab="output">Product output</button>
+    <button data-tab="batch">Batch release</button>
+  </nav>
+
+  <!-- FLOW -->
+  <section class="panel" id="flow">
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-h"><div><h3>Intake to dispatch</h3><div class="sub">Bangalore Mega Dairy · last tag update <span id="upd">just now</span></div></div><span class="pill ok"><span class="dot-live" style="display:inline-block;margin-right:6px;vertical-align:0"></span>SCADA live</span></div>
+      <div class="pipe"></div>
+      <div class="flow">
+        <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M1 6h13v10H1zM14 10h4l3 3v3h-7"/><circle cx="5.5" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/></svg></div>
+          <h4>Reception</h4><div class="m" data-live="35200">35,200</div><div class="s">L/hr · 6 bays</div><div class="st"><span class="pill ok">4.1 °C in</span></div></div>
+        <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M4.9 4.9l14.2 14.2M2 12h20M4.9 19.1L19.1 4.9"/></svg></div>
+          <h4>Chilling</h4><div class="m" data-live="34900">34,900</div><div class="s">L/hr · silo 72%</div><div class="st"><span class="pill ok">3.6 °C</span></div></div>
+        <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2c3 4 5 7 5 10a5 5 0 0 1-10 0c0-3 2-6 5-10z"/></svg></div>
+          <h4>Pasteurisation</h4><div class="m" data-live="34600">34,600</div><div class="s">L/hr · 2 of 3 PHE</div><div class="st"><span class="pill ok">72.4 °C · 15 s</span></div></div>
+        <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></div>
+          <h4>Packing</h4><div class="m" data-live="68400">68,400</div><div class="s">pouches/hr · 11 of 12</div><div class="st"><span class="pill warn">FFS-07 down</span></div></div>
+        <div class="stage"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10h14v11M9 21v-5h6v5M3 10l9-7 9 7"/></svg></div>
+          <h4>Dispatch</h4><div class="m" data-live="31800">31,800</div><div class="s">L/hr · 71 routes</div><div class="st"><span class="pill ok">3.9 °C load</span></div></div>
+      </div>
+    </div>
+    <div class="g g3">
+      <div class="card"><h3>Silo levels</h3><div class="sub">Raw and pasteurised milk</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">RMS-1 raw</span><span class="trk"><span class="fill" data-v="72"></span></span><span class="val">72%</span></div>
+          <div class="bar"><span class="lab">RMS-2 raw</span><span class="trk"><span class="fill" data-v="58"></span></span><span class="val">58%</span></div>
+          <div class="bar"><span class="lab">PMS-1 past.</span><span class="trk"><span class="fill" data-v="81"></span></span><span class="val">81%</span></div>
+          <div class="bar"><span class="lab">PMS-2 past.</span><span class="trk"><span class="fill warn" data-v="93"></span></span><span class="val">93%</span></div>
+        </div></div>
+      <div class="card"><h3>Hourly throughput</h3><div class="sub">Thousand litres, today</div>
+        <div class="cols" style="height:150px">
+          <div class="col"><span class="c" data-h="62"></span></div><div class="col"><span class="c" data-h="78"></span></div><div class="col"><span class="c" data-h="91"></span></div>
+          <div class="col"><span class="c" data-h="96"></span></div><div class="col"><span class="c" data-h="100"></span></div><div class="col"><span class="c" data-h="87"></span></div>
+          <div class="col"><span class="c" data-h="44"></span></div><div class="col"><span class="c" data-h="92"></span></div></div>
+        <div class="cols-x"><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span></div></div>
+      <div class="card"><h3>Active alarms</h3><div class="sub">Curated, last 4 hours</div>
+        <div class="score">
+          <div class="row"><span>FFS-07 film break</span><span class="pill warn">14:38</span></div>
+          <div class="row"><span>PMS-2 high level</span><span class="pill warn">15:02</span></div>
+          <div class="row"><span>CIP-3 return temp low</span><span class="pill">13:10</span></div>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- EFFICIENCY -->
+  <section class="panel" id="eff">
+    <div class="g g4">
+      <div class="card"><div class="gauge"><div class="ring" style="--v:98.4;--c:var(--good)"><b>98.4%</b></div><div class="lbl">Yield efficiency</div><div class="tg">Target 98.0%</div></div></div>
+      <div class="card"><div class="gauge"><div class="ring" style="--v:58;--c:var(--warn)"><b>0.42%</b></div><div class="lbl">Process loss</div><div class="tg">Norm ≤ 0.40%</div></div></div>
+      <div class="card"><div class="gauge"><div class="ring" style="--v:91"><b>91.2%</b></div><div class="lbl">Thermal efficiency</div><div class="tg">Boiler + PHE</div></div></div>
+      <div class="card"><div class="gauge"><div class="ring" style="--v:88;--c:var(--good)"><b>88.6%</b></div><div class="lbl">Regeneration efficiency</div><div class="tg">PHE heat recovery, target 88%</div></div></div>
+    </div>
+    <div class="card"><h3>Efficiency by plant</h3><div class="sub">Rolling 7 days</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Plant</th><th class="n">Intake L/day</th><th class="n">Yield</th><th class="n">Loss</th><th class="n">Thermal</th><th class="n">Regen.</th><th class="n">OEE</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Bangalore Mega Dairy</td><td class="n">8,42,600</td><td class="n">98.4%</td><td class="n t-warn">0.42%</td><td class="n">91.2%</td><td class="n">88.6%</td><td class="n">82.1%</td><td><span class="pill ok">On target</span></td></tr>
+          <tr><td>Kanakapura Dairy</td><td class="n">3,91,200</td><td class="n">98.1%</td><td class="n">0.38%</td><td class="n">89.4%</td><td class="n">86.9%</td><td class="n">78.4%</td><td><span class="pill warn">Regen below</span></td></tr>
+          <tr><td>Bangalore Dairy</td><td class="n">1,92,400</td><td class="n">97.6%</td><td class="n t-bad">0.61%</td><td class="n">86.0%</td><td class="n">84.2%</td><td class="n">71.5%</td><td><span class="pill bad">Loss high</span></td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <!-- DOWNTIME -->
+  <section class="panel" id="down">
+    <div class="g g21">
+      <div class="card"><h3>Stoppage log</h3><div class="sub">Every stoppage carries a reason code</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Start</th><th>Line</th><th class="n">Minutes</th><th>Reason code</th><th>Detail</th><th>Coded by</th></tr></thead>
+          <tbody>
+            <tr><td>14:38</td><td>FFS-07</td><td class="n">22</td><td><span class="pill warn">MECH-04</span></td><td>Film break, re-threading</td><td>Shift engr.</td></tr>
+            <tr><td>11:15</td><td>PHE-2</td><td class="n">16</td><td><span class="pill info">CIP-01</span></td><td>Scheduled mid-run CIP</td><td>Auto</td></tr>
+            <tr><td>09:52</td><td>Curd line 1</td><td class="n">8</td><td><span class="pill bad">UTIL-02</span></td><td>Steam pressure dip</td><td>Boiler ops</td></tr>
+            <tr><td>Yesterday 21:40</td><td>FFS-03</td><td class="n">34</td><td><span class="pill warn">MECH-01</span></td><td>Sealing jaw heater</td><td>Maintenance</td></tr>
+            <tr><td>Yesterday 16:05</td><td>Reception bay 4</td><td class="n">12</td><td><span class="pill">OPS-03</span></td><td>Tanker queue / no load</td><td>Reception</td></tr>
+          </tbody></table></div></div>
+      <div class="card"><h3>Downtime by reason</h3><div class="sub">Minutes, last 7 days</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">Mechanical</span><span class="trk"><span class="fill bad" data-v="100"></span></span><span class="val">312</span></div>
+          <div class="bar"><span class="lab">Planned CIP</span><span class="trk"><span class="fill" data-v="68"></span></span><span class="val">212</span></div>
+          <div class="bar"><span class="lab">Utilities</span><span class="trk"><span class="fill warn" data-v="31"></span></span><span class="val">96</span></div>
+          <div class="bar"><span class="lab">Operations</span><span class="trk"><span class="fill" data-v="24"></span></span><span class="val">74</span></div>
+          <div class="bar"><span class="lab">Material</span><span class="trk"><span class="fill" data-v="12"></span></span><span class="val">38</span></div>
+          <div class="bar"><span class="lab">Uncoded</span><span class="trk"><span class="fill good" data-v="0"></span></span><span class="val t-good">0</span></div>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- UTILITIES -->
+  <section class="panel" id="util">
+    <div class="g g3">
+      <div class="card"><div class="sub" style="margin:0">Specific energy</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">12.8 kWh</div><div class="l">per 1000 L processed</div></div><div class="meter"><span style="--v:64%"></span></div><div class="sub" style="margin:6px 0 0">Target 13.5 · <span class="t-good">better</span></div></div>
+      <div class="card"><div class="sub" style="margin:0">Steam</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">118 kg</div><div class="l">per 1000 L processed</div></div><div class="meter"><span style="--v:74%;background:var(--warn)"></span></div><div class="sub" style="margin:6px 0 0">Target 110 · <span class="t-warn">7% over</span></div></div>
+      <div class="card"><div class="sub" style="margin:0">Water</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">1.9 KL</div><div class="l">per 1000 L processed</div></div><div class="meter"><span style="--v:58%"></span></div><div class="sub" style="margin:6px 0 0">Target 2.0 · <span class="t-good">better</span></div></div>
+    </div>
+    <div class="card"><h3>Utilities trend — steam per 1000 L</h3><div class="sub">Last 10 days</div>
+      <div class="cols" style="height:140px">
+        <div class="col"><span class="cv">108</span><span class="c" data-h="88"></span></div><div class="col"><span class="cv">111</span><span class="c" data-h="91"></span></div><div class="col"><span class="cv">109</span><span class="c" data-h="89"></span></div>
+        <div class="col"><span class="cv">114</span><span class="c" data-h="93"></span></div><div class="col"><span class="cv">112</span><span class="c" data-h="92"></span></div><div class="col"><span class="cv">116</span><span class="c" data-h="95"></span></div>
+        <div class="col"><span class="cv">119</span><span class="c" data-h="98"></span></div><div class="col"><span class="cv">117</span><span class="c" data-h="96"></span></div><div class="col"><span class="cv">122</span><span class="c" data-h="100"></span></div>
+        <div class="col"><span class="cv">118</span><span class="c" data-h="97"></span></div></div>
+      <div class="cols-x"><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span></div></div>
+  </section>
+
+  <!-- OUTPUT -->
+  <section class="panel" id="output">
+    <div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Product-wise output reconciled to milk intake</h3><div class="sub">Today · milk-equivalent litres</div></div><span class="pill ok">Gap 0.42% · within norm</span></div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Product</th><th class="n">Output</th><th class="n">Milk equiv. L</th><th class="n">FAT kg used</th><th class="n">SNF kg used</th><th class="n">Plan</th><th class="n">Achieved</th></tr></thead>
+        <tbody>
+          <tr><td>Toned milk</td><td class="n">5,12,000 L</td><td class="n">5,12,000</td><td class="n">15,360</td><td class="n">43,520</td><td class="n">5,00,000</td><td class="n t-good">102%</td></tr>
+          <tr><td>Homogenised milk</td><td class="n">1,08,000 L</td><td class="n">1,08,000</td><td class="n">3,780</td><td class="n">9,288</td><td class="n">1,10,000</td><td class="n">98%</td></tr>
+          <tr><td>Curd</td><td class="n">96,400 kg</td><td class="n">98,300</td><td class="n">2,950</td><td class="n">8,450</td><td class="n">95,000</td><td class="n t-good">101%</td></tr>
+          <tr><td>Buttermilk</td><td class="n">42,000 L</td><td class="n">21,000</td><td class="n">210</td><td class="n">1,810</td><td class="n">40,000</td><td class="n t-good">105%</td></tr>
+          <tr><td>Cream → ghee</td><td class="n">7,480 kg</td><td class="n">98,600</td><td class="n">6,560</td><td class="n">—</td><td class="n">8,000</td><td class="n t-warn">94%</td></tr>
+          <tr class="total"><td>Total accounted</td><td></td><td class="n">8,37,900</td><td></td><td></td><td></td><td></td></tr>
+          <tr><td class="t-muted">Milk intake</td><td></td><td class="n">8,42,600</td><td></td><td></td><td></td><td></td></tr>
+          <tr><td class="t-muted">Unaccounted (loss)</td><td></td><td class="n t-warn">3,540 · 0.42%</td><td></td><td></td><td></td><td></td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <!-- BATCH -->
+  <section class="panel" id="batch">
+    <div class="card"><div class="card-h"><div><h3>Batch release status</h3><div class="sub">From the quality lab · no batch dispatches without release</div></div>
+      <input class="inp" style="width:220px" type="search" placeholder="Search batch…" data-filter="btbl"></div>
+      <div class="tw"><table class="t" id="btbl">
+        <thead><tr><th>Batch</th><th>Product</th><th>Line</th><th class="n">Qty</th><th>Packed</th><th>Lab result</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">MD-TM-261026-B04</td><td>Toned milk 500 ml</td><td>FFS-02</td><td class="n">48,000</td><td>15:10</td><td>MBRT pass · COB neg</td><td><span class="pill ok">Released</span></td></tr>
+          <tr><td class="mono">MD-TM-261026-B05</td><td>Toned milk 500 ml</td><td>FFS-04</td><td class="n">46,500</td><td>15:22</td><td>Awaiting micro</td><td><span class="pill info">In test</span></td></tr>
+          <tr><td class="mono">MD-HM-261026-B02</td><td>Homogenised 1 L</td><td>FFS-09</td><td class="n">22,000</td><td>14:55</td><td>MBRT pass</td><td><span class="pill ok">Released</span></td></tr>
+          <tr class="flag"><td class="mono">MD-CD-261026-B01</td><td>Curd 500 g</td><td>Curd-1</td><td class="n">18,400</td><td>12:30</td><td>Antibiotic residue +ve</td><td><span class="pill bad">On hold</span></td></tr>
+          <tr><td class="mono">KP-GH-261025-B11</td><td>Ghee 1 L</td><td>Ghee-2</td><td class="n">3,200</td><td>Yesterday</td><td>FFA, moisture pass</td><td><span class="pill ok">Released</span></td></tr>
+        </tbody></table></div>
+      <div class="note bad" style="margin-top:14px"><span class="ic">!</span><span>Curd batch <b>MD-CD-261026-B01</b> held on antibiotic residue. The source silo traces to routes T-02 and T-11; see <a href="m06-quality.html">Quality</a>.</span></div></div>
+  </section>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: SCADA historian (60-s curated tags) + EBS production · all figures illustrative</span></div>
+</main>
+<script src="js/app.js"></script>
+<script>
+// Simulated live tag refresh — replace with the warehouse/SCADA feed
+(function(){
+  const els=[...document.querySelectorAll('[data-live]')];let t=0;
+  setInterval(()=>{
+    t=0;els.forEach(e=>{const b=+e.dataset.live;const v=Math.round(b*(1+(Math.random()-.5)*.02)/10)*10;e.textContent=v.toLocaleString('en-IN');e.classList.remove('flash');void e.offsetWidth;e.classList.add('flash')});
+    document.getElementById('upd').textContent='just now';
+  },5000);
+  setInterval(()=>{t+=1;document.getElementById('upd').textContent=t+'s ago'},1000);
+})();
+</script>
+</body>
+</html>

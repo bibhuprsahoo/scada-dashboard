@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finance · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 02 · Finance</div><h1>Every statutory statement, product sales reconciled to it</h1>
+    <p>₹ crore unless stated. Audited FY25 figures are marked verified; everything else is illustrative.</p></div>
+    <div class="filters">
+      <select aria-label="Financial year"><option>FY 2025-26</option><option>FY 2024-25</option><option>FY 2023-24</option></select>
+      <select aria-label="Basis"><option>Audited</option><option>Provisional</option></select>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi good"><span class="src ver">Verified</span><div class="v">₹2,925.9 Cr</div><div class="l">Operating income FY25 (audited)</div></div>
+    <div class="kpi"><span class="src ver">Verified</span><div class="v">₹8.7 Cr</div><div class="l">Profit after tax FY25</div><div class="d">0.30% of operating income</div></div>
+    <div class="kpi"><span class="src">Projected</span><div class="v">₹3,400 Cr</div><div class="l">Turnover FY26 projected</div><div class="d"><span class="up">▲ 16.2%</span> on FY25</div></div>
+    <div class="kpi good"><span class="src ver">Verified</span><div class="v">₹59.39 Cr</div><div class="l">Ugadi bonus paid FY26</div><div class="d">₹1/litre · 1.27 L farmers</div></div>
+  </div>
+
+  <nav class="tabs" data-tabs>
+    <button data-tab="summary">Summary</button>
+    <button data-tab="bs">Balance Sheet</button>
+    <button data-tab="ie">Income &amp; Expenditure</button>
+    <button data-tab="cf">Cash Flow</button>
+    <button data-tab="sales">Product Sales</button>
+    <button data-tab="payments">Milk Payments</button>
+    <button data-tab="ratios">Ratios &amp; Receivables</button>
+    <button data-tab="statutory">Statutory &amp; Audit</button>
+  </nav>
+
+  <!-- SUMMARY -->
+  <section class="panel" id="summary">
+    <div class="g g21">
+      <div class="card">
+        <h3>Revenue trend</h3><div class="sub">Operating income, ₹ crore</div>
+        <div class="cols">
+          <div class="col"><span class="cv">2,180</span><span class="c" data-h="64"></span></div>
+          <div class="col"><span class="cv">2,412</span><span class="c" data-h="71"></span></div>
+          <div class="col"><span class="cv">2,698</span><span class="c" data-h="79"></span></div>
+          <div class="col"><span class="cv">2,925.9</span><span class="c" data-h="86"></span></div>
+          <div class="col"><span class="cv">3,400</span><span class="c alt" data-h="100"></span></div>
+        </div>
+        <div class="cols-x"><span>FY22</span><span>FY23</span><span>FY24</span><span>FY25 ✓</span><span>FY26 proj.</span></div>
+      </div>
+      <div class="card">
+        <h3>Revenue mix</h3><div class="sub">FY25, share of operating income</div>
+        <div class="donut-wrap">
+          <div class="donut" style="--seg:#1e9be0 0 62%,#13966b 62% 76%,#e3a21a 76% 88%,#8b6fe0 88% 95%,#c9dbe9 95% 100%"><div class="c"><b>₹2,926</b><span>crore</span></div></div>
+          <div class="legend">
+            <span><i style="background:#1e9be0"></i>Liquid milk 62%</span>
+            <span><i style="background:#13966b"></i>Curd &amp; buttermilk 14%</span>
+            <span><i style="background:#e3a21a"></i>Ghee &amp; butter 12%</span>
+            <span><i style="background:#8b6fe0"></i>Other products 7%</span>
+            <span><i style="background:#c9dbe9"></i>Other income 5%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="g g4">
+      <div class="card"><div class="sub" style="margin:0">Milk cost as % of income</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">81.4%</div></div><div class="meter"><span style="--v:81%"></span></div></div>
+      <div class="card"><div class="sub" style="margin:0">Cost per litre processed</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">₹4.82</div></div><div class="d t-muted" style="font-size:12px;margin-top:6px">Conversion, excl. milk</div></div>
+      <div class="card"><div class="sub" style="margin:0">Receivables &gt; 90 days</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v t-warn">₹14.2 Cr</div></div><div class="d t-muted" style="font-size:12px;margin-top:6px">9.8% of book debts</div></div>
+      <div class="card"><div class="sub" style="margin:0">Open audit observations</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v t-bad">7</div></div><div class="d t-muted" style="font-size:12px;margin-top:6px">2 rated high</div></div>
+    </div>
+  </section>
+
+  <!-- BALANCE SHEET -->
+  <section class="panel" id="bs">
+    <div class="g g2">
+      <div class="card"><h3>Sources of funds</h3><div class="sub">As at 31 March, ₹ crore</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Item</th><th class="n">FY25</th><th class="n">FY24</th></tr></thead>
+          <tbody>
+            <tr><td>Share capital</td><td class="n">112.4</td><td class="n">104.8</td></tr>
+            <tr><td>Reserves &amp; surplus</td><td class="n">286.1</td><td class="n">271.3</td></tr>
+            <tr><td>Government grants</td><td class="n">94.6</td><td class="n">98.2</td></tr>
+            <tr><td>Secured loans</td><td class="n">168.3</td><td class="n">182.0</td></tr>
+            <tr><td>Unsecured loans</td><td class="n">42.0</td><td class="n">38.5</td></tr>
+            <tr><td>Current liabilities &amp; provisions</td><td class="n">318.7</td><td class="n">294.1</td></tr>
+            <tr class="total"><td>Total</td><td class="n">1,022.1</td><td class="n">988.9</td></tr>
+          </tbody></table></div></div>
+      <div class="card"><h3>Application of funds</h3><div class="sub">As at 31 March, ₹ crore</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Item</th><th class="n">FY25</th><th class="n">FY24</th></tr></thead>
+          <tbody>
+            <tr><td>Net fixed assets</td><td class="n">468.5</td><td class="n">482.7</td></tr>
+            <tr><td>Capital work in progress</td><td class="n">36.2</td><td class="n">18.9</td></tr>
+            <tr><td>Investments</td><td class="n">58.0</td><td class="n">54.0</td></tr>
+            <tr><td>Inventories</td><td class="n">184.6</td><td class="n">171.2</td></tr>
+            <tr><td>Sundry debtors</td><td class="n">144.8</td><td class="n">139.5</td></tr>
+            <tr><td>Cash &amp; bank</td><td class="n">72.3</td><td class="n">68.1</td></tr>
+            <tr><td>Loans &amp; advances</td><td class="n">57.7</td><td class="n">54.5</td></tr>
+            <tr class="total"><td>Total</td><td class="n">1,022.1</td><td class="n">988.9</td></tr>
+          </tbody></table></div></div>
+    </div>
+  </section>
+
+  <!-- I&E -->
+  <section class="panel" id="ie">
+    <div class="card"><h3>Income &amp; expenditure account</h3><div class="sub">Line by line, three years · ₹ crore · FY25 totals verified, lines illustrative</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Line</th><th class="n">FY23</th><th class="n">FY24</th><th class="n">FY25</th><th class="n">Δ FY25</th></tr></thead>
+        <tbody>
+          <tr><td><b>Sales of milk &amp; products</b></td><td class="n">2,318.6</td><td class="n">2,592.4</td><td class="n">2,809.2</td><td class="n t-good">+8.4%</td></tr>
+          <tr><td>Other operating income</td><td class="n">93.4</td><td class="n">105.6</td><td class="n">116.7</td><td class="n t-good">+10.5%</td></tr>
+          <tr class="total"><td>Operating income</td><td class="n">2,412.0</td><td class="n">2,698.0</td><td class="n">2,925.9</td><td class="n t-good">+8.4%</td></tr>
+          <tr><td>Milk purchase cost</td><td class="n">1,946.3</td><td class="n">2,188.7</td><td class="n">2,381.6</td><td class="n t-bad">+8.8%</td></tr>
+          <tr><td>Packing material</td><td class="n">88.2</td><td class="n">94.1</td><td class="n">101.8</td><td class="n t-bad">+8.2%</td></tr>
+          <tr><td>Power &amp; fuel</td><td class="n">62.5</td><td class="n">67.9</td><td class="n">71.4</td><td class="n t-bad">+5.2%</td></tr>
+          <tr><td>Employee cost</td><td class="n">118.4</td><td class="n">126.2</td><td class="n">134.0</td><td class="n t-bad">+6.2%</td></tr>
+          <tr><td>Transport &amp; distribution</td><td class="n">76.0</td><td class="n">82.3</td><td class="n">88.6</td><td class="n t-bad">+7.7%</td></tr>
+          <tr><td>Depreciation</td><td class="n">38.9</td><td class="n">41.2</td><td class="n">42.8</td><td class="n">+3.9%</td></tr>
+          <tr><td>Finance cost</td><td class="n">16.1</td><td class="n">15.4</td><td class="n">14.2</td><td class="n t-good">−7.8%</td></tr>
+          <tr><td>Other expenses</td><td class="n">58.6</td><td class="n">72.0</td><td class="n">80.1</td><td class="n t-bad">+11.3%</td></tr>
+          <tr><td>Tax</td><td class="n">2.0</td><td class="n">2.6</td><td class="n">2.5</td><td class="n">—</td></tr>
+          <tr class="total"><td>Profit after tax</td><td class="n">5.0</td><td class="n">6.2</td><td class="n">8.7</td><td class="n t-good">+40.3%</td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <!-- CASH FLOW -->
+  <section class="panel" id="cf">
+    <div class="g g21">
+      <div class="card"><h3>Cash flow — indirect method</h3><div class="sub">FY25, ₹ crore</div>
+        <div class="tw"><table class="t"><tbody>
+          <tr><td>Profit before tax</td><td class="n">11.2</td></tr>
+          <tr><td>Add: depreciation</td><td class="n">42.8</td></tr>
+          <tr><td>Add: finance cost</td><td class="n">14.2</td></tr>
+          <tr><td>Change in inventories</td><td class="n t-bad">(13.4)</td></tr>
+          <tr><td>Change in debtors</td><td class="n t-bad">(5.3)</td></tr>
+          <tr><td>Change in payables</td><td class="n">24.6</td></tr>
+          <tr class="total"><td>Net cash from operating</td><td class="n t-good">74.1</td></tr>
+          <tr><td>Capex incl. CWIP</td><td class="n t-bad">(45.8)</td></tr>
+          <tr><td>Investments</td><td class="n t-bad">(4.0)</td></tr>
+          <tr class="total"><td>Net cash from investing</td><td class="n t-bad">(49.8)</td></tr>
+          <tr><td>Loans repaid (net)</td><td class="n t-bad">(10.2)</td></tr>
+          <tr><td>Share capital raised</td><td class="n">7.6</td></tr>
+          <tr><td>Interest paid</td><td class="n t-bad">(14.2)</td></tr>
+          <tr><td>Dividend / bonus to members</td><td class="n t-bad">(3.3)</td></tr>
+          <tr class="total"><td>Net cash from financing</td><td class="n t-bad">(20.1)</td></tr>
+          <tr class="total"><td>Net increase in cash</td><td class="n">4.2</td></tr>
+        </tbody></table></div></div>
+      <div class="card"><h3>Waterfall</h3><div class="sub">Opening to closing cash</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">Opening cash</span><span class="trk"><span class="fill" data-v="68"></span></span><span class="val">68.1</span></div>
+          <div class="bar"><span class="lab">Operating</span><span class="trk"><span class="fill good" data-v="74"></span></span><span class="val t-good">+74.1</span></div>
+          <div class="bar"><span class="lab">Investing</span><span class="trk"><span class="fill bad" data-v="50"></span></span><span class="val t-bad">−49.8</span></div>
+          <div class="bar"><span class="lab">Financing</span><span class="trk"><span class="fill bad" data-v="20"></span></span><span class="val t-bad">−20.1</span></div>
+          <div class="bar"><span class="lab">Closing cash</span><span class="trk"><span class="fill" data-v="72"></span></span><span class="val">72.3</span></div>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- PRODUCT SALES -->
+  <section class="panel" id="sales">
+    <div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Product-wise volume and realisation</h3><div class="sub">FY26 YTD (Apr–Sep), reconciled to GL sales accounts</div></div><span class="pill ok">Reconciled · diff ₹0.04 Cr</span></div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Product</th><th>Unit</th><th class="n">Volume</th><th class="n">Value ₹ Cr</th><th class="n">Realisation / unit</th><th class="n">vs LY</th><th>Share</th></tr></thead>
+        <tbody>
+          <tr><td>Toned milk</td><td>lakh L</td><td class="n">1,842</td><td class="n">884.2</td><td class="n">₹48.0</td><td class="n t-good">+6.1%</td><td style="min-width:120px"><div class="meter"><span style="--v:56%"></span></div></td></tr>
+          <tr><td>Homogenised / full cream</td><td>lakh L</td><td class="n">412</td><td class="n">226.6</td><td class="n">₹55.0</td><td class="n t-good">+9.4%</td><td><div class="meter"><span style="--v:14%"></span></div></td></tr>
+          <tr><td>Curd</td><td>lakh kg</td><td class="n">286</td><td class="n">157.3</td><td class="n">₹55.0</td><td class="n t-good">+11.2%</td><td><div class="meter"><span style="--v:10%"></span></div></td></tr>
+          <tr><td>Buttermilk</td><td>lakh L</td><td class="n">148</td><td class="n">29.6</td><td class="n">₹20.0</td><td class="n t-good">+18.5%</td><td><div class="meter"><span style="--v:2%"></span></div></td></tr>
+          <tr><td>Ghee</td><td>tonnes</td><td class="n">2,140</td><td class="n">128.4</td><td class="n">₹600/kg</td><td class="n t-bad">−2.3%</td><td><div class="meter"><span style="--v:8%"></span></div></td></tr>
+          <tr><td>Butter</td><td>tonnes</td><td class="n">980</td><td class="n">49.0</td><td class="n">₹500/kg</td><td class="n">+0.8%</td><td><div class="meter"><span style="--v:3%"></span></div></td></tr>
+          <tr><td>Skimmed milk powder</td><td>tonnes</td><td class="n">1,620</td><td class="n">48.6</td><td class="n">₹300/kg</td><td class="n t-bad">−6.4%</td><td><div class="meter"><span style="--v:3%"></span></div></td></tr>
+          <tr><td>Sweets &amp; ice cream</td><td>tonnes</td><td class="n">760</td><td class="n">41.8</td><td class="n">₹550/kg</td><td class="n t-good">+14.0%</td><td><div class="meter"><span style="--v:3%"></span></div></td></tr>
+          <tr class="total"><td>Total</td><td></td><td></td><td class="n">1,565.5</td><td></td><td class="n t-good">+7.2%</td><td></td></tr>
+        </tbody></table></div></div>
+    <div class="g g3">
+      <div class="card"><h3>By channel</h3><div class="bars" style="margin-top:12px">
+        <div class="bar"><span class="lab">Dealers / agents</span><span class="trk"><span class="fill" data-v="58"></span></span><span class="val">58%</span></div>
+        <div class="bar"><span class="lab">Nandini parlours</span><span class="trk"><span class="fill" data-v="21"></span></span><span class="val">21%</span></div>
+        <div class="bar"><span class="lab">Institutional</span><span class="trk"><span class="fill" data-v="12"></span></span><span class="val">12%</span></div>
+        <div class="bar"><span class="lab">KMF transfer</span><span class="trk"><span class="fill" data-v="9"></span></span><span class="val">9%</span></div></div></div>
+      <div class="card"><h3>Sales vs dispatch</h3><div class="sub">Lakh litres, last 6 days</div>
+        <div class="cols" style="height:130px">
+          <div class="col"><span class="c" data-h="88"></span></div><div class="col"><span class="c" data-h="92"></span></div><div class="col"><span class="c" data-h="85"></span></div>
+          <div class="col"><span class="c" data-h="96"></span></div><div class="col"><span class="c" data-h="100"></span></div><div class="col"><span class="c" data-h="94"></span></div></div>
+        <div class="cols-x"><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span></div></div>
+      <div class="card"><h3>Top dealers by value</h3><div class="sub">October MTD</div>
+        <table class="t"><tbody>
+          <tr><td>Jayanagar agency</td><td class="n">₹3.42 Cr</td></tr>
+          <tr><td>Yeshwanthpur distributors</td><td class="n">₹3.18 Cr</td></tr>
+          <tr><td>Whitefield milk agency</td><td class="n">₹2.96 Cr</td></tr>
+          <tr><td>Rajajinagar dealers</td><td class="n">₹2.71 Cr</td></tr></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- MILK PAYMENTS -->
+  <section class="panel" id="payments">
+    <div class="g g21">
+      <div class="card"><div class="card-h"><div><h3>Cycle register</h3><div class="sub">Ten-day cycles, union → MPCS</div></div>
+        <select class="inp" style="width:auto" data-status-filter="cyc"><option value="">All</option><option value="settled">Settled</option><option value="open">Open</option></select></div>
+        <div class="tw"><table class="t" id="cyc">
+          <thead><tr><th>Cycle</th><th class="n">Litres</th><th class="n">Base amount</th><th class="n">Incentive</th><th class="n">Total</th><th>Paid on</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr data-status="settled"><td>01–10 Sep</td><td class="n">5.71 Cr</td><td class="n">₹20.4 Cr</td><td class="n">₹0.58 Cr</td><td class="n">₹21.0 Cr</td><td>14 Sep</td><td><span class="pill ok">Settled</span></td></tr>
+            <tr data-status="settled"><td>11–20 Sep</td><td class="n">5.84 Cr</td><td class="n">₹20.8 Cr</td><td class="n">₹0.61 Cr</td><td class="n">₹21.4 Cr</td><td>24 Sep</td><td><span class="pill ok">Settled</span></td></tr>
+            <tr data-status="settled"><td>21–30 Sep</td><td class="n">5.90 Cr</td><td class="n">₹21.1 Cr</td><td class="n">₹0.62 Cr</td><td class="n">₹21.7 Cr</td><td>04 Oct</td><td><span class="pill ok">Settled</span></td></tr>
+            <tr data-status="settled"><td>01–10 Oct</td><td class="n">5.94 Cr</td><td class="n">₹21.2 Cr</td><td class="n">₹0.63 Cr</td><td class="n">₹21.8 Cr</td><td>14 Oct</td><td><span class="pill ok">Settled</span></td></tr>
+            <tr data-status="open"><td>11–20 Oct</td><td class="n">5.96 Cr</td><td class="n">₹21.3 Cr</td><td class="n">₹0.64 Cr</td><td class="n">₹21.9 Cr</td><td>—</td><td><span class="pill warn">Part paid</span></td></tr>
+            <tr data-status="open"><td>21–31 Oct</td><td class="n">6.58 Cr*</td><td class="n">₹23.5 Cr</td><td class="n">₹0.70 Cr</td><td class="n">₹24.2 Cr</td><td>Due 04 Nov</td><td><span class="pill info">Running</span></td></tr>
+          </tbody></table></div>
+        <div class="sub" style="margin:10px 0 0">* Running cycle projected to month end.</div></div>
+      <div class="card"><h3>Bonus &amp; incentive</h3><div class="sub">FY26</div>
+        <dl class="kv">
+          <dt>Ugadi bonus</dt><dd>₹59.39 Cr <span class="pill ok">Verified</span></dd>
+          <dt>Rate</dt><dd>₹1 per litre</dd>
+          <dt>Farmers paid</dt><dd>1.27 lakh</dd>
+          <dt>Quality incentive</dt><dd>₹7.6 Cr YTD</dd>
+          <dt>Price equalisation</dt><dd>₹2.1 Cr reserve</dd>
+        </dl>
+        <div class="note" style="margin-top:14px"><span class="ic">i</span><span>Farmer-level settlement and the union→MPCS gap are tracked in <a href="m04-procurement.html#billing">Procurement › Billing</a>.</span></div></div>
+    </div>
+  </section>
+
+  <!-- RATIOS -->
+  <section class="panel" id="ratios">
+    <div class="g g4">
+      <div class="card"><div class="sub" style="margin:0">Current ratio</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">1.44</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Debt / equity</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">0.53</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Debtor days</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v t-warn">18</div></div></div>
+      <div class="card"><div class="sub" style="margin:0">Net margin</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">0.30%</div></div></div>
+    </div>
+    <div class="g g2">
+      <div class="card"><h3>Receivables ageing</h3><div class="sub">₹ crore, as of 25 Oct</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">0–30 days</span><span class="trk"><span class="fill good" data-v="100"></span></span><span class="val">98.4</span></div>
+          <div class="bar"><span class="lab">31–60 days</span><span class="trk"><span class="fill" data-v="22"></span></span><span class="val">21.6</span></div>
+          <div class="bar"><span class="lab">61–90 days</span><span class="trk"><span class="fill warn" data-v="11"></span></span><span class="val">10.6</span></div>
+          <div class="bar"><span class="lab">&gt; 90 days</span><span class="trk"><span class="fill bad" data-v="14"></span></span><span class="val">14.2</span></div>
+        </div></div>
+      <div class="card"><h3>Cost per litre</h3><div class="sub">₹ per litre processed, conversion cost</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">Packing</span><span class="trk"><span class="fill" data-v="100"></span></span><span class="val">1.62</span></div>
+          <div class="bar"><span class="lab">Manpower</span><span class="trk"><span class="fill" data-v="88"></span></span><span class="val">1.42</span></div>
+          <div class="bar"><span class="lab">Power &amp; fuel</span><span class="trk"><span class="fill" data-v="59"></span></span><span class="val">0.96</span></div>
+          <div class="bar"><span class="lab">Transport</span><span class="trk"><span class="fill" data-v="35"></span></span><span class="val">0.56</span></div>
+          <div class="bar"><span class="lab">Other</span><span class="trk"><span class="fill" data-v="16"></span></span><span class="val">0.26</span></div>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- STATUTORY -->
+  <section class="panel" id="statutory">
+    <div class="g g21">
+      <div class="card"><h3>Statutory filings</h3><div class="sub">13 filings tracked</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Filing</th><th>Authority</th><th>Period</th><th>Due</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Audited balance sheet &amp; I&amp;E</td><td>Registrar</td><td>FY25</td><td>30 Sep</td><td><span class="pill ok">Filed</span></td></tr>
+            <tr><td>Receipts &amp; payments / cash flow</td><td>Registrar</td><td>FY25</td><td>30 Sep</td><td><span class="pill ok">Filed</span></td></tr>
+            <tr><td>Schedule of fixed assets &amp; depreciation</td><td>Registrar</td><td>FY25</td><td>30 Sep</td><td><span class="pill ok">Filed</span></td></tr>
+            <tr><td>Statutory audit report</td><td>Registrar</td><td>FY25</td><td>30 Sep</td><td><span class="pill ok">Filed</span></td></tr>
+            <tr><td>GSTR-1</td><td>GST</td><td>Sep 26</td><td>11 Oct</td><td><span class="pill ok">Filed</span></td></tr>
+            <tr><td>GSTR-3B</td><td>GST</td><td>Sep 26</td><td>20 Oct</td><td><span class="pill ok">Filed</span></td></tr>
+            <tr><td>TDS return 24Q / 26Q</td><td>Income tax</td><td>Q2</td><td>31 Oct</td><td><span class="pill warn">Due in 5 d</span></td></tr>
+            <tr><td>EPF ECR</td><td>EPFO</td><td>Oct 26</td><td>15 Nov</td><td><span class="pill info">Upcoming</span></td></tr>
+            <tr><td>ESI contribution</td><td>ESIC</td><td>Oct 26</td><td>15 Nov</td><td><span class="pill info">Upcoming</span></td></tr>
+            <tr><td>MMPO-1992 return</td><td>Dept. of Animal Husbandry</td><td>H1</td><td>31 Oct</td><td><span class="pill warn">Due in 5 d</span></td></tr>
+            <tr><td>FSSAI annual return</td><td>FSSAI</td><td>FY26</td><td>31 May</td><td><span class="pill ok">Filed</span></td></tr>
+            <tr><td>Producer price equalisation account</td><td>Board</td><td>FY26</td><td>Quarterly</td><td><span class="pill ok">Current</span></td></tr>
+            <tr><td>Bonus account</td><td>Board</td><td>FY26</td><td>Annual</td><td><span class="pill ok">Current</span></td></tr>
+          </tbody></table></div></div>
+      <div class="card"><h3>Open audit observations</h3><div class="sub">7 open</div>
+        <div class="score">
+          <div class="row"><span>Fixed asset register not reconciled to GL for Kanakapura</span><span class="pill bad">High</span></div>
+          <div class="row"><span>Dealer security deposits below credit limit</span><span class="pill bad">High</span></div>
+          <div class="row"><span>Cattle feed recovery from MPCS lagging</span><span class="pill warn">Med</span></div>
+          <div class="row"><span>Stale cheques not written back</span><span class="pill warn">Med</span></div>
+          <div class="row"><span>Inventory obsolescence provision</span><span class="pill warn">Med</span></div>
+          <div class="row"><span>Petty cash limits exceeded at BMC</span><span class="pill">Low</span></div>
+          <div class="row"><span>Asset tagging incomplete</span><span class="pill">Low</span></div>
+        </div></div>
+    </div>
+  </section>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: EBS General Ledger via warehouse · FY25 operating income, PAT and Ugadi bonus verified</span></div>
+</main>
+<script src="js/app.js"></script>
+</body>
+</html>

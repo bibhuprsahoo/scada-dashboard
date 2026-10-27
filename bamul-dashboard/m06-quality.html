@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quality &amp; Testing · BAMUL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header id="topbar"></header>
+<main class="wrap">
+  <div class="phead">
+    <div><div class="kicker">Module 06 · Quality &amp; Testing</div><h1>Quality is tested at the pour and again before release</h1>
+    <p>FAT and SNF at the society set the rate paid in that ten-day cycle. A testing gap is a payment error, not just a quality lapse.</p></div>
+    <div class="filters"><select aria-label="Period"><option>Last 7 days</option><option>October MTD</option><option>Current cycle</option></select></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi good"><div class="v">3.92%</div><div class="l">Average FAT at reception</div><div class="d"><span class="up">▲ 0.04</span> vs last cycle</div></div>
+    <div class="kpi good"><div class="v">8.62%</div><div class="l">Average SNF at reception</div><div class="d">Norm ≥ 8.50</div></div>
+    <div class="kpi warn"><div class="v">0.6%</div><div class="l">Adulteration positive rate</div><div class="d">Of samples screened</div></div>
+    <div class="kpi"><div class="v">24 min</div><div class="l">Average lab turnaround</div><div class="d">Target 30 min</div></div>
+  </div>
+
+  <nav class="tabs" data-tabs>
+    <button data-tab="pour">At the pour</button>
+    <button data-tab="arrival">Arrival &amp; adulteration</button>
+    <button data-tab="residue">Residue &amp; aflatoxin</button>
+    <button data-tab="product">Finished product</button>
+    <button data-tab="calib">Lab calibration</button>
+  </nav>
+
+  <section class="panel" id="pour">
+    <div class="g g21">
+      <div class="card"><h3>FAT &amp; SNF trend</h3><div class="sub">Union average at reception, last 10 days</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Date</th><th class="n">FAT %</th><th>FAT</th><th class="n">SNF %</th><th>SNF</th></tr></thead>
+          <tbody>
+            <tr><td>17 Oct</td><td class="n">3.86</td><td style="min-width:120px"><div class="meter"><span style="--v:77%"></span></div></td><td class="n">8.58</td><td style="min-width:120px"><div class="meter"><span style="--v:86%"></span></div></td></tr>
+            <tr><td>19 Oct</td><td class="n">3.88</td><td><div class="meter"><span style="--v:78%"></span></div></td><td class="n">8.60</td><td><div class="meter"><span style="--v:86%"></span></div></td></tr>
+            <tr><td>21 Oct</td><td class="n">3.90</td><td><div class="meter"><span style="--v:78%"></span></div></td><td class="n">8.61</td><td><div class="meter"><span style="--v:86%"></span></div></td></tr>
+            <tr><td>23 Oct</td><td class="n">3.91</td><td><div class="meter"><span style="--v:78%"></span></div></td><td class="n">8.63</td><td><div class="meter"><span style="--v:86%"></span></div></td></tr>
+            <tr><td>25 Oct</td><td class="n">3.93</td><td><div class="meter"><span style="--v:79%"></span></div></td><td class="n">8.62</td><td><div class="meter"><span style="--v:86%"></span></div></td></tr>
+            <tr><td>26 Oct</td><td class="n">3.92</td><td><div class="meter"><span style="--v:78%"></span></div></td><td class="n">8.62</td><td><div class="meter"><span style="--v:86%"></span></div></td></tr>
+          </tbody></table></div></div>
+      <div class="card"><h3>Sampling compliance</h3><div class="sub">Societies below the sampling norm are flagged</div>
+        <div class="donut-wrap" style="justify-content:center"><div class="donut" style="--seg:#13966b 0 91%,#e3a21a 91% 97%,#d9434b 97% 100%"><div class="c"><b>91%</b><span>at norm</span></div></div></div>
+        <div class="legend" style="margin-top:14px"><span><i style="background:#13966b"></i>At norm · 2,015</span><span><i style="background:#e3a21a"></i>Below norm · 133</span><span><i style="background:#d9434b"></i>No samples · 66</span></div></div>
+    </div>
+    <div class="card"><h3>Flags raised</h3><div class="sub">Rules that close the loop with finance</div>
+      <div class="g g3" style="margin:0">
+        <div class="note warn"><span class="ic">!</span><span><b>133 societies</b> are below the sampling norm this cycle.</span></div>
+        <div class="note warn"><span class="ic">!</span><span><b>Route T-02</b> had a cold-chain excursion (6.8 °C transit).</span></div>
+        <div class="note bad"><span class="ic">!</span><span><b>1 batch held</b> on antibiotic residue detection.</span></div>
+      </div></div>
+  </section>
+
+  <section class="panel" id="arrival">
+    <div class="g g2">
+      <div class="card"><h3>Keeping quality on arrival</h3><div class="sub">MBRT and COB, tanker loads, last 7 days</div>
+        <div class="bars">
+          <div class="bar"><span class="lab">MBRT &gt; 3 h (good)</span><span class="trk"><span class="fill good" data-v="82"></span></span><span class="val">82%</span></div>
+          <div class="bar"><span class="lab">MBRT 1–3 h (fair)</span><span class="trk"><span class="fill warn" data-v="15"></span></span><span class="val">15%</span></div>
+          <div class="bar"><span class="lab">MBRT &lt; 1 h (poor)</span><span class="trk"><span class="fill bad" data-v="3"></span></span><span class="val">3%</span></div>
+          <div class="bar"><span class="lab">COB positive</span><span class="trk"><span class="fill bad" data-v="1.2"></span></span><span class="val">1.2%</span></div>
+        </div></div>
+      <div class="card"><h3>Adulteration screening</h3><div class="sub">Samples screened 14,820 · positives 89</div>
+        <div class="tw"><table class="t">
+          <thead><tr><th>Adulterant</th><th class="n">Positives</th><th class="n">Rate</th><th>Worst route</th></tr></thead>
+          <tbody>
+            <tr><td>Added water</td><td class="n">52</td><td class="n">0.35%</td><td>M-14</td></tr>
+            <tr><td>Starch</td><td class="n">18</td><td class="n">0.12%</td><td>T-02</td></tr>
+            <tr><td>Urea</td><td class="n">11</td><td class="n">0.07%</td><td>M-22</td></tr>
+            <tr><td>Detergent</td><td class="n">8</td><td class="n">0.05%</td><td>T-15</td></tr>
+            <tr class="total"><td>Total</td><td class="n">89</td><td class="n">0.60%</td><td></td></tr>
+          </tbody></table></div></div>
+    </div>
+  </section>
+
+  <section class="panel" id="residue">
+    <div class="card"><h3>Antibiotic residue and aflatoxin M1, by route</h3><div class="sub">Last 30 days</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Route</th><th class="n">Samples</th><th class="n">Antibiotic +ve</th><th class="n">AFM1 &gt; 0.5 ppb</th><th>Last positive</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="flag"><td>T-02 Byrapatna</td><td class="n">186</td><td class="n t-bad">3</td><td class="n">0</td><td>26 Oct</td><td><span class="pill bad">Batch held</span></td></tr>
+          <tr class="flag"><td>T-11 Anekal</td><td class="n">212</td><td class="n t-bad">2</td><td class="n">1</td><td>26 Oct</td><td><span class="pill bad">Batch held</span></td></tr>
+          <tr><td>T-04 Harohalli</td><td class="n">198</td><td class="n">0</td><td class="n">0</td><td>—</td><td><span class="pill ok">Clear</span></td></tr>
+          <tr><td>M-14 Can route</td><td class="n">94</td><td class="n">1</td><td class="n">0</td><td>11 Oct</td><td><span class="pill warn">Watch</span></td></tr>
+          <tr><td>T-09 Kanakapura</td><td class="n">204</td><td class="n">0</td><td class="n">2</td><td>08 Oct</td><td><span class="pill warn">Feed check</span></td></tr>
+        </tbody></table></div>
+      <div class="note" style="margin-top:14px"><span class="ic">i</span><span>Aflatoxin M1 positives point to feed, not to milk handling. Cross-check against <a href="m04-procurement.html#feed">cattle feed issued</a> on that route.</span></div></div>
+  </section>
+
+  <section class="panel" id="product">
+    <div class="card"><h3>Microbiological results on finished product</h3><div class="sub">Last 7 days, per FSSAI limits</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Product</th><th class="n">Samples</th><th class="n">TPC pass</th><th class="n">Coliform pass</th><th class="n">Yeast &amp; mould</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Toned milk</td><td class="n">84</td><td class="n">100%</td><td class="n">100%</td><td class="n">—</td><td><span class="pill ok">Pass</span></td></tr>
+          <tr><td>Homogenised milk</td><td class="n">42</td><td class="n">100%</td><td class="n">100%</td><td class="n">—</td><td><span class="pill ok">Pass</span></td></tr>
+          <tr><td>Curd</td><td class="n">56</td><td class="n">98.2%</td><td class="n">96.4%</td><td class="n">98.2%</td><td><span class="pill warn">2 fails</span></td></tr>
+          <tr><td>Ghee</td><td class="n">18</td><td class="n">—</td><td class="n">—</td><td class="n">100%</td><td><span class="pill ok">Pass</span></td></tr>
+          <tr><td>Ice cream</td><td class="n">22</td><td class="n">100%</td><td class="n">95.5%</td><td class="n">100%</td><td><span class="pill warn">1 fail</span></td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <section class="panel" id="calib">
+    <div class="card"><h3>Calibration register — lab instruments</h3><div class="sub">Dairy and chilling-centre labs (society AMCS units are in Procurement)</div>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Instrument</th><th>Lab</th><th>Last calibrated</th><th>Next due</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Milkoscan FT-1</td><td>Mega Dairy QC</td><td>02 Oct</td><td>02 Jan</td><td><span class="pill ok">Current</span></td></tr>
+          <tr><td>Gerber centrifuge</td><td>Mega Dairy QC</td><td>15 Aug</td><td>15 Nov</td><td><span class="pill ok">Current</span></td></tr>
+          <tr><td>Lactometer set</td><td>Kanakapura QC</td><td>20 Jul</td><td>20 Oct</td><td><span class="pill bad">Overdue</span></td></tr>
+          <tr><td>Antibiotic test reader</td><td>Reception lab</td><td>10 Sep</td><td>10 Dec</td><td><span class="pill ok">Current</span></td></tr>
+          <tr><td>pH meter</td><td>Anekal CC</td><td>28 Aug</td><td>28 Oct</td><td><span class="pill warn">Due in 2 d</span></td></tr>
+        </tbody></table></div></div>
+  </section>
+
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: LIMS / EBS lab results · all figures illustrative</span></div>
+</main>
+<script src="js/app.js"></script>
+</body>
+</html>
