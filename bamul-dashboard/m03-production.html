@@ -81,7 +81,7 @@ button[data-tab].soon::after{content:"Coming soon";font-size:9px;font-weight:600
   <!-- EFFICIENCY -->
   <section class="panel" id="eff">
     <div class="g g4">
-      <div class="card"><div class="gauge"><div class="ring" style="--v:98.4;--c:var(--good)"><b>98.4%</b></div><div class="lbl">Yield efficiency</div><div class="tg">Target 98.0%</div></div></div>
+      <div class="card"><div class="gauge"><div class="ring" id="yield-ring" style="--v:0;--c:var(--good)"><b id="yield-val">—</b></div><div class="lbl">Yield efficiency</div><div class="tg">% milk used in production</div></div></div>
       <div class="card"><div class="gauge"><div class="ring" style="--v:58;--c:var(--warn)"><b>0.42%</b></div><div class="lbl">Process loss</div><div class="tg">Norm ≤ 0.40%</div></div></div>
       <div class="card"><div class="gauge"><div class="ring" style="--v:91"><b>91.2%</b></div><div class="lbl">Thermal efficiency</div><div class="tg">Boiler + PHE</div></div></div>
       <div class="card"><div class="gauge"><div class="ring" style="--v:88;--c:var(--good)"><b>88.6%</b></div><div class="lbl">Regeneration efficiency</div><div class="tg">PHE heat recovery, target 88%</div></div></div>
@@ -188,6 +188,26 @@ window.addEventListener('DOMContentLoaded', function() {
   var btn = document.querySelector('button[data-tab="'+id+'"]');
   if(btn){ btn.classList.add('soon'); btn.setAttribute('aria-disabled','true'); }
 });
+
+// Yield efficiency gauge — same figure as Post Dairy "% of received milk used in production"
+(async function(){
+  try {
+    const FILTER = 'week';
+    const [recv, disp] = await Promise.all([
+      fetch('/api/bangalore/milk-procurement-summary?filter=' + FILTER).then(r=>r.json()),
+      fetch('/api/bangalore/milk-dispatch?filter=' + FILTER).then(r=>r.json())
+    ]);
+    const received   = Number(recv.totalReceived) || 0;
+    const MILK       = ['RAW MILK','PAST MILK','SKIM MILK','SKIM MILK POWDER','Homogenised milk'];
+    const dispatched = (disp.data||[]).filter(d=>MILK.includes(d.ProductCode)).reduce((a,d)=>a+(Number(d.TotalQty)||0),0);
+    const used       = Math.max(0, received - dispatched);
+    const pct        = received > 0 ? Math.round(used / received * 100 * 10) / 10 : 0;
+    const ring  = document.getElementById('yield-ring');
+    const val   = document.getElementById('yield-val');
+    if(ring) ring.style.setProperty('--v', pct);
+    if(val)  val.textContent = pct + '%';
+  } catch(e){ console.error('yield gauge failed', e); }
+})();
 </script>
 <script>
 /* Module 03 · #flow — real data from the existing /api/bangalore/* endpoints
