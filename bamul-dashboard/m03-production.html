@@ -184,7 +184,7 @@ window.addEventListener('DOMContentLoaded', function() {
 </script>
 <script>
 // Disable tabs that are not yet connected to real data
-['eff','down','util','output','batch'].forEach(function(id){
+['down','util','output','batch'].forEach(function(id){
   var btn = document.querySelector('button[data-tab="'+id+'"]');
   if(btn){ btn.classList.add('soon'); btn.setAttribute('aria-disabled','true'); }
 });
