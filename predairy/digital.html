@@ -189,8 +189,10 @@ iframe .topbar, .topbar{}
       <span class="rangechip" id="rangeChip">—</span>
       <div class="seg" id="segBasis" role="group" aria-label="Reporting period">
         <button type="button" data-b="daily" class="active">Yesterday</button>
-        <button type="button" data-b="weekly">Weekly</button>
-        <button type="button" data-b="monthly">Monthly</button>
+        <button type="button" data-b="weekly">This Week</button>
+        <button type="button" data-b="prevweek">Prev Week</button>
+        <button type="button" data-b="monthly">This Month</button>
+        <button type="button" data-b="prevmonth">Prev Month</button>
         <button type="button" data-b="custom">Custom</button>
       </div>
     </div>
@@ -323,6 +325,24 @@ function getDateRange(b) {
     const from = fmtDate(first), t = fmtDate(end);
     const n = daysBetween(from, t);
     return { from, to:t, basis:srvBasis, label:rangeChipLabel(from,t,n), key:'monthly_'+from+'_'+t };
+  }
+  if (b === 'prevweek') {
+    // The whole previous Monday–Sunday week (full 7 days). Sent as a fixed
+    // custom range so the server treats it as an explicit window.
+    const w = weekOfISO(fmtDate(yday));                 // week containing yesterday
+    const prevMon = new Date(w.from+'T00:00:00'); prevMon.setDate(prevMon.getDate() - 7);
+    const prevSun = new Date(prevMon); prevSun.setDate(prevMon.getDate() + 6);
+    const f = fmtDate(prevMon), t = fmtDate(prevSun);
+    const n = daysBetween(f, t);
+    return { from:f, to:t, basis:'custom', label:rangeChipLabel(f,t,n), key:'prevweek_'+f+'_'+t };
+  }
+  if (b === 'prevmonth') {
+    // The whole previous calendar month (1st -> last day). Sent as a custom range.
+    const pFrom = new Date(today.getFullYear(), today.getMonth()-1, 1);
+    const pTo   = new Date(today.getFullYear(), today.getMonth(), 0);   // last day of prev month
+    const f = fmtDate(pFrom), t = fmtDate(pTo);
+    const n = daysBetween(f, t);
+    return { from:f, to:t, basis:'custom', label:rangeChipLabel(f,t,n), key:'prevmonth_'+f+'_'+t };
   }
   const f = fromCustom || fmtDate(today), t = toCustom || fmtDate(today);
   const n = daysBetween(f,t);

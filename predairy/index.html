@@ -130,7 +130,7 @@ iframe .topbar, .topbar{}
 <script>
 (async function(){
   try{
-    const r=await fetch('/papi/bangalore/union054/procurement');
+    const r=await fetch('https://bangalore-dairy.duckdns.org/papi/bangalore/union054/procurement');
     const j=await r.json();
     if(!j.success) throw new Error(j.error);
     window.DD=j.data;

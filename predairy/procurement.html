@@ -78,6 +78,14 @@ tr.tot td{font-weight:750;background:#eef3f9;color:var(--navy)}
 .note b{color:var(--navy)}
 .brief li{margin:6px 0 6px 18px;font-size:13.5px;line-height:1.6}
 .sec{margin-top:22px}
+/* On narrower viewports (e.g. embedded in an iframe), tighten the data tables
+   so they fit the width instead of forcing a horizontal scrollbar. */
+@media (max-width:1500px){
+  table{font-size:16px}
+  th{font-size:13px;padding:11px 10px}
+  td{padding:11px 10px}
+  .bar{width:70px}
+}
 .scroll{max-height:420px;overflow-y:auto}
 .scroll thead th{position:sticky;top:0;z-index:2}
 select.ctl{padding:8px 14px;border:1px solid var(--line);border-radius:8px;font-size:14px;margin-bottom:14px;background:#fff}
@@ -139,9 +147,9 @@ iframe .topbar, .topbar{}
   <div class="card">
     <h3 class="ct">Share of Procurement — All Taluks</h3>
     <p class="cs" id="csShare"></p>
-    <div style="display:flex;gap:32px;align-items:center">
-      <div style="flex:0 0 480px;height:480px;position:relative;min-width:480px"><canvas id="chShare" style="width:480px!important;height:480px!important"></canvas></div>
-      <div id="shareLegend" style="flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:22px 28px"></div>
+    <div style="display:flex;gap:32px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1 1 320px;max-width:480px;min-width:0;aspect-ratio:1/1;position:relative"><canvas id="chShare"></canvas></div>
+      <div id="shareLegend" style="flex:1 1 320px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px 28px"></div>
     </div>
   </div>
 </div>
@@ -156,7 +164,7 @@ iframe .topbar, .topbar{}
 window.DD = null;
 (async function(){
   try{
-    const r = await fetch('/papi/bangalore/union054/procurement');
+    const r = await fetch('https://bangalore-dairy.duckdns.org/papi/bangalore/union054/procurement');
     if(!r.ok) throw new Error('HTTP '+r.status);
     const j = await r.json();
     if(!j || !j.success) throw new Error((j&&j.error)||'No data');
@@ -314,9 +322,9 @@ function renderShare(){
     datalabels:{color:'#fff',font:{size:10,weight:'bold'},
       formatter:(v,ctx)=>{const p=100*v/total;return p>=3? p.toFixed(1)+'%':'';}}}}});
   document.getElementById('shareLegend').innerHTML=rows.map((x,i)=>
-    `<div style="display:flex;align-items:center;gap:14px">
+    `<div style="display:flex;align-items:center;gap:14px;min-width:0">
       <div style="width:30px;height:30px;border-radius:7px;background:${PALETTE[i]};flex-shrink:0"></div>
-      <span style="font-size:26px;font-weight:800;color:#1c2b3a;text-transform:uppercase;letter-spacing:.4px;line-height:1.25">${x.t} <span style="color:#68788c;font-weight:600">(${(100*x.v/total).toFixed(1)}%)</span></span>
+      <span style="font-size:clamp(14px,1.4vw,26px);font-weight:800;color:#1c2b3a;text-transform:uppercase;letter-spacing:.4px;line-height:1.25;min-width:0;overflow-wrap:anywhere">${x.t} <span style="color:#68788c;font-weight:600">(${(100*x.v/total).toFixed(1)}%)</span></span>
     </div>`).join('');
 }
 

@@ -100,6 +100,10 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
 .card h3.ct{font-size:23px;letter-spacing:-.2px}
 .card p.cs{font-size:14px}
 .tblwrap{border:3px solid var(--navy);border-radius:12px;overflow:hidden;margin-top:14px;margin-left:80px;margin-right:80px}
+/* Narrower viewports (e.g. embedded in an iframe) — shrink the big side margins
+   so the table fits without forcing a page-level horizontal scrollbar. */
+@media (max-width:1500px){.tblwrap{margin-left:24px;margin-right:24px}}
+@media (max-width:1100px){.tblwrap{margin-left:0;margin-right:0}}
 #tblUnion th:first-child, #tblUnion td:first-child{width:8%}
 #tblUnion th:nth-child(2), #tblUnion td:nth-child(2){width:7%}
 #tblUnion th:nth-child(3), #tblUnion td:nth-child(3){width:7%}
