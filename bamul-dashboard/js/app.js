@@ -31,7 +31,7 @@
       </a>
       <span class="spacer"></span>
       <span class="chip demo" title="Figures are illustrative until EBS, warehouse and SCADA are connected">Illustrative data</span>
-      <span class="clock"><span class="dot-live" style="display:inline-block;margin-right:8px;vertical-align:1px"></span><span id="clk"></span></span>
+      <span class="clock"><span id="clk"></span></span>
       <select class="modsel" aria-label="Jump to module">
         <option value="portal.html"${here === 'portal.html' ? ' selected' : ''}>All modules</option>${opts}
       </select>`;
