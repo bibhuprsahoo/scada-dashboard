@@ -64,15 +64,6 @@
           <h4>Dispatch</h4><div class="m" id="s-dispatch">—</div><div class="s">L dispatched</div></div>
       </div>
     </div>
-    <div class="g g3">
-      <div class="card"><h3>Silo throughput</h3><div class="sub">Raw & pasteurised · last dairy-day (L)</div>
-        <div class="bars" id="silo-bars"><div class="bar"><span class="lab">loading…</span><span class="trk"><span class="fill" style="--v:0%"></span></span><span class="val">—</span></div></div></div>
-      <div class="card"><h3>Hourly throughput</h3><div class="sub">Raw milk to silos · last dairy-day (L)</div>
-        <div class="cols" style="height:150px" id="hourly-cols"></div>
-        <div class="cols-x" id="hourly-x"></div></div>
-      <div class="card"><h3>Dispatch by type</h3><div class="sub">Last dairy-day · by product</div>
-        <div class="score" id="disp-type"><div class="row"><span>loading…</span></div></div></div>
-    </div>
   </section>
 
   <!-- EFFICIENCY -->
@@ -177,86 +168,36 @@
    today's SCADA batch tables are sparse. */
 (function () {
   const FILTER = 'yesterday';
-  const MILK = ['RAW MILK', 'PAST MILK', 'SKIM MILK', 'SKIM MILK POWDER', 'Homogenised milk'];
   const $ = id => document.getElementById(id);
   const num = x => Number(x) || 0;
   const fmt = n => Math.round(num(n)).toLocaleString('en-IN');
   const fmtL = n => fmt(n) + ' L';
   async function j(url) { const r = await fetch(url); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url); return r.json(); }
 
-  function renderSilos(raw, past) {
-    const box = $('silo-bars'); if (!box) return;
-    const pastMap = {};
-    (past || []).forEach(r => { const id = r.PMSID || r.id; pastMap[id] = (pastMap[id] || 0) + num(r.TotalProcessed); });
-    const pastRows = Object.keys(pastMap).sort().map(id => ({ id, qty: pastMap[id] }));
-    const rows = [];
-    const maxR = Math.max(1, ...(raw || []).map(r => num(r.TotalQty)));
-    const maxP = Math.max(1, ...pastRows.map(r => r.qty));
-    (raw || []).forEach(r => rows.push({ lab: (r.RMSID || r.id) + ' raw', qty: num(r.TotalQty), fat: r.AvgFat, snf: r.AvgSNF, pct: Math.round(num(r.TotalQty) / maxR * 100) }));
-    pastRows.forEach(r => rows.push({ lab: r.id + ' past.', qty: r.qty, pct: Math.round(r.qty / maxP * 100) }));
-    if (!rows.length) { box.innerHTML = '<div class="bar"><span class="lab">No silo batches in this window</span><span class="trk"><span class="fill" style="--v:0%"></span></span><span class="val">—</span></div>'; return; }
-    box.innerHTML = rows.map(r =>
-      `<div class="bar"><span class="lab">${r.lab}${r.fat != null ? ' · F ' + r.fat + '/' + r.snf : ''}</span><span class="trk"><span class="fill" data-v="${r.pct}" style="--v:${r.pct}%"></span></span><span class="val">${fmt(r.qty)} L</span></div>`
-    ).join('');
-  }
-
-  function renderHourly(detail) {
-    const box = $('hourly-cols'), x = $('hourly-x'); if (!box) return;
-    const hours = {};
-    (detail || []).forEach(r => {
-      const d = new Date(r.LogTime); if (isNaN(d)) return;
-      const ist = new Date(d.getTime() + 5.5 * 3600 * 1000);   // server stores LogTime in UTC
-      const h = ist.getUTCHours();
-      hours[h] = (hours[h] || 0) + num(r.TransferredQty);
-    });
-    const keys = Object.keys(hours).map(Number).sort((a, b) => a - b);
-    if (!keys.length) { box.innerHTML = '<div class="sub" style="grid-column:1/-1">No batches logged in this window.</div>'; if (x) x.innerHTML = ''; return; }
-    const max = Math.max(1, ...keys.map(k => hours[k]));
-    box.innerHTML = keys.map(h => {
-      const pct = Math.round(hours[h] / max * 100);
-      return `<div class="col"><span class="cv">${Math.round(hours[h] / 1000)}</span><span class="c" data-h="${pct}" style="--h:${pct}%"></span></div>`;
-    }).join('');
-    if (x) x.innerHTML = keys.map(h => `<span>${String(h).padStart(2, '0')}</span>`).join('');
-  }
-
-  function renderDispType(data) {
-    const box = $('disp-type'); if (!box) return;
-    const rows = (data || []).slice().sort((a, b) => num(b.TotalQty) - num(a.TotalQty)).slice(0, 6);
-    if (!rows.length) { box.innerHTML = '<div class="row"><span>No dispatch in this window.</span></div>'; return; }
-    box.innerHTML = rows.map(r =>
-      `<div class="row"><span>${r.ProductCode || r.Type || '—'} · ${(r.DairyCode || '').trim()}</span><span class="pill">${fmt(r.TotalQty)} L · ${r.Trucks || 0} trk</span></div>`
-    ).join('');
-  }
+  function renderSilos(raw, past) {}
+  function renderHourly(detail) {}
+  function renderDispType(data) {}
 
   async function load() {
     try {
-      const [proc, rmst, pmst, ai, disp, det] = await Promise.all([
+      const [proc, ai] = await Promise.all([
         j('/api/bangalore/milk-procurement-summary?filter=' + FILTER),
-        j('/api/bangalore/rmst?filter=' + FILTER),
-        j('/api/bangalore/pmst?filter=' + FILTER),
-        j('/api/bangalore/ai-production?filter=' + FILTER),
-        j('/api/bangalore/milk-dispatch?filter=' + FILTER),
-        j('/api/bangalore/rmst-detail?filter=' + FILTER)
+        j('/api/bangalore/ai-production?filter=' + FILTER)
       ]);
 
       const intake   = num(proc.totalReceived);
-      const chill    = (rmst.data || []).reduce((a, s) => a + num(s.TotalQty), 0);
-      const past     = (pmst.data || []).reduce((a, s) => a + num(s.TotalProcessed), 0);
       const pouches  = num(ai.milkPkts) + num(ai.curdPkts);
-      const dispMilk = (disp.data || []).filter(d => MILK.includes(d.ProductCode)).reduce((a, d) => a + num(d.TotalQty), 0);
 
       $('s-reception').textContent = fmtL(intake);
-      $('s-chilling').textContent = fmtL(chill);
-      $('s-pasteurisation').textContent = fmtL(past);
+      $('s-chilling').textContent = '—';
+      $('s-pasteurisation').textContent = '—';
       $('s-packing').textContent = fmt(pouches) + ' pouches';
-      $('s-dispatch').textContent = fmtL(dispMilk);
+      $('s-dispatch').textContent = '—';
 
       const k = $('k-intake'); if (k) k.textContent = fmtL(intake);
       const kd = $('k-intake-d'); if (kd) kd.textContent = (proc.byType || []).length + ' product types dispatched';
 
-      renderSilos(rmst.data || [], pmst.data || []);
-      renderHourly(det.data || []);
-      renderDispType(disp.data || []);
+      renderSilos(); renderHourly(); renderDispType();
 
       const upd = $('upd'); if (upd) upd.textContent = 'data for ' + new Date(Date.now() - 86400000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
     } catch (e) {
