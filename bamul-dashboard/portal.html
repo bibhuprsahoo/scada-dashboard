@@ -23,20 +23,22 @@
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .tile{
   position:relative;display:flex;flex-direction:column;gap:12px;min-height:190px;
-  background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;color:var(--text);
-  transition:transform .18s ease,border-color .18s ease,background .18s ease;overflow:hidden;
+  background:linear-gradient(150deg,#2ba3e6 0%,#1e88d8 100%);border:1px solid #1a7cc7;border-radius:16px;padding:18px;color:#fff;
+  box-shadow:0 6px 18px rgba(16,90,150,.18);
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;overflow:hidden;
 }
-.tile:hover{transform:translateY(-3px);border-color:rgba(30,155,224,.6);background:rgba(30,155,224,.1);text-decoration:none}
-.tile::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(30,155,224,.18),transparent 70%)}
+.tile:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(16,90,150,.28);filter:brightness(1.05);text-decoration:none}
+.tile::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),transparent 70%)}
 .tile .top{display:flex;align-items:center;gap:12px}
-.tile .ico{width:44px;height:44px;border-radius:12px;background:var(--sky-soft);border:1px solid rgba(30,155,224,.45);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.tile .ico svg{width:22px;height:22px;stroke:var(--sky);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.tile .no{font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--faint)}
-.tile h2{font-size:18px;font-weight:700}
+.tile .ico{width:44px;height:44px;border-radius:12px;background:#fff;border:0;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tile .ico svg{width:22px;height:22px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tile .no{font-size:11px;font-weight:600;letter-spacing:.2em;color:rgba(255,255,255,.75)}
+.tile h2{font-size:18px;font-weight:700;color:#fff}
 .tile .big{font:800 26px/1 var(--head);margin-top:auto}
-.tile .cap{font-size:12px;color:var(--muted);margin-top:4px}
-.tile .foot2{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line);padding-top:10px;font-size:12px;color:var(--muted)}
-.tile .go{color:var(--sky);font-weight:600}
+.tile .cap{font-size:12px;color:rgba(255,255,255,.85);margin-top:4px}
+.tile .foot2{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid rgba(255,255,255,.3);padding-top:10px;font-size:12px;color:rgba(255,255,255,.85)}
+.tile .go{color:#fff;font-weight:700}
+.tile .pill{background:#fff;border-color:#fff}
 .tile .ph{position:absolute;right:14px;top:16px}
 @media (max-width:1200px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:900px){.hero{grid-template-columns:minmax(0,1fr)}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -49,7 +51,7 @@
 <main class="wrap">
   <section class="hero">
     <div class="card hello">
-      <div class="kicker">Union at a glance · FY 2026-27</div>
+      <div class="kicker">Union at a glance · FY 2025-26</div>
       <h1>Good day. Twelve modules, one data spine.</h1>
       <p>Every number on this portal comes from one governed warehouse — the same figure the board sees is the figure the auditor sees.</p>
       <div class="strip">
