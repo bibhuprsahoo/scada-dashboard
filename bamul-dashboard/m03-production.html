@@ -157,12 +157,16 @@ button[data-tab].soon::after{content:"Coming soon";font-size:9px;font-weight:600
 </main>
 <script src="js/app.js"></script>
 <script>
-// Override topbar clock on this page to show data date (yesterday) instead of live time
+// Override topbar clock and remove "Illustrative data" chip on this page only
 window.addEventListener('DOMContentLoaded', function() {
+  // Replace live clock with yesterday's data date
   var yesterday = new Date(Date.now() - 86400000);
   var label = yesterday.toLocaleString('en-IN', { weekday:'short', day:'2-digit', month:'short', year:'numeric' });
   var clk = document.getElementById('clk');
   if (clk) clk.textContent = 'Data: ' + label;
+  // Remove the "Illustrative data" chip
+  var chip = document.querySelector('.chip.demo');
+  if (chip) chip.remove();
 });
 </script>
 <script>
