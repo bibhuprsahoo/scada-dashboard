@@ -74,13 +74,13 @@ iframe .topbar, .topbar{}
   <nav class="topnav">
     <a href="../bangalore-dairy-dashboard.html" title="Back to Post-Dairy Dashboard">← Post-Dairy</a>
     <a href="union-summary.html">Union Summary</a>
-    <a href="index.html" class="active">Procurement</a>
     <a href="procurement.html">Performance &amp; Trends</a>
+    <a href="index.html" class="active">Procurement</a>
     <a href="digital.html">Digital Transformation</a>
     <a href="farmers.html">Farmer Engagement</a>
     <!--<a href="../Transport-vehicle/index.html">Transport Vehicle</a>-->
   </nav>
-  <div class="pbadge">Reporting period: <b id="reportingPeriod">—</b></div>
+  <div class="pbadge" style="display:none">Reporting period: <b id="reportingPeriod">—</b></div>
 </div>
 
 <main>
@@ -89,8 +89,10 @@ iframe .topbar, .topbar{}
     <span class="rangechip" id="rangeChip"></span>
     <div class="seg" id="segBasis">
       <button data-b="daily">Yesterday</button>
-      <button data-b="weekly">Weekly</button>
-      <button data-b="monthly">Monthly</button>
+      <button data-b="weekly">This Week</button>
+      <button data-b="prevweek">Prev Week</button>
+      <button data-b="monthly">This Month</button>
+      <button data-b="prevmonth">Prev Month</button>
       <button data-b="custom">Custom</button>
     </div>
     <!-- Custom date range drops onto its own second line, right-aligned under
@@ -181,7 +183,22 @@ function range(){
     let s=W.dates.indexOf(monStr); if(s<0)s=Math.max(0,last-6);
     return{s,e:last+1};
   }
+  if(basis==='prevweek'){
+    // Full previous Mon–Sun week: the 7 days before this week's Monday.
+    const today=new Date(); const dow=today.getDay(); const daysFromMon=dow===0?6:dow-1;
+    const mon=new Date(today); mon.setDate(today.getDate()-daysFromMon);
+    const monStr=mon.toISOString().split('T')[0];
+    let thisMon=W.dates.indexOf(monStr);
+    if(thisMon<0){let last=DAYS-1;while(last>0&&W.dailyAll[last]===0)last--;thisMon=Math.max(0,last-6);}
+    return{s:Math.max(0,thisMon-7),e:Math.max(1,thisMon)};
+  }
   if(basis==='monthly'){let last=DAYS-1;while(last>0&&W.dailyAll[last]===0)last--;return{s:W.monthStarts[2],e:last+1};}//
+  if(basis==='prevmonth'){
+    // Full previous calendar month = [prevMonthStart, thisMonthStart).
+    const curStart=W.monthStarts[2];
+    const prevStart=(W.monthStarts[1]!=null)?W.monthStarts[1]:0;
+    return{s:Math.max(0,prevStart),e:Math.max(1,curStart)};
+  }
   let s=W.dates.indexOf(from),e=W.dates.indexOf(to)+1;
   if(s<0)s=0;if(e<=0)e=DAYS;if(e<=s){const t=s;s=e-1;e=t+1;}
   return{s,e};

@@ -23,7 +23,7 @@ body{background:var(--bg);color:var(--ink)}
 .topnav a:hover{color:#fff}
 .topnav a.active{color:#fff;border-bottom-color:#7db4e8}
 .pbadge{margin-left:auto;font-size:15px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);padding:6px 14px;border-radius:20px}
-main{max-width:100%;width:100%;margin:0;padding:26px 30px 60px}
+main{max-width:100%;width:100%;margin:0;padding:26px 30px 16px}
 .pagehead{margin-bottom:22px;text-align:center}
 .pagehead h2{font-size:38px;font-weight:800;color:var(--navy);letter-spacing:-.5px;line-height:1.2}
 .pagehead p{font-size:14px;color:var(--muted);margin-top:6px}
@@ -96,10 +96,10 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
 .dinp{padding:7px 10px;border:1px solid var(--line);border-radius:8px;font-size:16px;font-family:inherit;color:var(--ink)}
 .sample{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10.5px;font-weight:800;letter-spacing:.5px;background:#fdf1dc;color:#a36508;text-transform:uppercase;vertical-align:middle;margin-left:8px}
 /* ---------- Union Summary table: presentation styling ---------- */
-.card{padding:24px 26px;border-radius:16px;border:2px solid #dbe4ee;box-shadow:0 4px 16px rgba(13,43,78,.08)}
+.card{padding:10px 26px 24px;border-radius:16px;border:2px solid #dbe4ee;box-shadow:0 4px 16px rgba(13,43,78,.08)}
 .card h3.ct{font-size:23px;letter-spacing:-.2px}
 .card p.cs{font-size:14px}
-.tblwrap{border:3px solid var(--navy);border-radius:12px;overflow:hidden;margin-top:14px;margin-left:80px;margin-right:80px}
+.tblwrap{border:3px solid var(--navy);border-radius:12px;overflow:hidden;margin-top:16px;margin-left:80px;margin-right:80px}
 /* Narrower viewports (e.g. embedded in an iframe) — shrink the big side margins
    so the table fits without forcing a page-level horizontal scrollbar. */
 @media (max-width:1500px){.tblwrap{margin-left:24px;margin-right:24px}}
@@ -114,16 +114,16 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
 /* Center every column header (Particulars + period columns + Selected Period) */
 #tblUnion th, #tblUnion td{text-align:center}
 #tblUnion thead th{background:linear-gradient(180deg,var(--navy),#16457c);color:#fff;
-  font-size:15.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
-  padding:10px 8px;border:none;border-bottom:3px solid var(--navy);white-space:nowrap}
+  font-size:15px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  padding:7px 8px;border:none;border-bottom:3px solid var(--navy);white-space:nowrap}
 #tblUnion thead th:not(:last-child){border-right:3px solid rgba(255,255,255,.35)}
 #tblUnion thead th:hover{background:linear-gradient(180deg,#16457c,#1c5a9e)}
-#tblUnion tbody td{padding:10px 8px;font-size:24px;font-weight:700;color:var(--navy);text-align:center;
+#tblUnion tbody td{padding:7px 8px;font-size:21px;font-weight:700;color:var(--navy);text-align:center;
   border-bottom:3px solid #cfdae7;border-right:3px solid #cfdae7}
 #tblUnion tbody tr:last-child td{border-bottom:none}
 #tblUnion tbody tr:nth-child(even) td{background:#f7fafd}
 #tblUnion tbody tr:hover td{background:#eaf3fc}
-#tblUnion td.l{font-size:19px;font-weight:700;color:var(--ink);letter-spacing:-.1px;text-align:center;
+#tblUnion td.l{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.1px;text-align:center;
   border-right:4px solid #b9c9dc;background:#fbfcfe}
 #tblUnion tbody tr:nth-child(even) td.l{background:#f4f7fb}
 /* "Selected period" is the LAST column — live, filter-driven, highlighted, and it
@@ -133,10 +133,10 @@ footer{font-size:11.5px;color:var(--muted);text-align:center;padding:20px}
 #tblUnion thead th .chgh{font-size:11px;font-weight:600;opacity:.85;display:block;margin-top:2px}
 #tblUnion tbody td.sel{background:#eaf3fd !important;color:var(--acc);
   border-right:none;box-shadow:inset 3px 0 0 var(--acc);white-space:nowrap}
-#tblUnion tbody td.sel>b{font-size:27px;font-weight:800}
+#tblUnion tbody td.sel>b{font-size:23px;font-weight:800}
 #tblUnion tbody tr:hover td.sel{background:#dcecfb !important}
-#tblUnion td.sel .up,#tblUnion td.sel .dn{font-size:17px;font-weight:800;margin-left:14px}
-#tblUnion td.sel .nt{font-size:17px;margin-left:14px}
+#tblUnion td.sel .up,#tblUnion td.sel .dn{font-size:15px;font-weight:800;margin-left:12px}
+#tblUnion td.sel .nt{font-size:15px;margin-left:12px}
 iframe .topbar, .topbar{}
 @media all{:root:not(:only-child) .topbar{display:none!important}}
 /* hide topbar when displayed in iframe slideshow */
@@ -148,8 +148,8 @@ iframe .topbar, .topbar{}
 <body>
 <div class="topbar">
   <div class="brand"><img src="../logo.png" style="height:38px;width:auto;object-fit:contain;display:block"></div>
-  <nav class="topnav"><a href="../bangalore-dairy-dashboard.html" title="Back to Post-Dairy Dashboard">← Post-Dairy</a><a href="union-summary.html" class="active">Union Summary</a><a href="index.html" class="">Procurement</a><a href="procurement.html" class="">Performance & Trends</a><a href="digital.html" class="">Digital Transformation</a><a href="farmers.html" class="">Farmer Engagement</a></nav>
-  <div class="pbadge">Reporting period: <b id="reportingPeriod">—</b></div>
+  <nav class="topnav"><a href="../bangalore-dairy-dashboard.html" title="Back to Post-Dairy Dashboard">← Post-Dairy</a><a href="union-summary.html" class="active">Union Summary</a><a href="procurement.html" class="">Performance & Trends</a><a href="index.html" class="">Procurement</a><a href="digital.html" class="">Digital Transformation</a><a href="farmers.html" class="">Farmer Engagement</a></nav>
+  <div class="pbadge" style="display:none">Reporting period: <b id="reportingPeriod">—</b></div>
 </div>
 <main>
 <div class="filterbar">
@@ -157,8 +157,10 @@ iframe .topbar, .topbar{}
   <span class="rangechip" id="rangeChip"></span>
   <div class="seg" id="segBasis">
     <button data-b="daily" class="active">Yesterday</button>
-    <button data-b="weekly">Weekly</button>
-    <button data-b="monthly">Monthly</button>
+    <button data-b="weekly">This Week</button>
+    <button data-b="prevweek">Prev Week</button>
+    <button data-b="monthly">This Month</button>
+    <button data-b="prevmonth">Prev Month</button>
     <button data-b="custom">Custom</button>
   </div>
   <!-- Custom date range drops onto its own second line, right-aligned under
@@ -247,6 +249,13 @@ function range(){
     const backToMon = (dow+6)%7;               // days since Monday
     return {s:Math.max(0,last-backToMon), e:END};
   }
+  if(basis==='prevweek'){
+    // Full previous Mon–Sun week (the 7 days before this week's Monday).
+    const dow = new Date(W.dates[last]+'T00:00:00').getDay();
+    const backToMon = (dow+6)%7;
+    const thisMon = last-backToMon;             // index of this week's Monday
+    return {s:Math.max(0,thisMon-7), e:Math.max(1,thisMon)};  // [prevMon, thisMon)
+  }
   if(basis==='monthly'){
     // Start of the month containing the last data day. Don't assume
     // monthStarts[2] exists — the 90-day wire may contain only 2 month
@@ -261,6 +270,18 @@ function range(){
       s = idx>=0 ? idx : Math.max(0, last-(d.getDate()-1));
     }
     return {s:Math.max(0,s), e:END};
+  }
+  if(basis==='prevmonth'){
+    // Full previous calendar month = [prevMonthStart, thisMonthStart).
+    const d = new Date(W.dates[last]+'T00:00:00');
+    const curFirstIso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-01`;
+    let curStart = W.dates.indexOf(curFirstIso);
+    if(curStart<0) curStart = Math.max(0, last-(d.getDate()-1));
+    const pd = new Date(d.getFullYear(), d.getMonth()-1, 1);
+    const prevFirstIso = `${pd.getFullYear()}-${String(pd.getMonth()+1).padStart(2,'0')}-01`;
+    let prevStart = W.dates.indexOf(prevFirstIso);
+    if(prevStart<0) prevStart = 0;              // wire may not reach back a full month
+    return {s:Math.max(0,prevStart), e:Math.max(1,curStart)};
   }
   let s=W.dates.indexOf(from), e=W.dates.indexOf(to)+1;
   if(s<0)s=0; if(e<=0)e=DAYS; if(e<=s){const t=s;s=e-1;e=t+1;}
@@ -413,10 +434,19 @@ function render(){
     else if(DAILY_OK.has(row.k)){ selVal = v[2]*share; selTxt=fmtL(selVal); selNA=false; }
     // else: no daily source on a sub-monthly view → N/A (selVal stays null)
 
-    // Last column = selected value + change (merged). No change shown when N/A.
+    // Last column = DIFFERENCE between the two compared periods (cmpNew − cmpOld),
+    // e.g. "27 Feb vs 26 Feb" shows (27 Feb value − 26 Feb value), followed by the
+    // same % change. Falls back to the selected-period value when the two compared
+    // columns aren't both available (keeps cum/avg rows sensible).
+    const aCmp = colVals[cmpNew], bCmp = colVals[cmpOld];
+    let diffTxt = selTxt;
+    if (showChange && !isNA(aCmp) && !isNA(bCmp)) {
+      const d = aCmp - bCmp;
+      diffTxt = row.avg ? d.toFixed(2) : fmtL(d);
+    }
     const selInner = selNA
       ? `<span class="nt">N/A</span>`
-      : `<b>${selTxt}</b>${changeHtml(colVals)}`;
+      : `<b>${diffTxt}</b>${changeHtml(colVals)}`;
     html+=`<tr><td class="l"><b>${row.l}</b></td>
     ${cellsHtml}
     <td class="sel${selNA?' nt':''}" data-v="${selVal??''}">${selInner}</td></tr>`;
