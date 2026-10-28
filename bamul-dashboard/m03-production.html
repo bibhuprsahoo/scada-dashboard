@@ -89,10 +89,10 @@ button[data-tab].soon::after{content:"Coming soon";font-size:9px;font-weight:600
     <div class="card"><h3>Efficiency by plant</h3><div class="sub">Rolling 7 days</div>
       <div class="tw"><table class="t">
         <thead><tr><th>Plant</th><th class="n">Intake L/day</th><th class="n">Yield</th><th class="n">Loss</th><th class="n">Thermal</th><th class="n">Regen.</th><th class="n">OEE</th><th>Status</th></tr></thead>
-        <tbody>
-          <tr><td>Bangalore Mega Dairy</td><td class="n">8,42,600</td><td class="n">98.4%</td><td class="n t-warn">0.42%</td><td class="n">91.2%</td><td class="n">88.6%</td><td class="n">82.1%</td><td><span class="pill ok">On target</span></td></tr>
-          <tr><td>Kanakapura Dairy</td><td class="n">3,91,200</td><td class="n">98.1%</td><td class="n">0.38%</td><td class="n">89.4%</td><td class="n">86.9%</td><td class="n">78.4%</td><td><span class="pill warn">Regen below</span></td></tr>
-          <tr><td>Bangalore Dairy</td><td class="n">1,92,400</td><td class="n">97.6%</td><td class="n t-bad">0.61%</td><td class="n">86.0%</td><td class="n">84.2%</td><td class="n">71.5%</td><td><span class="pill bad">Loss high</span></td></tr>
+        <tbody id="eff-plant-tbody">
+          <tr><td>Bangalore Dairy</td><td class="n" id="eff-bd-intake">—</td><td class="n" id="eff-bd-yield">—</td><td class="n" id="eff-bd-loss">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td><span class="pill" id="eff-bd-status">—</span></td></tr>
+          <tr><td>Kanakapura Dairy</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td><span class="pill">—</span></td></tr>
+          <tr><td>Hosakote Dairy</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td><span class="pill">—</span></td></tr>
         </tbody></table></div></div>
   </section>
 
@@ -177,6 +177,7 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 // Yield efficiency gauge — same as Post Dairy "% of received milk used in production"
+var formatIN = n => Math.round(Number(n)||0).toLocaleString('en-IN');
 (async function(){
   try {
     const FILTER = 'yesterday';
@@ -195,6 +196,9 @@ window.addEventListener('DOMContentLoaded', function() {
     if(val)  val.textContent = pct + '%';
     var ky  = document.getElementById('k-yield');   if(ky)  ky.textContent  = pct + '%';
     var kyd = document.getElementById('k-yield-d'); if(kyd) kyd.textContent = 'yesterday · ' + pct + '% used in production';
+    // Update Bangalore Dairy row in efficiency table
+    var bi = document.getElementById('eff-bd-intake'); if(bi) bi.textContent = formatIN(979420) + ' Kg';
+    var by = document.getElementById('eff-bd-yield');  if(by) by.textContent = pct + '%';
   } catch(e){ console.error('yield gauge failed', e); }
 })();
 
@@ -221,6 +225,9 @@ window.addEventListener('DOMContentLoaded', function() {
     if(val)  val.textContent  = pct + '%';
     if(ky)   ky.textContent   = pct + '%';
     if(kyd)  kyd.textContent  = 'yesterday · norm ≤ 0.40%';
+    // Update Bangalore Dairy loss and status in table
+    var bl = document.getElementById('eff-bd-loss');   if(bl) { bl.textContent = pct + '%'; bl.className = 'n ' + (pct > 0.4 ? 't-bad' : pct > 0 ? 't-warn' : 't-good'); }
+    var bs = document.getElementById('eff-bd-status'); if(bs) { bs.textContent = pct <= 0 ? 'On target' : pct <= 0.4 ? 'Within norm' : 'Loss high'; bs.className = 'pill ' + (pct <= 0.4 ? 'ok' : 'bad'); }
   } catch(e){ console.error('loss gauge failed', e); }
 })();
 </script>
