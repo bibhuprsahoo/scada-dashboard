@@ -172,21 +172,21 @@ window.addEventListener('DOMContentLoaded', function() {
   if(btn){ btn.classList.add('soon'); btn.setAttribute('aria-disabled','true'); }
 });
 
-// Yield efficiency gauge — same figure as Post Dairy "% of received milk used in production"
+// Yield efficiency gauge — same as Post Dairy "% of received milk used in production"
 (async function(){
   try {
-    const FILTER = 'week';
-    const [recv, disp] = await Promise.all([
-      fetch('/api/bangalore/milk-procurement-summary?filter=' + FILTER).then(r=>r.json()),
-      fetch('/api/bangalore/milk-dispatch?filter=' + FILTER).then(r=>r.json())
+    const FILTER = 'yesterday';
+    const [wb, pd, nmp] = await Promise.all([
+      fetch('/api/bangalore/truck-entry?filter=' + FILTER).then(r=>r.json()),
+      fetch('/api/bangalore/product-dispatch?filter=' + FILTER).then(r=>r.json()),
+      fetch('/api/bangalore/nmp-dispatch?filter=' + FILTER).then(r=>r.json())
     ]);
-    const received   = Number(recv.totalReceived) || 0;
-    const MILK       = ['RAW MILK','PAST MILK','SKIM MILK','SKIM MILK POWDER','Homogenised milk'];
-    const dispatched = (disp.data||[]).filter(d=>MILK.includes(d.ProductCode)).reduce((a,d)=>a+(Number(d.TotalQty)||0),0);
-    const used       = Math.max(0, received - dispatched);
-    const pct        = received > 0 ? Math.round(used / received * 100 * 10) / 10 : 0;
-    const ring  = document.getElementById('yield-ring');
-    const val   = document.getElementById('yield-val');
+    const received = (wb.data||[]).reduce((a,r)=>{ const n=Number(r.NetWeight)||0; return a+(n>0?n:Math.max(0,(Number(r.GrossWeight)||0)-(Number(r.TareWeight)||0))); },0);
+    const dispatched = [...(pd.data||[]),...(nmp.data||[])].reduce((a,r)=>a+(Number(r.TotalQty)||0),0);
+    const used = Math.max(0, received - dispatched);
+    const pct  = received > 0 ? Math.round(used / received * 1000) / 10 : 0;
+    const ring = document.getElementById('yield-ring');
+    const val  = document.getElementById('yield-val');
     if(ring) ring.style.setProperty('--v', pct);
     if(val)  val.textContent = pct + '%';
   } catch(e){ console.error('yield gauge failed', e); }
