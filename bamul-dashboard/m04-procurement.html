@@ -7,6 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/app.css">
 <style>
+/* Full-width layout for big-screen / TV display (like the predairy pages) */
+.wrap{max-width:none}
+.wrap.has-side{max-width:none}
+/* Wider sidebar so the "Coming soon" tooltip fits without horizontal scroll */
+.wrap.has-side{grid-template-columns:270px minmax(0,1fr)}
+@media (min-width:1600px){.wrap.has-side{grid-template-columns:300px minmax(0,1fr)}}
+/* The sidebar's overflow-y:auto also clips the tooltip and causes a horizontal scrollbar.
+   Let it overflow visibly so the tooltip shows in the column gap instead. */
+.side{overflow:visible}
 .chain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:center}
 .chain .abox{text-align:center}.chain .ar{color:var(--sky);font-size:22px}
 .chain .abox.gap{border-color:rgba(201,130,8,.6);background:rgba(201,130,8,.08)}
@@ -14,6 +23,25 @@
 .rank{display:inline-flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;font:700 12px var(--head);background:var(--sky-soft);color:var(--sky)}
 .rank.lo{background:rgba(217,67,75,.15);color:var(--bad)}
 .delta{font-weight:700}
+/* Locked (coming soon) tabs: not clickable, dimmed, lock icon + hover tooltip */
+.tabs button.locked{position:relative;opacity:.5;cursor:not-allowed;color:var(--muted)}
+.tabs button.locked:hover{color:var(--muted);border-bottom-color:transparent}
+.tabs button.locked::after{
+  content:attr(data-soon);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%) translateY(4px);
+  background:var(--navy,#0b3a5c);color:#fff;font-size:11px;font-weight:600;letter-spacing:.02em;white-space:nowrap;
+  padding:5px 9px;border-radius:6px;box-shadow:0 4px 14px rgba(16,49,77,.25);
+  opacity:0;pointer-events:none;transition:opacity .15s ease,transform .15s ease;z-index:30}
+.tabs button.locked:hover::after{opacity:1;transform:translateX(-50%) translateY(0)}
+/* In the vertical sidebar layout, keep the tooltip INSIDE the sidebar,
+   a little to the right of the label text (not past the sidebar edge). */
+.tabs.side-tabs button.locked::after{left:auto;right:8px;bottom:auto;top:50%;transform:translateY(-50%) translateX(4px)}
+.tabs.side-tabs button.locked:hover::after{transform:translateY(-50%) translateX(0)}
+/* When a predairy (iframe) tab is active: hide module header, filters, KPIs & footer so the iframe starts from the top */
+body.union-view .phead,
+body.union-view .kpis,
+body.union-view .foot{display:none}
+body.union-view .pd-panel{margin:0}
+body.union-view .pd-panel .pd-frame{height:calc(100vh - 56px)}
 </style>
 </head>
 <body>
@@ -36,24 +64,32 @@
   </div>
 
   <nav class="tabs" data-tabs>
-    <button data-tab="master">MPCS master</button>
-    <button data-tab="feed">Cattle feed</button>
-    <button data-tab="routes">Routes &amp; collection</button>
-    <button data-tab="chilling">Chilling &amp; cold chain</button>
-    <button data-tab="amcs">AMCS calibration</button>
-    <button data-tab="malpractice">Fat entry malpractice</button>
-    <button data-tab="performance">Performance</button>
-    <button data-tab="billing">Producer &amp; billing</button>
+    <button data-tab="union-summary">Overall Union Summary</button>
+        <button data-tab="master">MPCS Master</button>
+
+    <button data-tab="pd-procurement">MPCS Overview</button>
+    <button data-tab="pd-performance">Taluk Overview</button>
+    <button data-tab="pd-digital">AMCS Adoption</button>
+    <button data-tab="pd-farmers">Farmer Engagement</button>
+    <button class="locked" data-tab="feed" data-soon="Coming soon">Cattle feed</button>
+    <button class="locked" data-tab="routes" data-soon="Coming soon">Routes &amp; collection</button>
+    <button class="locked" data-tab="chilling" data-soon="Coming soon">Chilling &amp; cold chain</button>
+    <!-- <button data-tab="amcs">AMCS calibration</button> -->
+    <button class="locked" data-tab="malpractice" data-soon="Coming soon">Fat entry malpractice</button>
+    <!-- <button data-tab="performance">Performance</button> -->
+    <button class="locked" data-tab="billing" data-soon="Coming soon">Producer &amp; billing</button>
   </nav>
 
   <!-- MASTER -->
   <section class="panel" id="master">
+    <!-- District / chilling summary cards — commented out
     <div class="g g4">
       <div class="card"><div class="sub" style="margin:0">Bengaluru Urban</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">742</div><div class="l">societies · 1,104 villages</div></div></div>
       <div class="card"><div class="sub" style="margin:0">Bengaluru Rural</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">806</div><div class="l">societies · 1,288 villages</div></div></div>
       <div class="card"><div class="sub" style="margin:0">Ramanagara</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">666</div><div class="l">societies · 1,094 villages</div></div></div>
       <div class="card"><div class="sub" style="margin:0">Chilling type</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v">1,186</div><div class="l">with BMC · 1,028 can-route</div></div></div>
     </div>
+    -->
     <div class="card"><div class="card-h"><div><h3>Society master</h3><div class="sub">Showing 10 of 2,214 · click a row to drill in</div></div>
       <input class="inp" style="width:240px" type="search" placeholder="Search code, village, route…" data-filter="mtbl"></div>
       <div class="tw"><table class="t" id="mtbl">
@@ -268,8 +304,92 @@
     </div>
   </section>
 
+  <!-- UNION SUMMARY -->
+  <section class="panel pd-panel" id="union-summary">
+    <iframe class="pd-frame" src="../predairy/union-summary.html" title="BAMUL Milk Procurement Summary"
+      style="display:block;width:100%;height:calc(100vh - 120px);border:0;border-radius:12px;background:#fff"></iframe>
+  </section>
+
+  <!-- PREDAIRY · PROCUREMENT -->
+  <section class="panel pd-panel" id="pd-procurement">
+    <iframe class="pd-frame" src="../predairy/index.html" title="Procurement"
+      style="display:block;width:100%;height:calc(100vh - 120px);border:0;border-radius:12px;background:#fff"></iframe>
+  </section>
+
+  <!-- PREDAIRY · PERFORMANCE & TRENDS -->
+  <section class="panel pd-panel" id="pd-performance">
+    <iframe class="pd-frame" src="../predairy/procurement.html" title="Performance &amp; Trends"
+      style="display:block;width:100%;height:calc(100vh - 120px);border:0;border-radius:12px;background:#fff"></iframe>
+  </section>
+
+  <!-- PREDAIRY · DIGITAL TRANSFORMATION -->
+  <section class="panel pd-panel" id="pd-digital">
+    <iframe class="pd-frame" src="../predairy/digital.html" title="Digital Transformation"
+      style="display:block;width:100%;height:calc(100vh - 120px);border:0;border-radius:12px;background:#fff"></iframe>
+  </section>
+
+  <!-- PREDAIRY · FARMER ENGAGEMENT -->
+  <section class="panel pd-panel" id="pd-farmers">
+    <iframe class="pd-frame" src="../predairy/farmers.html" title="Farmer Engagement"
+      style="display:block;width:100%;height:calc(100vh - 120px);border:0;border-radius:12px;background:#fff"></iframe>
+  </section>
+
   <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: EBS procurement, AMCS feed · society-level figures illustrative</span></div>
 </main>
 <script src="js/app.js"></script>
+<script>
+(function () {
+  // Tabs that embed a predairy page via iframe (header + KPIs hidden, iframe from top)
+  var PD_TABS = ['union-summary', 'pd-procurement', 'pd-performance', 'pd-digital', 'pd-farmers'];
+  var frames = Array.prototype.slice.call(document.querySelectorAll('.pd-frame'));
+
+  // Hide the embedded predairy page's own top header (.topbar) once it loads.
+  // Same-origin, so we can inject a style into the iframe document without editing those pages.
+  function hideFrameHeader(frame) {
+    try {
+      var doc = frame.contentDocument || frame.contentWindow.document;
+      if (!doc) return;
+      if (!doc.getElementById('embedHideStyle')) {
+        var st = doc.createElement('style');
+        st.id = 'embedHideStyle';
+        st.textContent = '.topbar{display:none !important}main{padding-top:14px !important}';
+        (doc.head || doc.documentElement).appendChild(st);
+      }
+    } catch (e) { /* ignore */ }
+  }
+  frames.forEach(function (f) { f.addEventListener('load', function () { hideFrameHeader(f); }); });
+
+  // Toggle a body class when any predairy tab is active so the module
+  // header / filters / KPIs are hidden and the iframe starts from the top.
+  // Detect the ACTIVE panel (.panel.on) rather than the hash, because on first
+  // load app.js selects the default tab without updating location.hash.
+  function activeTab() {
+    var onPanel = document.querySelector('.panel.on');
+    if (onPanel) return onPanel.id;
+    return location.hash.slice(1);
+  }
+  function sync() {
+    var on = PD_TABS.indexOf(activeTab()) !== -1;
+    document.body.classList.toggle('union-view', on);
+    if (on) frames.forEach(hideFrameHeader);
+  }
+  // Locked tabs (coming soon): block activation. Capture phase + stopImmediatePropagation
+  // runs before app.js's own click handler, so the panel never switches.
+  document.querySelectorAll('[data-tabs] button.locked').forEach(function (b) {
+    b.setAttribute('aria-disabled', 'true');
+    b.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
+  });
+
+  // Tab buttons use history.replaceState (no hashchange event), so also listen on clicks.
+  document.querySelectorAll('[data-tabs] button[data-tab]:not(.locked)').forEach(function (b) {
+    b.addEventListener('click', function () { setTimeout(sync, 0); });
+  });
+  window.addEventListener('hashchange', sync);
+  sync();
+})();
+</script>
 </body>
 </html>

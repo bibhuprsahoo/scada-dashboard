@@ -30,7 +30,7 @@
         <span><span class="t1"><span class="lg">BAMUL Executive Dashboard</span><span class="sm">BAMUL</span></span><span class="t2">Bangalore Milk Union Ltd.</span></span>
       </a>
       <span class="spacer"></span>
-      <span class="chip demo" title="Figures are illustrative until EBS, warehouse and SCADA are connected">Illustrative data</span>
+      ${here === 'portal.html' ? '<a href="index.html" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--blue);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap">← Welcome Page</a>' : ''}
       <span class="clock"><span id="clk"></span></span>
       <select class="modsel" aria-label="Jump to module">
         <option value="portal.html"${here === 'portal.html' ? ' selected' : ''}>All modules</option>${opts}

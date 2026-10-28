@@ -121,6 +121,15 @@ h3.ct{font-size:1.4375rem;font-weight:700;color:var(--navy);line-height:1.33}
 .tnav-arrow:hover{background:var(--navy);color:#fff}
 .tnav-arrow:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .tnav-pos{font-size:1.4375rem;font-weight:700;color:var(--navy);min-width:2.5rem;text-align:center}
+/* Top-10 header tabs: click a title to switch the table; active title is highlighted. */
+.ttabs{display:flex;align-items:center;gap:.5rem 1rem;flex-wrap:wrap}
+.ttabs .ttab{font-size:1.4375rem;font-weight:700;line-height:1.33;color:var(--muted);
+  background:none;border:0;padding:.1rem .25rem .35rem;cursor:pointer;font-family:inherit;
+  border-bottom:3px solid transparent;transition:color .15s,border-color .15s}
+.ttabs .ttab:hover{color:var(--navy)}
+.ttabs .ttab.active{color:var(--navy);border-bottom-color:var(--acc)}
+.ttabs .tsep{color:var(--line);font-size:1.4375rem;font-weight:400;user-select:none}
+.ttabs .ttab:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
 p.cs{font-size:0.875rem;color:var(--muted);line-height:1.36;margin-top:.125rem}
 .tscroll{width:100%;overflow-x:auto;padding-top:.625rem}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
@@ -191,12 +200,12 @@ iframe .topbar, .topbar{}
   <nav class="topnav">
     <a href="../bangalore-dairy-dashboard.html" title="Back to Post-Dairy Dashboard">← Post-Dairy</a>
     <a href="union-summary.html">Union Summary</a>
-    <a href="index.html">Procurement</a>
     <a href="procurement.html">Performance &amp; Trends</a>
+    <a href="index.html">Procurement</a>
     <a href="digital.html">Digital Transformation</a>
     <a href="farmers.html" class="active" aria-current="page">Farmer Engagement</a>
   </nav>
-  <div class="pbadge">Reporting period: <b id="reportingPeriod">—</b></div>
+  <div class="pbadge" style="display:none">Reporting period: <b id="reportingPeriod">—</b></div>
 </div>
 
 <main>
@@ -207,8 +216,10 @@ iframe .topbar, .topbar{}
       <span class="rangechip" id="rangeChip">—</span>
       <div class="seg" id="segBasis" role="group" aria-label="Reporting period">
         <button type="button" data-b="daily" class="active">Yesterday</button>
-        <button type="button" data-b="weekly">Weekly</button>
-        <button type="button" data-b="monthly">Monthly</button>
+        <button type="button" data-b="weekly">This Week</button>
+        <button type="button" data-b="prevweek">Prev Week</button>
+        <button type="button" data-b="monthly">This Month</button>
+        <button type="button" data-b="prevmonth">Prev Month</button>
         <button type="button" data-b="custom">Custom</button>
       </div>
     </div>
@@ -228,12 +239,7 @@ iframe .topbar, .topbar{}
   <!-- Top 10 pourers — one card, cycle between tables with the ‹ 1/2 › control -->
   <section class="card tcard pad-lg">
     <div class="tcard-head">
-      <h3 class="ct" id="topTitle">Top 10 Highest-Quantity Pourers</h3>
-      <div class="tnav">
-        <button type="button" id="topPrev" class="tnav-arrow" aria-label="Previous table">‹</button>
-        <span class="tnav-pos" id="topPos">1/2</span>
-        <button type="button" id="topNext" class="tnav-arrow" aria-label="Next table">›</button>
-      </div>
+      <div class="ttabs" id="topTabs" role="tablist"></div>
     </div>
 
     <!-- Top 10 by quantity -->
@@ -322,6 +328,24 @@ function getDateRange(b) {
     const from = fmtDate(first), t = fmtDate(end);
     const n = daysBetween(from, t);
     return { asOf:t, from, to:t, basis:srvBasis, label:rangeChipLabel(from,t,n), key:'monthly_'+from+'_'+t };
+  }
+  if (b === 'prevweek') {
+    // The whole previous Monday–Sunday week (full 7 days). Sent as a fixed
+    // custom range so the server treats it as an explicit window.
+    const w = weekOfISO(fmtDate(yday));                 // week containing yesterday
+    const prevMon = new Date(w.from+'T00:00:00'); prevMon.setDate(prevMon.getDate() - 7);
+    const prevSun = new Date(prevMon); prevSun.setDate(prevMon.getDate() + 6);
+    const f = fmtDate(prevMon), t = fmtDate(prevSun);
+    const n = daysBetween(f, t);
+    return { asOf:t, from:f, to:t, basis:'custom', label:rangeChipLabel(f,t,n), key:'prevweek_'+f+'_'+t };
+  }
+  if (b === 'prevmonth') {
+    // The whole previous calendar month (1st -> last day). Sent as a custom range.
+    const pFrom = new Date(today.getFullYear(), today.getMonth()-1, 1);
+    const pTo   = new Date(today.getFullYear(), today.getMonth(), 0);   // last day of prev month
+    const f = fmtDate(pFrom), t = fmtDate(pTo);
+    const n = daysBetween(f, t);
+    return { asOf:t, from:f, to:t, basis:'custom', label:rangeChipLabel(f,t,n), key:'prevmonth_'+f+'_'+t };
   }
   const f = fromCustom || fmtDate(today), t = toCustom || fmtDate(today);
   const n = daysBetween(f, t);
@@ -612,14 +636,33 @@ let topIdx = 0;
 function showTopTab(i){
   topIdx = (i + TOP_TABS.length) % TOP_TABS.length;   // wrap-around both ways
   const tab = TOP_TABS[topIdx];
-  document.getElementById('topTitle').textContent = tab.title;
-  document.getElementById('topPos').textContent = `${topIdx + 1}/${TOP_TABS.length}`;
+  document.querySelectorAll('#topTabs .ttab').forEach((b, k) => {
+    b.classList.toggle('active', k === topIdx);
+    b.setAttribute('aria-selected', k === topIdx ? 'true' : 'false');
+  });
   document.querySelectorAll('.topPane').forEach(p => {
     p.hidden = Number(p.dataset.pane) !== tab.pane;
   });
 }
-document.getElementById('topPrev').addEventListener('click', () => showTopTab(topIdx - 1));
-document.getElementById('topNext').addEventListener('click', () => showTopTab(topIdx + 1));
+// Build the tab bar from TOP_TABS: "Title | Title | ..." — click to switch.
+(function buildTopTabs(){
+  const bar = document.getElementById('topTabs');
+  TOP_TABS.forEach((t, k) => {
+    if (k) {
+      const sep = document.createElement('span');
+      sep.className = 'tsep';
+      sep.textContent = '|';
+      bar.appendChild(sep);
+    }
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ttab';
+    btn.setAttribute('role', 'tab');
+    btn.textContent = t.title;
+    btn.addEventListener('click', () => showTopTab(k));
+    bar.appendChild(btn);
+  });
+})();
 showTopTab(0);
 
 document.querySelectorAll('#segBasis button').forEach(b=>b.classList.toggle('active',b.dataset.b===basis));
