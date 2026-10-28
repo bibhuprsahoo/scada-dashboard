@@ -86,6 +86,7 @@
             <nav class="tabs" data-tabs>
                 <button data-tab="fleet">Fleet overview</button>
                 <button data-tab="live">Live tracker</button>
+                <button data-tab="vehicles">List of vehicle</button>
                 <!--<button data-tab="exceptions">
                     Exceptions &amp; integrity
                 </button>
@@ -123,12 +124,12 @@
                         <div class="d">of 162 fitted</div>
                     </div>
                     <div class="kpi">
-                        <div class="v">58</div>
+                        <div class="v">179</div>
                         <div class="l">Procurement vehicles</div>
                         <div class="d">Tankers &amp; BMC</div>
                     </div>
                     <div class="kpi">
-                        <div class="v">64</div>
+                        <div class="v">86</div>
                         <div class="l">Delivery vehicles</div>
                         <div class="d">Reefer &amp; parlour</div>
                     </div>
@@ -709,6 +710,780 @@
                 </div>
             </section>
 
+            <!-- LIST OF VEHICLE -->
+            <section class="panel" id="vehicles">
+                <div class="card">
+                    <div class="card-h">
+                        <div>
+                            <h3>List of vehicle</h3>
+                            <div class="sub">
+                                Registration number and capacity
+                            </div>
+                        </div>
+                        <div class="filters">
+                            <select id="vfleet" aria-label="Fleet">
+                                <option value="procurement">Procurement</option>
+                                <option value="marketing" selected>
+                                    Marketing
+                                </option>
+                                <option value="field">Field staff</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="tw">
+                        <table class="t" id="vlist">
+                            <thead>
+                                <tr>
+                                    <th class="n" style="width: 64px">Sl no</th>
+                                    <th>Registration number</th>
+                                    <th>Capacity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1041</td>
+                        <td>1.8 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3348</td>
+                        <td>1.8 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1039</td>
+                        <td>1.8 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1037</td>
+                        <td>1.8 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1043</td>
+                        <td>1.8 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1040</td>
+                        <td>1.8 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1033</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1035</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1029</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8678</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8681</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1042</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8666</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3361</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7061</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8673</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1038</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3359</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8674</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8348</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8351</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3352</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3350</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8346</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1034</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3353</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8347</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3360</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3362</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1036</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1030</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8353</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3363</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3356</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8682</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1028</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3396</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3357</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3354</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8668</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8675</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8667</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3349</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8677</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8355</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8344</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8679</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1031</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3351</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1027</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8354</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8349</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8350</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8343</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT8345</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3355</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3358</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT1032</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8671</td>
+                        <td>3.5 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8680</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8672</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7045</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7058</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7047</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8669</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8664</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7052</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7046</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7057</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7064</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7062</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8670</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7063</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7048</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7060</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7051</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS8665</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7049</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7056</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7053</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7050</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7059</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AT3395</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7054</td>
+                        <td>6 ton</td>
+                    </tr>
+                    <tr data-fleet="marketing">
+                        <td class="n"></td>
+                        <td class="mono">KA05AS7065</td>
+                        <td>6 ton</td>
+                    </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51B6209</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA43A2262</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">AP39VE7056</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA11D1986</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA05AM3528</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51B6212</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA01AS3231</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA16C7265</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA40A1363</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51B6214</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA06AB3352</td>
+                                    <td>12 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA43A2263</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA439470</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51B6432</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51B6149</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51AG0239</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA01AN4707</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA05AD8499</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA11C8486</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA439483</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA01AB5544</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51AE8401</td>
+                                    <td>20 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA07B4185</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA02AF3430</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">MH23W8244</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51B6221</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA07B4536</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA05AE2626</td>
+                                    <td>20 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA11D1581</td>
+                                    <td>20 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">MH04GC4444</td>
+                                    <td>20 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA01AR3393</td>
+                                    <td>20 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51B6213</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA43A2103</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA07B6168</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA11C8678</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA53D5235</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA05AF6297</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51B6431</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51B6220</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA01AR3839</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA05AE1745</td>
+                                    <td>20 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA11C7627</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA17C0491</td>
+                                    <td>9 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA06AB3584</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA437155</td>
+                                    <td>20 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA01AF0783</td>
+                                    <td>9 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA50A7272</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA05AD4260</td>
+                                    <td>9 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA05AD3955</td>
+                                    <td>12 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA51AJ0159</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA02AD7388</td>
+                                    <td>12 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA01AA8816</td>
+                                    <td>12 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA01AT2242</td>
+                                    <td>12 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA08A2105</td>
+                                    <td>12 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">AP04TX1116</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA02AE1179</td>
+                                    <td>20 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">AP39WC8083</td>
+                                    <td>20 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA01AQ8903</td>
+                                    <td>9 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA11D3430</td>
+                                    <td>15 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA11D2484</td>
+                                    <td>9 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">TN73AD4483</td>
+                                    <td>12 ton</td>
+                                </tr>
+                                <tr data-fleet="procurement">
+                                    <td class="n"></td>
+                                    <td class="mono">KA01AQ8903</td>
+                                    <td>15 ton</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="sub" id="vempty" hidden>
+                            No vehicles assigned to this fleet.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- EXCEPTIONS -->
             <!--<section class="panel" id="exceptions">
                 <div class="g g2">
@@ -1092,6 +1867,23 @@
         <script src="/bamul-dashboard/js/mojro.js"></script>
         <script src="js/app.js"></script>
         <script>
+            // Fleet filter for the vehicle list (rows carry data-fleet)
+            (() => {
+                const sel = document.getElementById("vfleet");
+                const rows = document.querySelectorAll("#vlist tbody tr");
+                const empty = document.getElementById("vempty");
+                const apply = () => {
+                    let shown = 0;
+                    rows.forEach((r) => {
+                        const ok = r.dataset.fleet === sel.value;
+                        r.hidden = !ok;
+                        if (ok) r.cells[0].textContent = ++shown;
+                    });
+                    empty.hidden = shown > 0;
+                };
+                sel.addEventListener("change", apply);
+                apply();
+            })();
             // getMojroAuthToken();
             // Clearing an exception requires a name and reason
             document.querySelectorAll("#exc .stsel").forEach((s) => {
