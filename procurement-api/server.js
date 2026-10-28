@@ -7,6 +7,7 @@ const app = express();
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bamul-dashboard', express.static(path.join(__dirname, '../bamul-dashboard')));
 
 // ── SQL Server config ──────────────────────────────────────────────────────────
 const sqlConfig = {
@@ -702,7 +703,7 @@ async function buildProcurementCache() {
     console.log('Procurement cache refreshed at', new Date().toISOString());
   } catch(err) {
     procurementCacheBuilding = false;
-    console.error('Cache build error:', err.message);
+    if (!err.message.includes('ECONNREFUSED')) console.error('Cache build error:', err.message);
   } finally {
     if(c) await c.end();
   }
@@ -1250,4 +1251,263 @@ app.listen(PORT, '0.0.0.0', () => {
       console.log('Procurement cache warmed, status:', r.statusCode);
     }).on('error', e => console.log('Cache warm error:', e.message));
   }, 2000);
+});
+
+// ── Oracle EBS PROD ────────────────────────────────────────────────────────────
+const oracledb = require('oracledb');
+const fs = require('fs');
+const CACHE_DIR = path.join(__dirname, 'oracle_cache');
+if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR);
+
+function cacheRead(key) {
+    try {
+        const f = path.join(CACHE_DIR, key + '.json');
+        if (fs.existsSync(f)) return JSON.parse(fs.readFileSync(f, 'utf8'));
+    } catch (_) {}
+    return null;
+}
+function cacheWrite(key, data) {
+    try { fs.writeFileSync(path.join(CACHE_DIR, key + '.json'), JSON.stringify(data)); } catch (_) {}
+}
+function cacheClear(key) {
+    try { fs.unlinkSync(path.join(CACHE_DIR, key + '.json')); } catch (_) {}
+}
+const _icPaths = [
+    'C:\\oracle\\instantclient_23_0',
+    'C:\\oracle\\instantclient_23_4',
+    '/opt/oracle/instantclient_23_4',
+    '/opt/oracle/instantclient_23_0'
+];
+for (const libDir of _icPaths) {
+    try { oracledb.initOracleClient({ libDir }); console.log('Oracle Thick mode:', libDir); break; } catch(e) {}
+}
+const oracleCfg = { user: 'apps_readonly', password: 'GsdjdRuta975', connectString: '115.124.111.4:1521/BMLPROD' };
+async function oraConn() { return await oracledb.getConnection(oracleCfg); }
+
+// ── Finance: Product Sales ─────────────────────────────────────────────────────
+
+function fySalesDates(fy) {
+    const [y1, y2] = fy.split('-').map(Number);
+    return { from: `TO_DATE('01-APR-${y1}','DD-MON-YYYY')`, to: `TO_DATE('01-APR-${y2}','DD-MON-YYYY')` };
+}
+
+app.get('/api/finance/product-sales', async (req, res) => {
+    try {
+        const fy = req.query.fy || '2025-2026';
+        if (!/^\d{4}-\d{4}$/.test(fy))
+            return res.status(400).json({ success: false, error: 'Invalid fy. Use format 2025-2026' });
+
+        const cached = cacheRead('sales_' + fy);
+        if (cached)
+            return res.json({ success: true, phase: cached.phase, fetchedAt: cached.fetchedAt, rows: cached.rows });
+
+        const { from, to } = fySalesDates(fy);
+        const conn = await oraConn();
+        const result = await conn.execute(
+            `SELECT oel.inventory_item_id,
+                    SUM(NVL(oel.shipped_quantity, oel.ordered_quantity))                                    AS total_qty,
+                    ROUND(SUM(NVL(oel.shipped_quantity, oel.ordered_quantity) * oel.unit_selling_price), 2) AS total_value,
+                    ROUND(AVG(oel.unit_selling_price), 2)                                                   AS avg_price
+             FROM apps.oe_order_lines_all oel
+             WHERE oel.actual_shipment_date >= ${from}
+               AND oel.actual_shipment_date <  ${to}
+               AND oel.line_category_code = 'ORDER'
+             GROUP BY oel.inventory_item_id
+             ORDER BY total_value DESC
+             FETCH FIRST 20 ROWS ONLY`,
+            {}, { outFormat: oracledb.OUT_FORMAT_OBJECT }
+        );
+        await conn.close();
+
+        const rows = result.rows.map(r => ({
+            inventory_item_id: r.INVENTORY_ITEM_ID,
+            total_qty:         r.TOTAL_QTY,
+            total_value:       r.TOTAL_VALUE,
+            avg_price:         r.AVG_PRICE,
+            item_code:         null,
+            product_name:      null,
+            uom:               null
+        }));
+
+        const phase1 = { fetchedAt: new Date().toISOString(), phase: 1, rows };
+        cacheWrite('sales_' + fy, phase1);
+        res.json({ success: true, phase: 1, fetchedAt: phase1.fetchedAt, rows });
+
+        // Phase 2 — background: resolve item descriptions one by one
+        (async () => {
+            try {
+                const conn2 = await oraConn();
+                for (const row of phase1.rows) {
+                    try {
+                        const r2 = await conn2.execute(
+                            `SELECT segment1, description, primary_uom_code
+                             FROM apps.mtl_system_items_b
+                             WHERE inventory_item_id = :id AND rownum = 1`,
+                            { id: row.inventory_item_id },
+                            { outFormat: oracledb.OUT_FORMAT_OBJECT }
+                        );
+                        if (r2.rows.length) {
+                            row.item_code    = r2.rows[0].SEGMENT1;
+                            row.product_name = r2.rows[0].DESCRIPTION;
+                            row.uom          = r2.rows[0].PRIMARY_UOM_CODE;
+                        }
+                    } catch (_) {}
+                }
+                await conn2.close();
+                phase1.phase     = 2;
+                phase1.fetchedAt = new Date().toISOString();
+                cacheWrite('sales_' + fy, phase1);
+                console.log(`Product sales cache phase 2 complete for ${fy}`);
+            } catch (_) {}
+        })();
+
+    } catch (err) { res.status(500).json({ success: false, error: err.message }); }
+});
+
+// DELETE /api/finance/product-sales/cache?fy=2025-2026  (omit fy to clear all)
+app.delete('/api/finance/product-sales/cache', (req, res) => {
+    const fy = req.query.fy;
+    if (fy) { cacheClear('sales_' + fy); return res.json({ success: true, message: `Cache cleared for ${fy}` }); }
+    ['2023-2024','2024-2025','2025-2026','2026-2027'].forEach(k => cacheClear('sales_' + k));
+    res.json({ success: true, message: 'All product-sales cache cleared' });
+});
+
+// ── Finance: Milk Payments — cycle register ────────────────────────────────────
+// Cycle: 1–15 due on 15th, 16–end due on last day of month
+// AP = milk purchase (ERS invoices, BAMUL owes MPCS)
+// AR = cattle feed / inputs sold to MPCS (MPCS owes BAMUL)
+// Net payable = AP milk − AR feed (actual cash BAMUL pays out)
+
+app.get('/api/finance/milk-payments', async (req, res) => {
+    try {
+        const fy = req.query.fy || '2025-2026';
+        if (!/^\d{4}-\d{4}$/.test(fy))
+            return res.status(400).json({ success: false, error: 'Invalid fy' });
+
+        const cached = cacheRead('payments_' + fy);
+        if (cached)
+            return res.json({ success: true, fetchedAt: cached.fetchedAt, rows: cached.rows });
+
+        const [y1, y2] = fy.split('-').map(Number);
+        const dateFrom = `01-APR-${y1}`;
+        const dateTo   = `01-APR-${y2}`;
+
+        const conn = await oraConn();
+        const result = await conn.execute(`
+            SELECT
+                TO_CHAR(cycle_from, 'YYYY-MM-DD')  AS cycle_from,
+                TO_CHAR(cycle_due,  'YYYY-MM-DD')  AS cycle_due,
+                TO_CHAR(cycle_from, 'DD Mon')|| ' - ' ||TO_CHAR(cycle_due,'DD Mon YYYY') AS cycle_label,
+                ROUND(ap_milk_amt / 1e7, 2)                  AS milk_purchase_cr,
+                ROUND(ar_feed_amt / 1e7, 2)                  AS feed_recovery_cr,
+                ROUND((ap_milk_amt - ar_feed_amt) / 1e7, 2)  AS net_payable_cr,
+                ap_inv_count,
+                ar_inv_count,
+                mpcs_count,
+                payment_status
+            FROM (
+                SELECT
+                    cycle_due, cycle_from,
+                    SUM(ap_milk_amt)    AS ap_milk_amt,
+                    SUM(ar_feed_amt)    AS ar_feed_amt,
+                    SUM(ap_inv_count)   AS ap_inv_count,
+                    SUM(ar_inv_count)   AS ar_inv_count,
+                    SUM(mpcs_count)     AS mpcs_count,
+                    MIN(payment_status) AS payment_status
+                FROM (
+                    SELECT
+                        aps2.due_date AS cycle_due,
+                        CASE WHEN EXTRACT(DAY FROM aps2.due_date) = 15
+                             THEN TRUNC(aps2.due_date,'MM')
+                             ELSE TRUNC(aps2.due_date,'MM') + 15
+                        END                                   AS cycle_from,
+                        SUM(aps2.gross_amount)                AS ap_milk_amt,
+                        0                                     AS ar_feed_amt,
+                        COUNT(DISTINCT ai.invoice_id)         AS ap_inv_count,
+                        0                                     AS ar_inv_count,
+                        COUNT(DISTINCT ai.vendor_id)          AS mpcs_count,
+                        CASE
+                            WHEN SUM(aps2.amount_remaining) = 0                        THEN 'PAID'
+                            WHEN SUM(aps2.amount_remaining) < SUM(aps2.gross_amount)   THEN 'PARTIAL'
+                            ELSE 'PENDING'
+                        END AS payment_status
+                    FROM apps.ap_invoices_all ai
+                    JOIN apps.ap_suppliers aps
+                        ON aps.vendor_id = ai.vendor_id AND aps.attribute_category = 'MPCS'
+                    JOIN apps.ap_payment_schedules_all aps2
+                        ON aps2.invoice_id = ai.invoice_id
+                    WHERE ai.invoice_date >= TO_DATE(:date_from,'DD-MON-YYYY')
+                      AND ai.invoice_date <  TO_DATE(:date_to,'DD-MON-YYYY')
+                      AND (EXTRACT(DAY FROM aps2.due_date) = 15
+                           OR aps2.due_date = LAST_DAY(aps2.due_date))
+                    GROUP BY aps2.due_date
+                    UNION ALL
+                    SELECT
+                        CASE WHEN EXTRACT(DAY FROM rct.trx_date) <= 15
+                             THEN TRUNC(rct.trx_date,'MM') + 14
+                             ELSE LAST_DAY(rct.trx_date)
+                        END AS cycle_due,
+                        CASE WHEN EXTRACT(DAY FROM rct.trx_date) <= 15
+                             THEN TRUNC(rct.trx_date,'MM')
+                             ELSE TRUNC(rct.trx_date,'MM') + 15
+                        END AS cycle_from,
+                        0                               AS ap_milk_amt,
+                        SUM(aps2.amount_due_original)   AS ar_feed_amt,
+                        0                               AS ap_inv_count,
+                        COUNT(rct.customer_trx_id)      AS ar_inv_count,
+                        0                               AS mpcs_count,
+                        'N/A'                           AS payment_status
+                    FROM apps.ra_customer_trx_all rct
+                    JOIN apps.ra_cust_trx_types_all rctt
+                        ON rctt.cust_trx_type_id = rct.cust_trx_type_id AND rctt.type = 'INV'
+                    JOIN apps.ar_payment_schedules_all aps2
+                        ON aps2.customer_trx_id = rct.customer_trx_id
+                    JOIN apps.hz_cust_accounts hca
+                        ON hca.cust_account_id = rct.bill_to_customer_id
+                    JOIN apps.hz_parties hp ON hp.party_id = hca.party_id
+                    JOIN apps.ap_suppliers aps
+                        ON aps.party_id = hp.party_id AND aps.attribute_category = 'MPCS'
+                    WHERE rct.trx_date >= TO_DATE(:date_from,'DD-MON-YYYY')
+                      AND rct.trx_date <  TO_DATE(:date_to,'DD-MON-YYYY')
+                    GROUP BY
+                        CASE WHEN EXTRACT(DAY FROM rct.trx_date) <= 15
+                             THEN TRUNC(rct.trx_date,'MM') + 14 ELSE LAST_DAY(rct.trx_date) END,
+                        CASE WHEN EXTRACT(DAY FROM rct.trx_date) <= 15
+                             THEN TRUNC(rct.trx_date,'MM') ELSE TRUNC(rct.trx_date,'MM') + 15 END
+                ) combined
+                GROUP BY cycle_due, cycle_from
+            )
+            WHERE ap_milk_amt > 0
+              AND (ap_milk_amt - ar_feed_amt) >= 0
+            ORDER BY cycle_due DESC
+            FETCH FIRST 24 ROWS ONLY`,
+            { date_from: dateFrom, date_to: dateTo },
+            { outFormat: oracledb.OUT_FORMAT_OBJECT }
+        );
+        await conn.close();
+
+        const rows = result.rows.map(r => ({
+            cycle_label:      r.CYCLE_LABEL,
+            cycle_from:       r.CYCLE_FROM,
+            cycle_due:        r.CYCLE_DUE,
+            milk_purchase_cr: r.MILK_PURCHASE_CR,
+            feed_recovery_cr: r.FEED_RECOVERY_CR,
+            net_payable_cr:   r.NET_PAYABLE_CR,
+            ap_inv_count:     r.AP_INV_COUNT,
+            ar_inv_count:     r.AR_INV_COUNT,
+            mpcs_count:       r.MPCS_COUNT,
+            payment_status:   r.PAYMENT_STATUS
+        }));
+
+        const payload = { fetchedAt: new Date().toISOString(), rows };
+        cacheWrite('payments_' + fy, payload);
+        res.json({ success: true, fetchedAt: payload.fetchedAt, rows });
+    } catch (err) { res.status(500).json({ success: false, error: err.message }); }
+});
+
+app.delete('/api/finance/milk-payments/cache', (req, res) => {
+    const fy = req.query.fy;
+    if (fy) { cacheClear('payments_' + fy); return res.json({ success: true, message: `Cache cleared for ${fy}` }); }
+    ['2023-2024','2024-2025','2025-2026','2026-2027'].forEach(k => cacheClear('payments_' + k));
+    res.json({ success: true, message: 'All milk-payments cache cleared' });
 });

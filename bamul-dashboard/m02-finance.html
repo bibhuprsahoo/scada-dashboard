@@ -27,17 +27,17 @@
   </div>
 
   <nav class="tabs" data-tabs>
+    <button data-tab="sales">Product Sales</button>
+    <button data-tab="payments">Milk Payments</button>
     <button data-tab="summary">Summary</button>
     <button data-tab="bs">Balance Sheet</button>
     <button data-tab="ie">Income &amp; Expenditure</button>
     <button data-tab="cf">Cash Flow</button>
-    <button data-tab="sales">Product Sales</button>
-    <button data-tab="payments">Milk Payments</button>
     <button data-tab="ratios">Ratios &amp; Receivables</button>
     <button data-tab="statutory">Statutory &amp; Audit</button>
   </nav>
 
-  <!-- SUMMARY -->
+  <!-- SUMMARY (commented out)
   <section class="panel" id="summary">
     <div class="g g21">
       <div class="card">
@@ -72,8 +72,7 @@
       <div class="card"><div class="sub" style="margin:0">Open audit observations</div><div class="kpi" style="padding:0;border:0;background:none"><div class="v t-bad">7</div></div><div class="d t-muted" style="font-size:12px;margin-top:6px">2 rated high</div></div>
     </div>
   </section>
-
-  <!-- BALANCE SHEET -->
+  -->
   <section class="panel" id="bs">
     <div class="g g2">
       <div class="card"><h3>Sources of funds</h3><div class="sub">As at 31 March, ₹ crore</div>
@@ -161,66 +160,86 @@
 
   <!-- PRODUCT SALES -->
   <section class="panel" id="sales">
-    <div class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Product-wise volume and realisation</h3><div class="sub">FY26 YTD (Apr–Sep), reconciled to GL sales accounts</div></div><span class="pill ok">Reconciled · diff ₹0.04 Cr</span></div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-h">
+        <div>
+          <h3>Product-wise volume and realisation</h3>
+          <div class="sub">Top 20 products by value &middot; source: EBS Order Management</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <select id="sales-fy" class="inp" style="width:auto">
+            <option value="2025-2026" selected>FY 2025-26</option>
+            <option value="2024-2025">FY 2024-25</option>
+            <option value="2023-2024">FY 2023-24</option>
+          </select>
+          <span id="sales-status" class="pill">Loading&hellip;</span>
+          <button id="sales-refresh" class="btn ghost" style="padding:6px 12px;font-size:12px">&circlearrowleft; Refresh</button>
+        </div>
+      </div>
       <div class="tw"><table class="t">
-        <thead><tr><th>Product</th><th>Unit</th><th class="n">Volume</th><th class="n">Value ₹ Cr</th><th class="n">Realisation / unit</th><th class="n">vs LY</th><th>Share</th></tr></thead>
-        <tbody>
-          <tr><td>Toned milk</td><td>lakh L</td><td class="n">1,842</td><td class="n">884.2</td><td class="n">₹48.0</td><td class="n t-good">+6.1%</td><td style="min-width:120px"><div class="meter"><span style="--v:56%"></span></div></td></tr>
-          <tr><td>Homogenised / full cream</td><td>lakh L</td><td class="n">412</td><td class="n">226.6</td><td class="n">₹55.0</td><td class="n t-good">+9.4%</td><td><div class="meter"><span style="--v:14%"></span></div></td></tr>
-          <tr><td>Curd</td><td>lakh kg</td><td class="n">286</td><td class="n">157.3</td><td class="n">₹55.0</td><td class="n t-good">+11.2%</td><td><div class="meter"><span style="--v:10%"></span></div></td></tr>
-          <tr><td>Buttermilk</td><td>lakh L</td><td class="n">148</td><td class="n">29.6</td><td class="n">₹20.0</td><td class="n t-good">+18.5%</td><td><div class="meter"><span style="--v:2%"></span></div></td></tr>
-          <tr><td>Ghee</td><td>tonnes</td><td class="n">2,140</td><td class="n">128.4</td><td class="n">₹600/kg</td><td class="n t-bad">−2.3%</td><td><div class="meter"><span style="--v:8%"></span></div></td></tr>
-          <tr><td>Butter</td><td>tonnes</td><td class="n">980</td><td class="n">49.0</td><td class="n">₹500/kg</td><td class="n">+0.8%</td><td><div class="meter"><span style="--v:3%"></span></div></td></tr>
-          <tr><td>Skimmed milk powder</td><td>tonnes</td><td class="n">1,620</td><td class="n">48.6</td><td class="n">₹300/kg</td><td class="n t-bad">−6.4%</td><td><div class="meter"><span style="--v:3%"></span></div></td></tr>
-          <tr><td>Sweets &amp; ice cream</td><td>tonnes</td><td class="n">760</td><td class="n">41.8</td><td class="n">₹550/kg</td><td class="n t-good">+14.0%</td><td><div class="meter"><span style="--v:3%"></span></div></td></tr>
-          <tr class="total"><td>Total</td><td></td><td></td><td class="n">1,565.5</td><td></td><td class="n t-good">+7.2%</td><td></td></tr>
-        </tbody></table></div></div>
-    <div class="g g3">
-      <div class="card"><h3>By channel</h3><div class="bars" style="margin-top:12px">
-        <div class="bar"><span class="lab">Dealers / agents</span><span class="trk"><span class="fill" data-v="58"></span></span><span class="val">58%</span></div>
-        <div class="bar"><span class="lab">Nandini parlours</span><span class="trk"><span class="fill" data-v="21"></span></span><span class="val">21%</span></div>
-        <div class="bar"><span class="lab">Institutional</span><span class="trk"><span class="fill" data-v="12"></span></span><span class="val">12%</span></div>
-        <div class="bar"><span class="lab">KMF transfer</span><span class="trk"><span class="fill" data-v="9"></span></span><span class="val">9%</span></div></div></div>
-      <div class="card"><h3>Sales vs dispatch</h3><div class="sub">Lakh litres, last 6 days</div>
-        <div class="cols" style="height:130px">
-          <div class="col"><span class="c" data-h="88"></span></div><div class="col"><span class="c" data-h="92"></span></div><div class="col"><span class="c" data-h="85"></span></div>
-          <div class="col"><span class="c" data-h="96"></span></div><div class="col"><span class="c" data-h="100"></span></div><div class="col"><span class="c" data-h="94"></span></div></div>
-        <div class="cols-x"><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span></div></div>
-      <div class="card"><h3>Top dealers by value</h3><div class="sub">October MTD</div>
-        <table class="t"><tbody>
-          <tr><td>Jayanagar agency</td><td class="n">₹3.42 Cr</td></tr>
-          <tr><td>Yeshwanthpur distributors</td><td class="n">₹3.18 Cr</td></tr>
-          <tr><td>Whitefield milk agency</td><td class="n">₹2.96 Cr</td></tr>
-          <tr><td>Rajajinagar dealers</td><td class="n">₹2.71 Cr</td></tr></tbody></table></div>
+        <thead><tr>
+          <th>#</th><th>Item code</th><th>Product</th><th>UOM</th>
+          <th class="n">Quantity</th><th class="n">Value &curren;</th>
+          <th class="n">Avg price / unit</th><th>Share</th>
+        </tr></thead>
+        <tbody id="sales-tbody">
+          <tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted)">Fetching data from EBS&hellip;</td></tr>
+        </tbody>
+      </table></div>
+      <div id="sales-note" class="note" style="margin-top:12px;display:none">
+        <span class="ic">i</span><span id="sales-note-text"></span>
+      </div>
     </div>
   </section>
 
   <!-- MILK PAYMENTS -->
   <section class="panel" id="payments">
-    <div class="g g21">
-      <div class="card"><div class="card-h"><div><h3>Cycle register</h3><div class="sub">Ten-day cycles, union → MPCS</div></div>
-        <select class="inp" style="width:auto" data-status-filter="cyc"><option value="">All</option><option value="settled">Settled</option><option value="open">Open</option></select></div>
-        <div class="tw"><table class="t" id="cyc">
-          <thead><tr><th>Cycle</th><th class="n">Litres</th><th class="n">Base amount</th><th class="n">Incentive</th><th class="n">Total</th><th>Paid on</th><th>Status</th></tr></thead>
-          <tbody>
-            <tr data-status="settled"><td>01–10 Sep</td><td class="n">5.71 Cr</td><td class="n">₹20.4 Cr</td><td class="n">₹0.58 Cr</td><td class="n">₹21.0 Cr</td><td>14 Sep</td><td><span class="pill ok">Settled</span></td></tr>
-            <tr data-status="settled"><td>11–20 Sep</td><td class="n">5.84 Cr</td><td class="n">₹20.8 Cr</td><td class="n">₹0.61 Cr</td><td class="n">₹21.4 Cr</td><td>24 Sep</td><td><span class="pill ok">Settled</span></td></tr>
-            <tr data-status="settled"><td>21–30 Sep</td><td class="n">5.90 Cr</td><td class="n">₹21.1 Cr</td><td class="n">₹0.62 Cr</td><td class="n">₹21.7 Cr</td><td>04 Oct</td><td><span class="pill ok">Settled</span></td></tr>
-            <tr data-status="settled"><td>01–10 Oct</td><td class="n">5.94 Cr</td><td class="n">₹21.2 Cr</td><td class="n">₹0.63 Cr</td><td class="n">₹21.8 Cr</td><td>14 Oct</td><td><span class="pill ok">Settled</span></td></tr>
-            <tr data-status="open"><td>11–20 Oct</td><td class="n">5.96 Cr</td><td class="n">₹21.3 Cr</td><td class="n">₹0.64 Cr</td><td class="n">₹21.9 Cr</td><td>—</td><td><span class="pill warn">Part paid</span></td></tr>
-            <tr data-status="open"><td>21–31 Oct</td><td class="n">6.58 Cr*</td><td class="n">₹23.5 Cr</td><td class="n">₹0.70 Cr</td><td class="n">₹24.2 Cr</td><td>Due 04 Nov</td><td><span class="pill info">Running</span></td></tr>
-          </tbody></table></div>
-        <div class="sub" style="margin:10px 0 0">* Running cycle projected to month end.</div></div>
-      <div class="card"><h3>Bonus &amp; incentive</h3><div class="sub">FY26</div>
-        <dl class="kv">
-          <dt>Ugadi bonus</dt><dd>₹59.39 Cr <span class="pill ok">Verified</span></dd>
-          <dt>Rate</dt><dd>₹1 per litre</dd>
-          <dt>Farmers paid</dt><dd>1.27 lakh</dd>
-          <dt>Quality incentive</dt><dd>₹7.6 Cr YTD</dd>
-          <dt>Price equalisation</dt><dd>₹2.1 Cr reserve</dd>
-        </dl>
-        <div class="note" style="margin-top:14px"><span class="ic">i</span><span>Farmer-level settlement and the union→MPCS gap are tracked in <a href="m04-procurement.html#billing">Procurement › Billing</a>.</span></div></div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-h">
+        <div>
+          <h3>Cycle register &mdash; milk payment &amp; input recovery</h3>
+          <div class="sub">15-day cycles &middot; AP milk purchase vs AR cattle feed/inputs &middot; source: EBS</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <select id="pay-fy" class="inp" style="width:auto">
+            <option value="2025-2026" selected>FY 2025-26</option>
+            <option value="2024-2025">FY 2024-25</option>
+            <option value="2023-2024">FY 2023-24</option>
+          </select>
+          <span id="pay-status" class="pill">Loading&hellip;</span>
+          <button id="pay-refresh" class="btn ghost" style="padding:6px 12px;font-size:12px">&circlearrowleft; Refresh</button>
+        </div>
+      </div>
+      <div class="tw"><table class="t">
+        <thead><tr>
+          <th>Cycle</th>
+          <th>Due date</th>
+          <th class="n">Milk purchase</th>
+          <th class="n">Feed recovery</th>
+          <th class="n">Net paid</th>
+          <th class="n">MPCS</th>
+        </tr></thead>
+        <tbody id="pay-tbody">
+          <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted)">Fetching data from EBS&hellip;</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sub" style="margin-top:10px">
+        Milk purchase = gross AP (ERS invoices). Feed recovery = AR cattle feed &amp; inputs sold to MPCS netted off. Net payable = actual cash paid.
+      </div>
     </div>
+  <!--
+    <div class="card">
+      <h3>Bonus &amp; incentive</h3><div class="sub">FY26</div>
+      <dl class="kv">
+        <dt>Ugadi bonus</dt><dd>&#8377;59.39 Cr <span class="pill ok">Verified</span></dd>
+        <dt>Rate</dt><dd>&#8377;1 per litre</dd>
+        <dt>Farmers paid</dt><dd>1.27 lakh</dd>
+        <dt>Quality incentive</dt><dd>&#8377;7.6 Cr YTD</dd>
+        <dt>Price equalisation</dt><dd>&#8377;2.1 Cr reserve</dd>
+      </dl>
+      <div class="note" style="margin-top:14px"><span class="ic">i</span><span>Farmer-level settlement and the union&rarr;MPCS gap are tracked in <a href="m04-procurement.html#billing">Procurement &rsaquo; Billing</a>.</span></div>
+    </div>
+  -->
   </section>
 
   <!-- RATIOS -->
@@ -287,5 +306,195 @@
   <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Source: EBS General Ledger via warehouse · FY25 operating income, PAT and Ugadi bonus verified</span></div>
 </main>
 <script src="js/app.js"></script>
+<script>
+(function () {
+  const API = '/api/finance/product-sales';
+  const tbody  = document.getElementById('sales-tbody');
+  const status = document.getElementById('sales-status');
+  const note   = document.getElementById('sales-note');
+  const noteT  = document.getElementById('sales-note-text');
+  const fyEl   = document.getElementById('sales-fy');
+  const refBtn = document.getElementById('sales-refresh');
+
+  function fmt(n)   { return Number(n).toLocaleString('en-IN'); }
+  function fmtCr(n) { return '&#8377;' + (n / 1e7).toFixed(2) + ' Cr'; }
+
+  function render(rows) {
+    if (!rows || !rows.length) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted)">No data found for this period.</td></tr>';
+      return;
+    }
+    const maxVal = rows[0].total_value || 1;
+    tbody.innerHTML = rows.map((r, i) => {
+      const pct  = Math.round((r.total_value / maxVal) * 100);
+      const code = r.item_code    || r.inventory_item_id;
+      const name = r.product_name || '<span style="color:var(--muted);font-style:italic">resolving&hellip;</span>';
+      const uom  = r.uom          || '&mdash;';
+      return `<tr>
+        <td style="color:var(--muted);font-size:12px">${i + 1}</td>
+        <td class="mono" style="font-size:12px">${code}</td>
+        <td>${name}</td>
+        <td style="color:var(--muted)">${uom}</td>
+        <td class="n">${fmt(r.total_qty)}</td>
+        <td class="n">${fmtCr(r.total_value)}</td>
+        <td class="n">&#8377;${fmt(r.avg_price)}</td>
+        <td style="min-width:120px"><div class="meter"><span style="--v:${pct}%"></span></div></td>
+      </tr>`;
+    }).join('');
+  }
+
+  let pollTimer = null;
+  let activeFy = null;
+  let salesCache = {};
+  // restore from sessionStorage
+  try { const s = sessionStorage.getItem('salesCache'); if (s) salesCache = JSON.parse(s); } catch(_) {}
+
+  function load(fy, bustCache) {
+    clearTimeout(pollTimer);
+    activeFy = fy;
+    if (!bustCache && salesCache[fy] && salesCache[fy].phase === 2) {
+      render(salesCache[fy].rows);
+      status.className = 'pill ok';
+      status.textContent = 'Live · EBS · ' + new Date(salesCache[fy].fetchedAt).toLocaleString('en-IN');
+      return;
+    }
+    status.className = 'pill info';
+    status.textContent = 'Loading…';
+    note.style.display = 'none';
+    if (bustCache) tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted)">Fetching data from EBS…</td></tr>';
+
+    const doFetch = () => fetch(API + '?fy=' + fy)
+      .then(r => r.json())
+      .then(d => {
+        if (activeFy !== fy) return; // stale response — FY changed while in-flight
+        if (!d.success) throw new Error(d.error || 'API error');
+        salesCache[fy] = { fy, rows: d.rows, phase: d.phase, fetchedAt: d.fetchedAt };
+        try { sessionStorage.setItem('salesCache', JSON.stringify(salesCache)); } catch(_) {}
+        render(d.rows);
+        const at = new Date(d.fetchedAt).toLocaleString('en-IN');
+        if (d.phase === 1) {
+          status.className = 'pill warn';
+          status.textContent = 'Phase 1 — resolving names…';
+          noteT.textContent = 'Item descriptions are being resolved in the background. Auto-refreshing in 15s.';
+          note.style.display = 'flex';
+          pollTimer = setTimeout(() => { if (activeFy === fy) load(fy, false); }, 15000);
+        } else {
+          status.className = 'pill ok';
+          status.textContent = 'Live · EBS · ' + at;
+          note.style.display = 'none';
+        }
+      })
+      .catch(err => {
+        if (activeFy !== fy) return;
+        // clear stale sessionStorage on error so next visit re-fetches
+        try { delete salesCache[fy]; sessionStorage.setItem('salesCache', JSON.stringify(salesCache)); } catch(_) {}
+        status.className = 'pill bad';
+        status.textContent = 'Error';
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--bad)">${err.message}</td></tr>`;
+      });
+
+    if (bustCache) {
+      fetch(API + '/cache?fy=' + fy, { method: 'DELETE' }).finally(doFetch);
+    } else {
+      doFetch();
+    }
+  }
+
+  fyEl.addEventListener('change', () => load(fyEl.value, false));
+  refBtn.addEventListener('click', () => load(fyEl.value, true));
+
+  // Auto-load when the sales tab becomes active
+  let loaded = false;
+  const panel = document.getElementById('sales');
+  if (panel) new MutationObserver(() => {
+    if (panel.classList.contains('on') && !loaded) { loaded = true; load(fyEl.value, false); }
+  }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+  // fire immediately if panel is already active when script runs
+  if (panel && panel.classList.contains('on')) { loaded = true; load(fyEl.value, false); }
+})();
+
+// ── Milk Payments tab ────────────────────────────────────────────────────────────────────────
+(function () {
+  const API     = '/api/finance/milk-payments';
+  const tbody   = document.getElementById('pay-tbody');
+  const status  = document.getElementById('pay-status');
+  const fyEl    = document.getElementById('pay-fy');
+  const refBtn  = document.getElementById('pay-refresh');
+
+  const fmtCr = n => '&#8377;' + Number(n).toFixed(2) + ' Cr';
+  const fmtN  = n => Number(n).toLocaleString('en-IN');
+
+  function pillFor(s) {
+    if (s === 'PAID')    return '<span class="pill ok">Paid</span>';
+    if (s === 'PARTIAL') return '<span class="pill warn">Partial</span>';
+    return '<span class="pill">Pending</span>';
+  }
+
+  function render(rows) {
+    if (!rows || !rows.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted)">No data for this period.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map(r => `<tr>
+      <td>${r.cycle_label}</td>
+      <td style="color:var(--muted);font-size:12px">${r.cycle_due}</td>
+      <td class="n">${fmtCr(r.milk_purchase_cr)}</td>
+      <td class="n" style="color:var(--warn)">&#8722; ${fmtCr(r.feed_recovery_cr)}</td>
+      <td class="n"><b>${fmtCr(r.net_payable_cr)}</b></td>
+      <td class="n">${fmtN(r.mpcs_count)}</td>
+    </tr>`).join('');
+  }
+
+  let payCache = {};
+  // restore from sessionStorage
+  try { const s = sessionStorage.getItem('payCache'); if (s) payCache = JSON.parse(s); } catch(_) {}
+
+  function load(fy, bustCache) {
+    if (!bustCache && payCache[fy]) {
+      render(payCache[fy].rows);
+      status.className = 'pill ok';
+      status.textContent = 'Live · EBS · ' + new Date(payCache[fy].fetchedAt).toLocaleString('en-IN');
+      return;
+    }
+    status.className = 'pill info';
+    status.textContent = 'Loading…';
+    if (bustCache) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted)">Fetching data from EBS…</td></tr>';
+
+    const doFetch = () => fetch(API + '?fy=' + fy)
+      .then(r => r.json())
+      .then(d => {
+        if (!d.success) throw new Error(d.error || 'API error');
+        payCache[fy] = { fy, rows: d.rows, fetchedAt: d.fetchedAt };
+        try { sessionStorage.setItem('payCache', JSON.stringify(payCache)); } catch(_) {}
+        render(d.rows);
+        status.className = 'pill ok';
+        status.textContent = 'Live · EBS · ' + new Date(d.fetchedAt).toLocaleString('en-IN');
+      })
+      .catch(err => {
+        try { delete payCache[fy]; sessionStorage.setItem('payCache', JSON.stringify(payCache)); } catch(_) {}
+        status.className = 'pill bad';
+        status.textContent = 'Error';
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--bad)">${err.message}</td></tr>`;
+      });
+
+    if (bustCache) {
+      fetch(API + '/cache?fy=' + fy, { method: 'DELETE' }).finally(doFetch);
+    } else {
+      doFetch();
+    }
+  }
+
+  fyEl.addEventListener('change', () => load(fyEl.value, false));
+  refBtn.addEventListener('click', () => load(fyEl.value, true));
+
+  let payLoaded = false;
+  const payPanel = document.getElementById('payments');
+  if (payPanel) new MutationObserver(() => {
+    if (payPanel.classList.contains('on') && !payLoaded) { payLoaded = true; load(fyEl.value, false); }
+  }).observe(payPanel, { attributes: true, attributeFilter: ['class'] });
+  // fire immediately if panel is already active when script runs
+  if (payPanel && payPanel.classList.contains('on')) { payLoaded = true; load(fyEl.value, false); }
+})();
+</script>
 </body>
 </html>
