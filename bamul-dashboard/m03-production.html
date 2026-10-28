@@ -212,32 +212,26 @@ window.addEventListener('DOMContentLoaded', function() {
 
   async function load() {
     try {
-      const [wb, rmst, pmst, ai, disp] = await Promise.all([
-        j('/api/bangalore/truck-entry?filter=' + FILTER_INTAKE),
+      const [rmst, pmst, ai, disp] = await Promise.all([
         j('/api/bangalore/rmst?filter=' + FILTER_INTAKE),
         j('/api/bangalore/pmst?filter=' + FILTER_INTAKE),
         j('/api/bangalore/ai-production?filter=' + FILTER),
         j('/api/bangalore/milk-dispatch?filter=' + FILTER_INTAKE)
       ]);
 
-      // Use truck-entry (weigh bridge API) for intake — same as Post Dairy
-      const wbTotal = (wb.data || []).reduce((a, r) => {
-        const n = num(r.NetWeight); return a + (n > 0 ? n : Math.max(0, num(r.GrossWeight) - num(r.TareWeight)));
-      }, 0);
-      const intake  = wbTotal;
       const chill   = (rmst.data || []).reduce((a, s) => a + num(s.TotalQty), 0);
-      const pouches  = num(ai.milkPkts) + num(ai.curdPkts);
-      const MILK     = ['RAW MILK','PAST MILK','SKIM MILK','SKIM MILK POWDER','Homogenised milk'];
-      const dispL    = (disp.data || []).filter(d => MILK.includes(d.ProductCode)).reduce((a, d) => a + num(d.TotalQty), 0);
+      const past    = (pmst.data || []).reduce((a, s) => a + num(s.TotalProcessed), 0);
+      const pouches = num(ai.milkPkts) + num(ai.curdPkts);
+      const MILK    = ['RAW MILK','PAST MILK','SKIM MILK','SKIM MILK POWDER','Homogenised milk'];
+      const dispL   = (disp.data || []).filter(d => MILK.includes(d.ProductCode)).reduce((a, d) => a + num(d.TotalQty), 0);
 
-      $('s-reception').textContent      = fmtL(intake);
-      $('s-chilling').textContent       = fmtL(chill);
-      $('s-pasteurisation').textContent = fmtL(past);
+      $('s-chilling').textContent       = chill  > 0 ? fmtL(chill) : '—';
+      $('s-pasteurisation').textContent = past   > 0 ? fmtL(past)  : '—';
       $('s-packing').textContent        = fmt(pouches) + ' pouches';
-      $('s-dispatch').textContent       = fmtL(dispL);
+      $('s-dispatch').textContent       = dispL  > 0 ? fmtL(dispL) : '—';
 
-      const k = $('k-intake'); if (k) k.textContent = fmtL(intake);
-      const kd = $('k-intake-d'); if (kd) kd.textContent = 'yesterday · weigh bridge';
+      const kp  = $('k-packing');  if (kp)  kp.textContent  = fmt(pouches);
+      const kpd = $('k-packing-d');if (kpd) kpd.textContent = 'milk ' + fmt(ai.milkPkts) + ' · curd ' + fmt(ai.curdPkts);
 
       renderSilos(); renderHourly(); renderDispType();
 
@@ -245,11 +239,34 @@ window.addEventListener('DOMContentLoaded', function() {
     } catch (e) {
       console.error('production flow load failed', e);
       const upd = $('upd'); if (upd) upd.textContent = 'data unavailable';
-      ['s-reception', 's-chilling', 's-pasteurisation', 's-packing', 's-dispatch'].forEach(id => { const el = $(id); if (el) el.textContent = '—'; });
+      ['s-reception','s-chilling','s-pasteurisation','s-packing','s-dispatch'].forEach(id => { const el=$(id); if(el) el.textContent='—'; });
     }
   }
 
+  // Read intake (Milk received) directly from the Post Dairy iframe
+  // so both always show the exact same number
+  function syncIntakeFromIframe() {
+    var iframe = document.querySelector('#postdairy iframe');
+    if (!iframe) return;
+    function tryRead() {
+      try {
+        var doc = iframe.contentDocument || iframe.contentWindow.document;
+        var el  = doc && doc.getElementById('sum-in');
+        if (el && el.textContent && el.textContent.trim() !== '—' && el.textContent.trim() !== '0') {
+          var val = el.textContent.trim();
+          var ki  = $('k-intake');    if (ki)  ki.textContent  = val + ' Kg';
+          var kd  = $('k-intake-d'); if (kd)  kd.textContent  = 'yesterday · weigh bridge';
+          var sr  = $('s-reception'); if (sr)  sr.textContent  = val + ' Kg';
+        }
+      } catch(e) {}
+    }
+    iframe.addEventListener('load', function() { setTimeout(tryRead, 800); });
+    // Also try after 3s in case iframe already loaded
+    setTimeout(tryRead, 3000);
+  }
+
   load();
+  syncIntakeFromIframe();
 })();
 </script>
 </body>
