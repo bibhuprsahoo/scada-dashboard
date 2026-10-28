@@ -23,7 +23,7 @@
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .tile{
   position:relative;display:flex;flex-direction:column;gap:12px;min-height:190px;
-  background:linear-gradient(150deg,#2ba3e6 0%,#1e88d8 100%);border:1px solid #1a7cc7;border-radius:16px;padding:18px;color:#fff;
+  background:linear-gradient(150deg,#2ba3e6 0%,#1e88d8 100%);border:1px solid #1a7cc7;border-radius:16px;padding:18px;color:#000;
   box-shadow:0 6px 18px rgba(16,90,150,.18);
   transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;overflow:hidden;
 }
@@ -32,12 +32,12 @@
 .tile .top{display:flex;align-items:center;gap:12px}
 .tile .ico{width:44px;height:44px;border-radius:12px;background:#fff;border:0;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .tile .ico svg{width:22px;height:22px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.tile .no{font-size:11px;font-weight:600;letter-spacing:.2em;color:rgba(255,255,255,.75)}
-.tile h2{font-size:18px;font-weight:700;color:#fff}
+.tile .no{font-size:11px;font-weight:600;letter-spacing:.2em;color:rgba(0,0,0,.6)}
+.tile h2{font-size:18px;font-weight:700;color:#000}
 .tile .big{font:800 26px/1 var(--head);margin-top:auto}
-.tile .cap{font-size:12px;color:rgba(255,255,255,.85);margin-top:4px}
-.tile .foot2{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid rgba(255,255,255,.3);padding-top:10px;font-size:12px;color:rgba(255,255,255,.85)}
-.tile .go{color:#fff;font-weight:700}
+.tile .cap{font-size:12px;color:rgba(0,0,0,.65);margin-top:4px}
+.tile .foot2{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid rgba(0,0,0,.15);padding-top:10px;font-size:12px;color:rgba(0,0,0,.65)}
+.tile .go{color:#000;font-weight:700}
 .tile .pill{background:#fff;border-color:#fff}
 .tile .ph{position:absolute;right:14px;top:16px}
 @media (max-width:1200px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -104,41 +104,41 @@
       <div><div class="big">147 / 162</div><div class="cap">Vehicles reporting now</div></div>
       <div class="foot2"><span class="pill warn">5 exceptions</span><span class="go">Open →</span></div>
     </a>
-    <a class="tile" href="m06-quality.html">
-      <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4 20a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1L14 9V3"/><path d="M7 15h10"/></svg></div><div><div class="no">MODULE 06</div><h2>Quality &amp; Testing</h2></div></div>
-      <div><div class="big">3.92 / 8.62</div><div class="cap">Avg FAT / SNF % at reception</div></div>
-      <div class="foot2"><span>0.6% adulteration positive</span><span class="go">Open →</span></div>
-    </a>
-    <a class="tile" href="m07-animal-health.html">
-      <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6-8 11-8 11z"/><path d="M12 8v6M9 11h6"/></svg></div><div><div class="no">MODULE 07</div><h2>Animal Health &amp; Vet</h2></div></div>
-      <div><div class="big">1,42,600</div><div class="cap">AI doses this month · 51.4% conception</div></div>
-      <div class="foot2"><span>1,148 camps held</span><span class="go">Open →</span></div>
-    </a>
-    <a class="tile" href="m08-hr.html">
-      <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><circle cx="18" cy="9" r="2.5"/><path d="M17 14c3 0 5 2 5 5"/></svg></div><div><div class="no">MODULE 08</div><h2>HR &amp; Manpower</h2></div></div>
-      <div><div class="big">1,842</div><div class="cap">Total manpower · 94.6% attendance</div></div>
-      <div class="foot2"><span>132 vacancies</span><span class="go">Open →</span></div>
-    </a>
     <a class="tile" href="m09-cattle-relief.html">
       <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div><div><div class="no">MODULE 09</div><h2>Cattle Relief Funds</h2></div></div>
       <div><div class="big">4.62 lakh</div><div class="cap">Animals insured · 58.3% claim ratio</div></div>
       <div class="foot2"><span>₹18.4 Cr premium YTD</span><span class="go">Open →</span></div>
     </a>
-    <a class="tile" href="m10-mis.html">
+    <div class="tile" style="opacity:.6;cursor:default">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4 20a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1L14 9V3"/><path d="M7 15h10"/></svg></div><div><div class="no">MODULE 06</div><h2>Quality &amp; Testing</h2></div></div>
+      <div><div class="big">Coming Soon</div><div class="cap">Module under development</div></div>
+      <div class="foot2"><span class="pill">Coming Soon</span></div>
+    </div>
+    <div class="tile" style="opacity:.6;cursor:default">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6-8 11-8 11z"/><path d="M12 8v6M9 11h6"/></svg></div><div><div class="no">MODULE 07</div><h2>Animal Health &amp; Vet</h2></div></div>
+      <div><div class="big">Coming Soon</div><div class="cap">Module under development</div></div>
+      <div class="foot2"><span class="pill">Coming Soon</span></div>
+    </div>
+    <div class="tile" style="opacity:.6;cursor:default">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><circle cx="18" cy="9" r="2.5"/><path d="M17 14c3 0 5 2 5 5"/></svg></div><div><div class="no">MODULE 08</div><h2>HR &amp; Manpower</h2></div></div>
+      <div><div class="big">Coming Soon</div><div class="cap">Module under development</div></div>
+      <div class="foot2"><span class="pill">Coming Soon</span></div>
+    </div>
+    <div class="tile" style="opacity:.6;cursor:default">
       <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h8"/></svg></div><div><div class="no">MODULE 10</div><h2>MIS &amp; Reports</h2></div></div>
-      <div><div class="big">64 reports</div><div class="cap">Scheduled library · 3 due this week</div></div>
-      <div class="foot2"><span>KPI dictionary · audit trail</span><span class="go">Open →</span></div>
-    </a>
-    <a class="tile" href="m11-events.html">
+      <div><div class="big">Coming Soon</div><div class="cap">Module under development</div></div>
+      <div class="foot2"><span class="pill">Coming Soon</span></div>
+    </div>
+    <div class="tile" style="opacity:.6;cursor:default">
       <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="M17 10l5-3v10l-5-3"/></svg></div><div><div class="no">MODULE 11</div><h2>Events &amp; Meetings</h2></div></div>
-      <div><div class="big">128 videos</div><div class="cap">Board, general body, melas, training</div></div>
-      <div class="foot2"><span>Next: Board meeting 05 Nov</span><span class="go">Open →</span></div>
-    </a>
-    <a class="tile" href="m12-settings.html">
+      <div><div class="big">Coming Soon</div><div class="cap">Module under development</div></div>
+      <div class="foot2"><span class="pill">Coming Soon</span></div>
+    </div>
+    <div class="tile" style="opacity:.6;cursor:default">
       <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.9-1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 3 14H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 10 3V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1A1.7 1.7 0 0 0 21 10h0a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></div><div><div class="no">MODULE 12</div><h2>Settings / Admin</h2></div></div>
-      <div><div class="big">4 sources</div><div class="cap">EBS · Warehouse · SCADA · KMF feed</div></div>
-      <div class="foot2"><span class="pill warn">Not connected</span><span class="go">Open →</span></div>
-    </a>
+      <div><div class="big">Coming Soon</div><div class="cap">Module under development</div></div>
+      <div class="foot2"><span class="pill">Coming Soon</span></div>
+    </div>
   </section>
 
   <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Illustrative figures except where marked “verified” — see Settings › Data sources</span></div>
