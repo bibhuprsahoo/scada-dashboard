@@ -34,7 +34,7 @@ button[data-tab].soon::after{content:"Coming soon";font-size:9px;font-weight:600
   <div class="kpis">
     <div class="kpi good"><div class="v" id="k-intake">—</div><div class="l">Milk intake · last dairy-day</div><div class="d" id="k-intake-d">loading…</div></div>
     <div class="kpi good"><div class="v" id="k-yield">—</div><div class="l">Yield efficiency</div><div class="d" id="k-yield-d">% milk used in production</div></div>
-    <div class="kpi warn"><div class="v">0.42%</div><div class="l">Process loss</div><div class="d">Norm ≤ 0.40%</div></div>
+    <div class="kpi warn"><div class="v" id="k-loss">—</div><div class="l">Process loss</div><div class="d" id="k-loss-d">yesterday</div></div>
     <div class="kpi"><div class="v">—</div><div class="l">Downtime this shift</div><div class="d"></div></div>
   </div>
 
@@ -82,7 +82,7 @@ button[data-tab].soon::after{content:"Coming soon";font-size:9px;font-weight:600
   <section class="panel" id="eff">
     <div class="g g4">
       <div class="card"><div class="gauge"><div class="ring" id="yield-ring" style="--v:0;--c:var(--good)"><b id="yield-val">—</b></div><div class="lbl">Yield efficiency</div><div class="tg">% milk used in production</div></div></div>
-      <div class="card"><div class="gauge"><div class="ring" style="--v:58;--c:var(--warn)"><b>0.42%</b></div><div class="lbl">Process loss</div><div class="tg">Norm ≤ 0.40%</div></div></div>
+      <div class="card"><div class="gauge"><div class="ring" id="loss-ring" style="--v:0;--c:var(--warn)"><b id="loss-val">—</b></div><div class="lbl">Process loss</div><div class="tg">(PMST − Stage5A − Stage5B) / PMST</div></div></div>
       <div class="card"><div class="gauge"><div class="ring" style="--v:91"><b>91.2%</b></div><div class="lbl">Thermal efficiency</div><div class="tg">Boiler + PHE</div></div></div>
       <div class="card"><div class="gauge"><div class="ring" style="--v:88;--c:var(--good)"><b>88.6%</b></div><div class="lbl">Regeneration efficiency</div><div class="tg">PHE heat recovery, target 88%</div></div></div>
     </div>
@@ -196,6 +196,32 @@ window.addEventListener('DOMContentLoaded', function() {
     var ky  = document.getElementById('k-yield');   if(ky)  ky.textContent  = pct + '%';
     var kyd = document.getElementById('k-yield-d'); if(kyd) kyd.textContent = 'yesterday · ' + pct + '% used in production';
   } catch(e){ console.error('yield gauge failed', e); }
+})();
+
+// Process loss gauge — ((PMST - (Stage5A Curd + Stage5B HMST)) / PMST) * 100
+(async function(){
+  try {
+    const FILTER = 'yesterday';
+    const [pmst, hmst, curd] = await Promise.all([
+      fetch('/api/bangalore/pmst?filter=' + FILTER).then(r=>r.json()),
+      fetch('/api/bangalore/hmst?filter=' + FILTER).then(r=>r.json()),
+      fetch('/api/bangalore/curd?filter=' + FILTER).then(r=>r.json())
+    ]);
+    const pmstTotal = (pmst.data||[]).reduce((a,r)=>a+(Number(r.TotalProcessed)||0),0);
+    const hmstTotal = (hmst.data||[]).reduce((a,r)=>a+(Number(r.TotalQty)||0),0);
+    const curdTotal = (curd.data||[]).reduce((a,r)=>a+(Number(r.TotalQty)||0),0);
+    const loss = pmstTotal > 0 ? ((pmstTotal - hmstTotal - curdTotal) / pmstTotal * 100) : 0;
+    const pct  = Math.round(loss * 100) / 100;
+    const absP = Math.abs(pct);
+    const ring = document.getElementById('loss-ring');
+    const val  = document.getElementById('loss-val');
+    const ky   = document.getElementById('k-loss');
+    const kyd  = document.getElementById('k-loss-d');
+    if(ring){ ring.style.setProperty('--v', Math.min(absP * 20, 100)); ring.style.setProperty('--c', pct > 0.4 ? 'var(--bad)' : pct > 0 ? 'var(--warn)' : 'var(--good)'); }
+    if(val)  val.textContent  = pct + '%';
+    if(ky)   ky.textContent   = pct + '%';
+    if(kyd)  kyd.textContent  = 'yesterday · norm ≤ 0.40%';
+  } catch(e){ console.error('loss gauge failed', e); }
 })();
 </script>
 <script>
