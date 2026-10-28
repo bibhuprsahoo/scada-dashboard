@@ -10,7 +10,7 @@
 .hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;margin-bottom:20px}
 .hero .hello h1{font-size:34px;font-weight:800}
 .hero .hello p{color:var(--muted);margin-top:6px}
-.strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+.strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
 .strip div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .strip b{display:block;font:800 22px var(--head)}
 .strip span{font-size:12px;color:var(--muted)}
@@ -23,7 +23,7 @@
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .tile{
   position:relative;display:flex;flex-direction:column;gap:12px;min-height:190px;
-  background:linear-gradient(150deg,#2ba3e6 0%,#1e88d8 100%);border:1px solid #1a7cc7;border-radius:16px;padding:18px;color:#000;
+  background:linear-gradient(150deg,#b8e4f9 0%,#8dd0f5 100%);border:1px solid #7ac4ef;border-radius:16px;padding:18px;color:#000;
   box-shadow:0 6px 18px rgba(16,90,150,.18);
   transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;overflow:hidden;
 }
@@ -55,20 +55,18 @@
       <h1>Good day. Twelve modules, one data spine.</h1>
       <p>Every number on this portal comes from one governed warehouse — the same figure the board sees is the figure the auditor sees.</p>
       <div class="strip">
-        <div><b>24.6 LLPD</b><span>Procurement today</span></div>
+        <div><b>23.0 LLPD</b><span>Procurement today</span></div>
         <div><b>2,214</b><span>MPCS reporting</span></div>
         <div><b>147 / 162</b><span>Vehicles live</span></div>
         <div><b>₹32.6 Cr</b><span>Next cycle due 31 Oct</span></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-h"><div><h3>Needs attention</h3><div class="sub">Open exceptions across modules</div></div><span class="pill bad">9 open</span></div>
+      <div class="card-h"><div><h3>Needs attention</h3><div class="sub">Open exceptions across modules</div></div><span class="pill bad">3 open</span></div>
       <div class="alerts">
         <a href="m04-procurement.html#amcs"><span class="sev" style="background:var(--bad)"></span>214 AMCS analysers overdue calibration<span class="m">Procurement</span></a>
         <a href="m04-procurement.html#malpractice"><span class="sev" style="background:var(--bad)"></span>3 societies escalated — manual fat entry<span class="m">Procurement</span></a>
-        <a href="m05-transport.html#exceptions"><span class="sev" style="background:var(--bad)"></span>KA-52-GC-5540 — no GPS ping 47 min<span class="m">Transport</span></a>
-        <a href="m05-transport.html#water"><span class="sev" style="background:var(--warn)"></span>1 tanker trip escalated for testing<span class="m">Transport</span></a>
-        <a href="m09-cattle-relief.html#claims"><span class="sev" style="background:var(--warn)"></span>212 insurance claims pending &gt; 60 days<span class="m">Cattle Relief</span></a>
+        <a href="m05-transport.html#exceptions"><span class="sev" style="background:var(--warn)"></span>KA-52-GC-5540 — no GPS ping 47 min<span class="m">Transport</span></a>
       </div>
     </div>
   </section>
@@ -81,7 +79,7 @@
   <section class="tiles" id="tiles">
     <a class="tile" href="m01-overview.html">
       <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div><div><div class="no">MODULE 01</div><h2>BAMUL Overview</h2></div></div>
-      <div><div class="big">18.0 LLPD</div><div class="cap">Processing capacity · 3 dairies</div></div>
+      <div><div class="big">23.0 LLPD</div><div class="cap">Procurement today · FY 2025-26</div></div>
       <div class="foot2"><span>Profile · History · Governance</span><span class="go">Open →</span></div>
     </a>
     <a class="tile" href="m02-finance.html">
@@ -141,7 +139,7 @@
     </div>
   </section>
 
-  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><span>Illustrative figures except where marked “verified” — see Settings › Data sources</span></div>
+  <div class="foot"><span>BAMUL Executive Dashboard · Confidential</span><a href="index.html" style="display:inline-flex;align-items:center;gap:6px;padding:7px 18px;background:var(--blue);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">← Welcome Page</a></div>
 </main>
 
 <script src="js/app.js"></script>
