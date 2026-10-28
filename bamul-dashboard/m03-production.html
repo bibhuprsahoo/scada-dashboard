@@ -33,7 +33,7 @@ button[data-tab].soon::after{content:"Coming soon";font-size:9px;font-weight:600
 
   <div class="kpis">
     <div class="kpi good"><div class="v" id="k-intake">—</div><div class="l">Milk intake · last dairy-day</div><div class="d" id="k-intake-d">loading…</div></div>
-    <div class="kpi good"><div class="v">98.4%</div><div class="l">Yield efficiency</div><div class="d">Target 98.0%</div></div>
+    <div class="kpi good"><div class="v" id="k-yield">—</div><div class="l">Yield efficiency</div><div class="d" id="k-yield-d">% milk used in production</div></div>
     <div class="kpi warn"><div class="v">0.42%</div><div class="l">Process loss</div><div class="d">Norm ≤ 0.40%</div></div>
     <div class="kpi"><div class="v">—</div><div class="l">Downtime this shift</div><div class="d"></div></div>
   </div>
@@ -189,6 +189,8 @@ window.addEventListener('DOMContentLoaded', function() {
     const val  = document.getElementById('yield-val');
     if(ring) ring.style.setProperty('--v', pct);
     if(val)  val.textContent = pct + '%';
+    var ky  = document.getElementById('k-yield');   if(ky)  ky.textContent  = pct + '%';
+    var kyd = document.getElementById('k-yield-d'); if(kyd) kyd.textContent = 'yesterday · ' + pct + '% used in production';
   } catch(e){ console.error('yield gauge failed', e); }
 })();
 </script>
